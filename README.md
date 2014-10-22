@@ -4,6 +4,7 @@ islandora_livingresearchlab_solution_pack
 
 ## Introduction
 This is a beta solution pack for the University of Toronto Scarborough Digital Scholarship Unit.  Objects use the Islandora collection content model to display relationships.
+Note: This repo is based on an older repo islandora_livingresearchlab-2.x-dev for better naming convention. 
 
 ## Dependencies
 Islandora
@@ -21,6 +22,6 @@ Needs:
 
 ## Maintainers
 
-- Kim Pham (since August 2014)
-
+* Kim Pham (since August 2014)
+* [Lingling Jiang](https://github.com/sprklinginfo)
 =======
