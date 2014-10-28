@@ -3,7 +3,7 @@
 /**
  * @file
  *
- * Installs the required object for pig latin solution pack.
+ * Hooks for installing/unintstalling this module.
  */
 
 /**
@@ -20,5 +20,6 @@ function islandora_livingresearchlab_install() {
  * Implementation of hook_uninstall.
  */
 function islandora_livingresearchlab_uninstall() {
+  module_load_include('inc', 'islandora', 'includes/solution_packs');
 
 }

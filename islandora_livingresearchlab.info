@@ -1,5 +1,9 @@
 name = Islandora Living Research Lab Solution Pack
 description = LRL LAB TEST sept09 2014
-package = Islandora
-version = "7.x-1.x-dev"
-core = "7.x"
+dependencies[] = islandora
+dependencies[] = islandora_pdf
+package = Islandora Solution Packs
+version = 7.x-dev
+core = 7.x
+configure = admin/islandora/solution_pack_config/livingresearchlab
+stylesheets[all][] = css/islandora_livingresearchlab.css
