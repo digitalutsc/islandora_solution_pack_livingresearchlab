@@ -176,7 +176,7 @@
               <tree>TRUE</tree>
               <actions>
                 <create>
-                  <path>/dwr:DarwinRecordSet/dwc:relatedResourceID[1]</path>
+                  <path>/dwr:DarwinRecordSet</path>
                   <context>document</context>
                   <schema/>
                   <type>xml</type>
