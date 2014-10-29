@@ -77,70 +77,27 @@ function islandora_livingresearchlab_theme($existing, $type, $theme, $path) {
  * Implements hook_CMODEL_PID_islandora_view_object().
  */
 function islandora_livingresearchlab_islandora_livingresearchlab_islandora_view_object($object) {
-  $output = theme('islandora_livingresearchlab', array('islandora_object' => $object));
+  $output = theme('islandora_livingresearchlab', array('object' => $object));
   return array('' => $output);
 }
 
 
 function islandora_livingresearchlab_islandora_livingresearchlab_datasessionCModel_islandora_view_object($object) {
-  $output = theme('lrl_datasession', array('islandora_object' => $object));
+  $output = theme('islandora_lrl_datasession', array('object' => $object));
   return array('' => $output);
 }
 
 function islandora_livingresearchlab_islandora_livingresearchlab_experimentCModel_islandora_view_object($object) {
-  $output = theme('lrl_experiment', array('islandora_object' => $object));
+  $output = theme('islandora_lrl_experiment', array('object' => $object));
   return array('' => $output);
 }
 
 function islandora_livingresearchlab_islandora_livingresearchlab_mouseCModel_islandora_view_object($object) {
-  $output = theme('lrl_mouse', array('islandora_object' => $object));
+  $output = theme('islandora_lrl_mouse', array('object' => $object));
   return array('' => $output);
 }
 
-// function islandora_livingresearchlab_islandora_livingresearchlab_protocolCModel_islandora_view_object($object) {
-//   $output = theme('lrl_procotol', array('islandora_object' => $object));
-//   return array('' => $output);
-// }
 
-// function islandora_livingresearchlab_islandora_livingresearchlab_publicationCModel_islandora_view_object($object) {
-//   $output = theme('lrl_publication', array('islandora_object' => $object));
-//   return array('' => $output);
-// }
-
-
-/**
- * Implements hook_islandora_ingest_steps().
- * This hook adds a single ingest step, but more could be added as seperate entries.
- */
-
-// no upload 2014-08-14
-// function islandora_livingresearchlab_islandora_livingresearchlabCModel_islandora_ingest_steps(array $configuration) {
-//   return array(
-//     'islandora_livingresearchlab_file_upload' => array(
-//       'weight' => 10,
-//       'type' => 'form',
-//       'form_id' => 'islandora_livingresearchlab_upload_form',
-//       'module' => 'islandora_livingresearchlab',
-//       'file' => 'includes/islandora_livingresearchlab_upload.form.inc'
-//     )
-//   );
-// }
-
-
-/**
- * Implements hook_CMODEL_PID_islandora_object_ingested().
- * This hook tells Islandora what to do with the object once it has been ingested.
- * In this case the raw text has been uploaded so we'll be in a position to
- * use that as input for our derived datastreams. The function
- * islandora_livingresearchlab_create_all_derivatives will be called with a refrence to the
- * as yet uningested object.
- */
-
-// no upload 2014-08-14
-// function islandora_livingresearchlab_islandora_livingresearchlabCModel_islandora_object_ingested($object) {
-//   module_load_include('inc', 'islandora_livingresearchlab', 'includes/derivatives');
-//   islandora_livingresearchlab_create_all_derivatives($object);
-// }
 
 /**
  * Implements hook_islandora_xml_form_builder_forms().
