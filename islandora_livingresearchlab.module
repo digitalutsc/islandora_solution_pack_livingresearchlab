@@ -328,7 +328,7 @@ function islandora_livingresearchlab_islandora_required_objects(IslandoraTuque $
   /** DATASESSION root collection */
   $datasessions_collection = $connection->repository->constructObject('islandora:datasessions_collection');
   $datasessions_collection->owner = 'fedoraAdmin';
-  $datasessions_collection->label = 'Islandora Living Research Lab Data Sessions';
+  $datasessions_collection->label = 'Islandora Living Research Lab Data Sessions Collection';
   $datasessions_collection->models = 'islandora:collectionCModel';
   $datasessions_collection->relationships->add(FEDORA_RELS_EXT_URI, 'isMemberOfCollection', 'islandora:root');
 
@@ -348,7 +348,7 @@ function islandora_livingresearchlab_islandora_required_objects(IslandoraTuque $
   /** EXPERIMENTS root collection */
   $experiments_collection = $connection->repository->constructObject('islandora:experiments_collection');
   $experiments_collection->owner = 'fedoraAdmin';
-  $experiments_collection->label = 'Experiments';
+  $experiments_collection->label = 'Islandora Living Research Lab Experiments Collection';
   $experiments_collection->models = 'islandora:collectionCModel';
   $experiments_collection->relationships->add(FEDORA_RELS_EXT_URI, 'isMemberOfCollection', 'islandora:root');
 
@@ -367,7 +367,7 @@ function islandora_livingresearchlab_islandora_required_objects(IslandoraTuque $
   /** MICE root collection */
   $mice_collection = $connection->repository->constructObject('islandora:mice_collection');
   $mice_collection->owner = 'fedoraAdmin';
-  $mice_collection->label = 'Mice';
+  $mice_collection->label = 'Islandora Living Research Lab Mice Collection';
   $mice_collection->models = 'islandora:collectionCModel';
   $mice_collection->relationships->add(FEDORA_RELS_EXT_URI, 'isMemberOfCollection', 'islandora:root');
 
@@ -386,7 +386,7 @@ function islandora_livingresearchlab_islandora_required_objects(IslandoraTuque $
   /** PROTOCOLS root collection */
   $protocols_collection = $connection->repository->constructObject('islandora:protocols_collection');
   $protocols_collection->owner = 'fedoraAdmin';
-  $protocols_collection->label = 'Protocols';
+  $protocols_collection->label = 'Islandora Living Research Lab Protocols Collection';
   $protocols_collection->models = 'islandora:collectionCModel';
   $protocols_collection->relationships->add(FEDORA_RELS_EXT_URI, 'isMemberOfCollection', 'islandora:root');
 
@@ -405,7 +405,7 @@ function islandora_livingresearchlab_islandora_required_objects(IslandoraTuque $
   /** PUBLICATIONS root collection */
   $publications_collection = $connection->repository->constructObject('islandora:publications_collection');
   $publications_collection->owner = 'fedoraAdmin';
-  $publications_collection->label = 'Publications';
+  $publications_collection->label = 'Islandora Living Research Lab Publications Collection';
   $publications_collection->models = 'islandora:collectionCModel';
   $publications_collection->relationships->add(FEDORA_RELS_EXT_URI, 'isMemberOfCollection', 'islandora:root');
 
@@ -423,13 +423,11 @@ function islandora_livingresearchlab_islandora_required_objects(IslandoraTuque $
 
   return array(
     'islandora_livingresearchlab' => array(
-      'title' => 'DSU Living Research Lab Solution Pack',
+      'title' => 'Islandora Living Research Lab Solution Pack',
       'objects' => array(
         $livingresearchlab_datasession_content_model,
         $livingresearchlab_experiment_content_model,
         $livingresearchlab_mouse_content_model,
-        $livingresearchlab_protocol_content_model,
-        $livingresearchlab_publication_content_model,
         $datasessions_collection,
         $experiments_collection,
         $mice_collection,
