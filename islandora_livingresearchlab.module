@@ -26,15 +26,34 @@ function islandora_livingresearchlab_menu() {
     'type' => MENU_NORMAL_ITEM,
   );
 
-  $items['islandora/object/add/birth'] = array(
-    'title' => 'Birth Form',
+  $items['islandora/lrl_object/add/birth'] = array(
+    'title' => 'Add Birth',
     'description' => 'Add birth to Living Research Lab',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('islandora_livingresearchlab_add_birth_form'),
     'access arguments' => array('administer living research lab content'),
     'file' => 'includes/islandora_livingresearchlab.birth.form.inc',
+    'type' => MENU_NORMAL_ITEM,
+  );
+  $items['islandora/lrl_object/autocomplete/mother'] = array(
+    'title' => 'Autocomplete callback',
+    'description' => 'Autocomplete a Mouse content model PID.',
+    'page callback' => 'islandora_livingresearchlab_autocomplete',
+    'page arguments' => array(4),
+    'access arguments' => array('administer living research lab content'),
+    'file' => 'includes/islandora_livingresearchlab.autocomplete.inc',
     'type' => MENU_CALLBACK,
   );
+  $items['islandora/lrl_object/autocomplete/father'] = array(
+    'title' => 'Autocomplete callback',
+    'description' => 'Autocomplete a Mouse content model PID.',
+    'page callback' => 'islandora_livingresearchlab_autocomplete',
+    'page arguments' => array(4),
+    'access arguments' => array('administer living research lab content'),
+    'file' => 'includes/islandora_livingresearchlab.autocomplete.inc',
+    'type' => MENU_CALLBACK,
+  );
+
   return $items;
 }
 
