@@ -23,6 +23,10 @@ function islandora_livingresearchlab_add_birth_form(array $form, array &$form_st
 
   $form = array();
 
+  // Because we have many fields with the same values, we have to set
+  // #tree to be able to access them.
+  $form['#tree'] = TRUE;
+
   // buttons
   $form['actions'] = array('#type' => 'actions');
   $form['actions']['submit'] = array(
@@ -85,18 +89,68 @@ function islandora_livingresearchlab_add_birth_form(array $form, array &$form_st
     '#title' => t('Children Information'),
     '#collapsible' => TRUE,
     '#collapsed' => FALSE,
+    // Set up the wrapper so that AJAX will be able to replace the fieldset.
+    '#prefix' => '<div id="children-fieldset-wrapper">',
+    '#suffix' => '</div>',
   );
-  $form['lrl_birth_children']['first'] = array(
+  $form['lrl_birth_children']['nums'] = array(
     '#type' => 'textfield',
-    '#title' => t('Child #1'),
+    '#title' => t('Total number of children born'),
     '#required' => TRUE,
+    '#default_value' => 1,
     '#size' => 25,
   );
+  $form['lrl_birth_children']['update_num'] = array(
+    '#type' => 'submit',
+    '#value' => t('Update the number'),
+    '#submit' => array('ajax_update_birth_nums'),
+    // See the examples in ajax_example.module for more details on the
+    // properties of #ajax.
+    '#ajax' => array(
+      'callback' => 'ajax_update_birth_nums_callback',
+      'wrapper' => 'children-fieldset-wrapper',
+    ),
+    '#attributes' => array(
+      'class' => array('update_num_btn'),
+    ),
+  );
+
+  // Use $form_state['num_children'] to track the number of children in the birth.
+  if (empty($form_state['num_children'])) {
+    $form_state['num_children'] = $form['lrl_birth_children']['nums']['#default_value'];
+  }
+  for ($i = 1; $i <= $form_state['num_children']; $i++) {
+    $form['lrl_birth_children']['child' . $i] = array(
+      '#type' => 'textfield',
+      '#title' => t('Child #' . $i . ' ID'),
+      '#size' => 25,
+    );
+  }
 
 
-  //dpm($form['actions']);
+  //dpm($form, 'form array');
+  //dpm($form_state, 'form_state');
 
   return $form;
+}
+
+/**
+ * Submit handler for the "Update the number" button.
+ *
+ * Increments the max counter and causes a rebuild.
+ */
+function ajax_update_birth_nums($form, &$form_state) {
+  $form_state['num_children'] = $form['lrl_birth_children']['nums']['#value'];
+  $form_state['rebuild'] = TRUE;
+}
+
+/**
+ * Callback for both ajax-enabled buttons.
+ *
+ * Selects and returns the fieldset with the names in it.
+ */
+function ajax_update_birth_nums_callback($form, $form_state) {
+  return $form['lrl_birth_children'];
 }
 
 /**
