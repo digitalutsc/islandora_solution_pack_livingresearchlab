@@ -13,6 +13,10 @@
 function islandora_livingresearchlab_install() {
   module_load_include('inc', 'islandora', 'includes/solution_packs');
   islandora_install_solution_pack('islandora_livingresearchlab');
+  // Set variable for islandora_livingresearchlab SP.
+  variable_set('islandora_livingresearchlab_mice_id_init_litter', '0001');
+  variable_set('islandora_livingresearchlab_mice_id_init_shipment', '0001');
+  //variable_get('islandora_livingresearchlab', TRUE);
 }
 
 /**
