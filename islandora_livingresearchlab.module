@@ -17,11 +17,11 @@ ini_set('display_startup_errors', TRUE);
 function islandora_livingresearchlab_menu() {
   $items = array();
   $items['admin/islandora/solution_pack_config/livingresearchlab'] = array(
-    'title' => 'Islandora Living Research Lab Solution Pack',
+    'title' => 'Living Research Lab Solution Pack',
     'description' => 'Configure the Living Research Lab solution pack.',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('islandora_livingresearchlab_admin'),
-    //'access arguments' => array('administer site configuration'),
+    'access arguments' => array('administer site configuration'),
     'file' => 'includes/islandora_livingresearchlab.admin.inc',
     'type' => MENU_NORMAL_ITEM,
   );
