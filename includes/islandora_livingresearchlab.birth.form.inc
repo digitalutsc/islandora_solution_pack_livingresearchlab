@@ -21,6 +21,7 @@ function islandora_livingresearchlab_add_birth_form(array $form, array &$form_st
   module_load_include('inc', 'islandora_livingresearchlab', 'includes/utilities');
   drupal_add_library('system', 'ui.datepicker');
   drupal_add_js("(function ($) { $('.datepicker').datepicker(); })(jQuery);", array('type' => 'inline', 'scope' => 'footer', 'weight' => 5));
+  $timestamp = time();
 
   $form = array();
 
@@ -40,6 +41,7 @@ function islandora_livingresearchlab_add_birth_form(array $form, array &$form_st
     '#title' => t('Birth Identifier'),
     '#description' => t('An unique ID for a birth event.'),
     '#required' => TRUE,
+    '#default_value' => $timestamp,
     '#size' => 25,
   );
   $form['lrl_birth_cage_id'] = array(
@@ -90,7 +92,6 @@ function islandora_livingresearchlab_add_birth_form(array $form, array &$form_st
     '#title' => t('Children Information'),
     '#collapsible' => TRUE,
     '#collapsed' => FALSE,
-    // Set up the wrapper so that AJAX will be able to replace the fieldset.
     '#prefix' => '<div id="children-fieldset-wrapper">',
     '#suffix' => '</div>',
   );
@@ -100,39 +101,46 @@ function islandora_livingresearchlab_add_birth_form(array $form, array &$form_st
     '#required' => TRUE,
     '#options' => array(0 => 'wild-type', 1 => 'transgenic'),
     '#default_value' => 0,
+
   );
   $form['lrl_birth_children']['nums'] = array(
     '#type' => 'select',
     '#title' => t('Total number of children born'),
-    '#options' => array(1 => 1, 2 => 2, 3 => 3, 4 => 4, 5 => 5, 6 => 6, 7 => 7, 8 => 8, 9 => 9, 10 => 10,
+    '#options' => array(0 => 'Unknown', 1 => 1, 2 => 2, 3 => 3, 4 => 4, 5 => 5, 6 => 6, 7 => 7, 8 => 8, 9 => 9, 10 => 10,
       11 => 11, 12 => 12, 13 => 13, 14 => 14, 15 => 15, 16 => 16, 17=> 17, 18 => 18, 19 => 19, 20 => 20),
     '#required' => TRUE,
-    '#default_value' => 1,
+    '#default_value' => 0,
     '#ajax' => array(
       'callback' => 'ajax_update_birth_nums_callback',
-      'wrapper' => 'children-fieldset-wrapper',
+      'wrapper' => 'children-id-fieldset-wrapper',
+      'method' => 'replaceWith',
       'effect' => 'slide',
       'progress' => array('type' => 'none'),
     ),
   );
 
-  $nums_children = !empty($form_state['values']['lrl_birth_children']['nums']) ? $form_state['values']['lrl_birth_children']['nums'] : 1;
+  // Children ID fieldset.
+  $form['lrl_birth_children']['id_fieldset'] = array(
+    '#type' => 'fieldset',
+    '#collapsible' => TRUE,
+    '#collapsed' => FALSE,
+    // Set up the wrapper so that AJAX will be able to replace the fieldset.
+    '#prefix' => '<div id="children-id-fieldset-wrapper">',
+    '#suffix' => '</div>',
+  );
+
+  $nums_children = !empty($form_state['values']['lrl_birth_children']['nums']) ? $form_state['values']['lrl_birth_children']['nums'] : 0;
   $mice_id_x = !empty($form_state['values']['lrl_birth_children']['id_schema_x']) ? $form_state['values']['lrl_birth_children']['id_schema_x'] : 0;
+
   for ($i = 1; $i <= $nums_children; $i++) {
     $child_id = islandora_livingresearchlab_generate_mouse_id('0', $mice_id_x, TRUE, $i);
-    $form['lrl_birth_children']['child' . $i] = array(
+    $form['lrl_birth_children']['id_fieldset']['child' . $i] = array(
       '#type' => 'textfield',
       '#title' => t('Child #') . $i . ' ' . t('ID'),
       '#size' => 25,
       '#default_value' => $child_id,
-      '#value' => $child_id,
     );
   }
-
-
-
-  //dpm($form, 'form array');
-  //dpm($form_state, 'form_state');
 
   return $form;
 }
@@ -144,7 +152,8 @@ function islandora_livingresearchlab_add_birth_form(array $form, array &$form_st
  * Selects and returns the fieldset with the children information in it.
  */
 function ajax_update_birth_nums_callback($form, $form_state) {
-  return $form['lrl_birth_children'];
+  $form_state['rebuild'] = TRUE;
+  return $form['lrl_birth_children']['id_fieldset'];
 }
 
 /**
