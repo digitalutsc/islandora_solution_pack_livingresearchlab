@@ -1,7 +1,7 @@
 <?php
 /**
  * @file
- * islandora_livingresearchlab.admin.inc
+ * lrl.admin.form.inc
  */
 
 /**

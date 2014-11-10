@@ -19,6 +19,65 @@ function islandora_livingresearchlab_install() {
   //variable_get('islandora_livingresearchlab', TRUE);
 }
 
+
+/**
+ * Implements hook_schema().
+ */
+function  islandora_livingresearchlab_schema() {
+  $schema['islandora_lrl_mice'] = array(
+    'description' => 'Table to track auto-generated Mouse IDs.',
+    'fields' => array(
+      'mouse_id' => array(
+        'description' => 'Mouse Identifier.',
+        'type' => 'varchar',
+        'length' => 11,
+        'not null' => TRUE,
+        'default' => '',
+      ),
+      'litter_no' => array(
+        'description' => 'Litter number of the mouse.',
+        'type' => 'varchar',
+        'length' => 4,
+        'not null' => TRUE,
+        'default' => '0000',
+      ),
+      'shipment_no' => array(
+        'description' => 'Shipment number of the mouse.',
+        'type' => 'varchar',
+        'length' => 4,
+        'not null' => TRUE,
+        'default' => '0000',
+      ),
+      'birth_id' => array(
+        'description' => 'Birth Identifier for the mouse.',
+        'type' => 'varchar',
+        'length' => 15,
+        'not null' => TRUE,
+        'default' => '',
+      ),
+      'mother_id' => array(
+        'description' => 'Mouse Identifier for the mother.',
+        'type' => 'varchar',
+        'length' => 20,
+        'not null' => TRUE,
+        'default' => '',
+      ),
+      'father_id' => array(
+        'description' => 'Mouse Identifier for the father.',
+        'type' => 'varchar',
+        'length' => 20,
+        'not null' => TRUE,
+        'default' => '',
+      ),
+    ),
+    'indexes' => array(
+      'birth_id' => array('birth_id'),
+    ),
+    'primary key' => array('mouse_id'),
+  );
+  return $schema;
+}
+
 /**
  * Implementation of hook_uninstall.
  */

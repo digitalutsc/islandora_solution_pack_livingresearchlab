@@ -17,7 +17,7 @@
  * @return string
  *   A unique mouse ID.
  */
-function islandora_livingresearchlab_generate_mouse_id($s, $x, $is_litter = TRUE, $seq = '01') {
+function lrl_generate_mouse_id($s, $x, $is_litter = TRUE, $seq = '01') {
   if (!isset($s)) {
     drupal_set_message(t('S segment in Mice ID schema is missing'));
   }

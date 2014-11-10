@@ -133,7 +133,7 @@ function islandora_livingresearchlab_add_birth_form(array $form, array &$form_st
   $mice_id_x = !empty($form_state['values']['lrl_birth_children']['id_schema_x']) ? $form_state['values']['lrl_birth_children']['id_schema_x'] : 0;
 
   for ($i = 1; $i <= $nums_children; $i++) {
-    $child_id = islandora_livingresearchlab_generate_mouse_id('0', $mice_id_x, TRUE, $i);
+    $child_id = lrl_generate_mouse_id('0', $mice_id_x, TRUE, $i);
     $form['lrl_birth_children']['id_fieldset']['child' . $i] = array(
       '#type' => 'textfield',
       '#title' => t('Child #') . $i . ' ' . t('ID'),

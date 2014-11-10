@@ -22,7 +22,7 @@ function islandora_livingresearchlab_menu() {
     'page callback' => 'drupal_get_form',
     'page arguments' => array('islandora_livingresearchlab_admin'),
     'access arguments' => array('administer site configuration'),
-    'file' => 'includes/islandora_livingresearchlab.admin.inc',
+    'file' => 'includes/lrl.admin.form.inc',
     'type' => MENU_NORMAL_ITEM,
   );
 
@@ -32,7 +32,7 @@ function islandora_livingresearchlab_menu() {
     'page callback' => 'drupal_get_form',
     'page arguments' => array('islandora_livingresearchlab_add_birth_form'),
     'access arguments' => array('administer living research lab content'),
-    'file' => 'includes/islandora_livingresearchlab.birth.form.inc',
+    'file' => 'includes/lrl.birth.form.inc',
     'type' => MENU_NORMAL_ITEM,
   );
   $items['islandora/lrl_object/autocomplete/mother'] = array(
@@ -41,7 +41,7 @@ function islandora_livingresearchlab_menu() {
     'page callback' => 'islandora_livingresearchlab_autocomplete',
     'page arguments' => array(4),
     'access arguments' => array('administer living research lab content'),
-    'file' => 'includes/islandora_livingresearchlab.autocomplete.inc',
+    'file' => 'includes/lrl.autocomplete.inc',
     'type' => MENU_CALLBACK,
   );
   $items['islandora/lrl_object/autocomplete/father'] = array(
@@ -50,7 +50,7 @@ function islandora_livingresearchlab_menu() {
     'page callback' => 'islandora_livingresearchlab_autocomplete',
     'page arguments' => array(4),
     'access arguments' => array('administer living research lab content'),
-    'file' => 'includes/islandora_livingresearchlab.autocomplete.inc',
+    'file' => 'includes/lrl.autocomplete.inc',
     'type' => MENU_CALLBACK,
   );
 
