@@ -1,5 +1,5 @@
 name = Islandora Living Research Lab Solution Pack
-description = LRL LAB TEST sept09 2014
+description = Islandora Module for DSU Living Research Lab project
 dependencies[] = islandora
 dependencies[] = islandora_pdf
 package = Islandora Solution Packs

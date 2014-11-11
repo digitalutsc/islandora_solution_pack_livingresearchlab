@@ -2,7 +2,7 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="Islandora Darwin Core collection"
     xsi:schemaLocation="http://www.islandora.ca http://syn.lib.umanitoba.ca/collection_policy.xsd">
   <content_models>
-	  <content_model name="Islandora Collection Content Model" namespace="islandora" pid="islandora:collectionCModel"/>
+	  <content_model name="Livingresearchlab Data Session Content Model" namespace="islandora:datasessions_collection" pid="islandora:livingresearchlab_datasessionCModel"/>
   </content_models>
   <search_terms></search_terms>
   <staging_area></staging_area>

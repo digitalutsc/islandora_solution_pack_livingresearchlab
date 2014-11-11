@@ -1,5 +1,7 @@
 <?php
-
+error_reporting(E_ALL);
+ini_set('display_errors', TRUE);
+ini_set('display_startup_errors', TRUE);
 
 /**
  * @file
@@ -14,17 +16,59 @@
  */
 function islandora_livingresearchlab_menu() {
   $items = array();
-  $items['admin/islandora/solution_pack_config/livingresearchlab'] => array(
-    'title' => 'DSU Living Research Lab Solution Pack',
+  $items['admin/islandora/solution_pack_config/livingresearchlab'] = array(
+    'title' => 'Living Research Lab Solution Pack',
     'description' => 'Configure the Living Research Lab solution pack.',
     'page callback' => 'drupal_get_form',
-    'access arguments' => array('administer site configuration'),
     'page arguments' => array('islandora_livingresearchlab_admin'),
-    'file' => 'includes/islandora_livingresearchlab.admin.inc',
+    'access arguments' => array('administer site configuration'),
+    'file' => 'includes/lrl.admin.form.inc',
     'type' => MENU_NORMAL_ITEM,
   );
+
+  $items['islandora/lrl_object/add/birth'] = array(
+    'title' => 'Add Birth',
+    'description' => 'Add birth to Living Research Lab',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('islandora_livingresearchlab_add_birth_form'),
+    'access arguments' => array('administer living research lab content'),
+    'file' => 'includes/lrl.birth.form.inc',
+    'type' => MENU_NORMAL_ITEM,
+  );
+  $items['islandora/lrl_object/autocomplete/mother'] = array(
+    'title' => 'Autocomplete callback',
+    'description' => 'Autocomplete a Mouse content model PID.',
+    'page callback' => 'islandora_livingresearchlab_autocomplete',
+    'page arguments' => array(4),
+    'access arguments' => array('administer living research lab content'),
+    'file' => 'includes/lrl.autocomplete.inc',
+    'type' => MENU_CALLBACK,
+  );
+  $items['islandora/lrl_object/autocomplete/father'] = array(
+    'title' => 'Autocomplete callback',
+    'description' => 'Autocomplete a Mouse content model PID.',
+    'page callback' => 'islandora_livingresearchlab_autocomplete',
+    'page arguments' => array(4),
+    'access arguments' => array('administer living research lab content'),
+    'file' => 'includes/lrl.autocomplete.inc',
+    'type' => MENU_CALLBACK,
+  );
+
   return $items;
 }
+
+/**
+ * Implements hook_permission().
+ */
+function islandora_livingresearchlab_permission() {
+  return array(
+    'administer living research lab content' => array(
+      'title' => t('Administer Living Research Lab Content'),
+      'description' => t('Add content to Living Research Lab Collection'),
+    ),
+  );
+}
+
 
 /**
  * Implements hook_theme().
@@ -77,70 +121,27 @@ function islandora_livingresearchlab_theme($existing, $type, $theme, $path) {
  * Implements hook_CMODEL_PID_islandora_view_object().
  */
 function islandora_livingresearchlab_islandora_livingresearchlab_islandora_view_object($object) {
-  $output = theme('islandora_livingresearchlab', array('islandora_object' => $object));
+  $output = theme('islandora_livingresearchlab', array('object' => $object));
   return array('' => $output);
 }
 
 
 function islandora_livingresearchlab_islandora_livingresearchlab_datasessionCModel_islandora_view_object($object) {
-  $output = theme('lrl_datasession', array('islandora_object' => $object));
+  $output = theme('islandora_lrl_datasession', array('object' => $object));
   return array('' => $output);
 }
 
 function islandora_livingresearchlab_islandora_livingresearchlab_experimentCModel_islandora_view_object($object) {
-  $output = theme('lrl_experiment', array('islandora_object' => $object));
+  $output = theme('islandora_lrl_experiment', array('object' => $object));
   return array('' => $output);
 }
 
 function islandora_livingresearchlab_islandora_livingresearchlab_mouseCModel_islandora_view_object($object) {
-  $output = theme('lrl_mouse', array('islandora_object' => $object));
+  $output = theme('islandora_lrl_mouse', array('object' => $object));
   return array('' => $output);
 }
 
-// function islandora_livingresearchlab_islandora_livingresearchlab_protocolCModel_islandora_view_object($object) {
-//   $output = theme('lrl_procotol', array('islandora_object' => $object));
-//   return array('' => $output);
-// }
 
-// function islandora_livingresearchlab_islandora_livingresearchlab_publicationCModel_islandora_view_object($object) {
-//   $output = theme('lrl_publication', array('islandora_object' => $object));
-//   return array('' => $output);
-// }
-
-
-/**
- * Implements hook_islandora_ingest_steps().
- * This hook adds a single ingest step, but more could be added as seperate entries.
- */
-
-// no upload 2014-08-14
-// function islandora_livingresearchlab_islandora_livingresearchlabCModel_islandora_ingest_steps(array $configuration) {
-//   return array(
-//     'islandora_livingresearchlab_file_upload' => array(
-//       'weight' => 10,
-//       'type' => 'form',
-//       'form_id' => 'islandora_livingresearchlab_upload_form',
-//       'module' => 'islandora_livingresearchlab',
-//       'file' => 'includes/islandora_livingresearchlab_upload.form.inc'
-//     )
-//   );
-// }
-
-
-/**
- * Implements hook_CMODEL_PID_islandora_object_ingested().
- * This hook tells Islandora what to do with the object once it has been ingested.
- * In this case the raw text has been uploaded so we'll be in a position to
- * use that as input for our derived datastreams. The function
- * islandora_livingresearchlab_create_all_derivatives will be called with a refrence to the
- * as yet uningested object.
- */
-
-// no upload 2014-08-14
-// function islandora_livingresearchlab_islandora_livingresearchlabCModel_islandora_object_ingested($object) {
-//   module_load_include('inc', 'islandora_livingresearchlab', 'includes/derivatives');
-//   islandora_livingresearchlab_create_all_derivatives($object);
-// }
 
 /**
  * Implements hook_islandora_xml_form_builder_forms().
@@ -328,7 +329,7 @@ function islandora_livingresearchlab_islandora_required_objects(IslandoraTuque $
   /** DATASESSION root collection */
   $datasessions_collection = $connection->repository->constructObject('islandora:datasessions_collection');
   $datasessions_collection->owner = 'fedoraAdmin';
-  $datasessions_collection->label = 'Islandora Living Research Lab Data Sessions';
+  $datasessions_collection->label = 'Islandora Living Research Lab Data Sessions Collection';
   $datasessions_collection->models = 'islandora:collectionCModel';
   $datasessions_collection->relationships->add(FEDORA_RELS_EXT_URI, 'isMemberOfCollection', 'islandora:root');
 
@@ -348,7 +349,7 @@ function islandora_livingresearchlab_islandora_required_objects(IslandoraTuque $
   /** EXPERIMENTS root collection */
   $experiments_collection = $connection->repository->constructObject('islandora:experiments_collection');
   $experiments_collection->owner = 'fedoraAdmin';
-  $experiments_collection->label = 'Experiments';
+  $experiments_collection->label = 'Islandora Living Research Lab Experiments Collection';
   $experiments_collection->models = 'islandora:collectionCModel';
   $experiments_collection->relationships->add(FEDORA_RELS_EXT_URI, 'isMemberOfCollection', 'islandora:root');
 
@@ -367,7 +368,7 @@ function islandora_livingresearchlab_islandora_required_objects(IslandoraTuque $
   /** MICE root collection */
   $mice_collection = $connection->repository->constructObject('islandora:mice_collection');
   $mice_collection->owner = 'fedoraAdmin';
-  $mice_collection->label = 'Mice';
+  $mice_collection->label = 'Islandora Living Research Lab Mice Collection';
   $mice_collection->models = 'islandora:collectionCModel';
   $mice_collection->relationships->add(FEDORA_RELS_EXT_URI, 'isMemberOfCollection', 'islandora:root');
 
@@ -386,7 +387,7 @@ function islandora_livingresearchlab_islandora_required_objects(IslandoraTuque $
   /** PROTOCOLS root collection */
   $protocols_collection = $connection->repository->constructObject('islandora:protocols_collection');
   $protocols_collection->owner = 'fedoraAdmin';
-  $protocols_collection->label = 'Protocols';
+  $protocols_collection->label = 'Islandora Living Research Lab Protocols Collection';
   $protocols_collection->models = 'islandora:collectionCModel';
   $protocols_collection->relationships->add(FEDORA_RELS_EXT_URI, 'isMemberOfCollection', 'islandora:root');
 
@@ -405,7 +406,7 @@ function islandora_livingresearchlab_islandora_required_objects(IslandoraTuque $
   /** PUBLICATIONS root collection */
   $publications_collection = $connection->repository->constructObject('islandora:publications_collection');
   $publications_collection->owner = 'fedoraAdmin';
-  $publications_collection->label = 'Publications';
+  $publications_collection->label = 'Islandora Living Research Lab Publications Collection';
   $publications_collection->models = 'islandora:collectionCModel';
   $publications_collection->relationships->add(FEDORA_RELS_EXT_URI, 'isMemberOfCollection', 'islandora:root');
 
@@ -423,13 +424,11 @@ function islandora_livingresearchlab_islandora_required_objects(IslandoraTuque $
 
   return array(
     'islandora_livingresearchlab' => array(
-      'title' => 'DSU Living Research Lab Solution Pack',
+      'title' => 'Islandora Living Research Lab Solution Pack',
       'objects' => array(
         $livingresearchlab_datasession_content_model,
         $livingresearchlab_experiment_content_model,
         $livingresearchlab_mouse_content_model,
-        $livingresearchlab_protocol_content_model,
-        $livingresearchlab_publication_content_model,
         $datasessions_collection,
         $experiments_collection,
         $mice_collection,
