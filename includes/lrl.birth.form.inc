@@ -163,6 +163,6 @@ function ajax_update_birth_nums_callback($form, $form_state) {
  * @todo: complete islandora_livingresearchlab_add_birth_form_submit().
  */
 function islandora_livingresearchlab_add_birth_form_submit(array $form, array &$form_state) {
-  //dpm($form_state, 'form_state_posted');
+  dpm($form_state, 'form_state_posted');
   drupal_set_message(t('Mouse 1234 created with Birth Record 111.'));
 }
