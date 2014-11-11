@@ -922,7 +922,7 @@
                       <schema/>
                       <type>xml</type>
                       <prefix>NULL</prefix>
-                      <value>&lt;dwc:occurrenceRemarks&gt;purchasedFrom%value%&lt;/dwc:occurrenceRemarks&gt;</value>
+                      <value>&lt;dwc:occurrenceRemarks&gt;purchasedFrom %value%&lt;/dwc:occurrenceRemarks&gt;</value>
                     </create>
                     <read>
                       <path>/dwr:DarwinRecordSet/dwc:Occurrence[2]/dwc:occurrenceRemarks[1]</path>
@@ -1332,6 +1332,44 @@
                   </actions>
                 </properties>
                 <children>
+                  <element name="birthid">
+                    <properties>
+                      <type>datepicker</type>
+                      <access>TRUE</access>
+                      <collapsed>FALSE</collapsed>
+                      <collapsible>FALSE</collapsible>
+                      <disabled>FALSE</disabled>
+                      <executes_submit_callback>FALSE</executes_submit_callback>
+                      <multiple>FALSE</multiple>
+                      <required>FALSE</required>
+                      <resizable>FALSE</resizable>
+                      <title>Birth ID</title>
+                      <tree>TRUE</tree>
+                      <actions>
+                        <create>
+                          <path>self::node()</path>
+                          <context>parent</context>
+                          <schema/>
+                          <type>xml</type>
+                          <prefix>NULL</prefix>
+                          <value>&lt;dwc:eventID&gt;%value%&lt;/dwc:eventID&gt;</value>
+                        </create>
+                        <read>
+                          <path>/dwr:DarwinRecordSet/dwc:Event[1]/dwc:eventID[1]</path>
+                          <context>parent</context>
+                        </read>
+                        <update>
+                          <path>self::node()</path>
+                          <context>self</context>
+                        </update>
+                        <delete>
+                          <path>self::node()</path>
+                          <context>self</context>
+                        </delete>
+                      </actions>
+                    </properties>
+                    <children/>
+                  </element>
                   <element name="birtheventdate">
                     <properties>
                       <type>datepicker</type>

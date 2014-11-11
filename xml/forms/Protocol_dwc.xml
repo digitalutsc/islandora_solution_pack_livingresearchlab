@@ -160,7 +160,7 @@
                 </properties>
                 <children/>
               </element>
-              <element name="dctermstype">
+              <element name="basisofrecord">
                 <properties>
                   <type>hidden</type>
                   <access>TRUE</access>
@@ -179,10 +179,10 @@
                       <schema/>
                       <type>xml</type>
                       <prefix>NULL</prefix>
-                      <value>&lt;dcterms:type&gt;Protocol&lt;/dcterms:type&gt;</value>
+                      <value>&lt;dwc:basisOfRecord&gt;Event&lt;/dwc:basisOfRecord&gt;</value>
                     </create>
                     <read>
-                      <path>/dwr:DarwinRecordSet/dwc:Occurrence/dcterms:type</path>
+                      <path>/dwr:DarwinRecordSet/dwc:Occurrence/dwc:basisOfRecord</path>
                       <context>document</context>
                     </read>
                     <update>
