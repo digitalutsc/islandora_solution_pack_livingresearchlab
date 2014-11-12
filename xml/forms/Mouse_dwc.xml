@@ -741,7 +741,6 @@
                       <collapsible>FALSE</collapsible>
                       <disabled>FALSE</disabled>
                       <executes_submit_callback>FALSE</executes_submit_callback>
-                      <maxlength>20</maxlength>
                       <multiple>FALSE</multiple>
                       <options>
                         <index key="Cage born">Cage born</index>
@@ -786,7 +785,6 @@
                       <description>yyy-mm-dd</description>
                       <disabled>FALSE</disabled>
                       <executes_submit_callback>FALSE</executes_submit_callback>
-                      <maxlength>20</maxlength>
                       <multiple>FALSE</multiple>
                       <required>FALSE</required>
                       <resizable>FALSE</resizable>
