@@ -158,5 +158,35 @@ function ajax_update_birth_nums_callback($form, $form_state) {
  */
 function islandora_livingresearchlab_add_birth_form_submit(array $form, array &$form_state) {
   dpm($form_state, 'form_state_posted');
-  drupal_set_message(t('Mouse 1234 created with Birth Record 111.'));
+
+  $birth_id = $form_state['values']['lrl_birth_id'];
+  $birth_cage_id = $form_state['values']['lrl_birth_cage_id'];
+  $mother_id = $form_state['values']['lrl_birth_mother'];
+  $father_id = $form_state['values']['lrl_birth_father'];
+  $weandate = $form_state['values']['lrl_birth_weandate'];
+  $dob = $form_state['values']['lrl_birth_dob'];
+  $setupdate = $form_state['values']['lrl_birth_setupdate'];
+  $children = $form_state['values']['lrl_birth_children']['id_fieldset'];
+  $litter = explode('-', $children['child1']);
+
+  foreach ($children as $child) {
+    dpm($child, 'children');
+    // Update Mice table to track Mice IDs.
+    try {
+      $query = db_insert('islandora_lrl_mice')
+        ->fields(array(
+          'mouse_id' => $child,
+          'litter_no' => $litter[2],
+          'shipment_no' => '0000',
+          'birth_id' => $birth_id,
+          'mother_id' => $mother_id,
+          'father_id' => $father_id))
+        ->execute();
+      drupal_set_message(t('Mouse ID !mid created with Birth Record ID !bid.', array('!mid' => $child, '!bid' => $birth_id)));
+    }
+    catch (PDOException $e) {
+      form_set_error("Failed to update Mice table.", $e->getMessage());
+    }
+
+  }
 }
