@@ -101,7 +101,6 @@ function islandora_livingresearchlab_add_birth_form(array $form, array &$form_st
     '#required' => TRUE,
     '#options' => array(0 => 'wild-type', 1 => 'transgenic'),
     '#default_value' => 0,
-
   );
   $form['lrl_birth_children']['nums'] = array(
     '#type' => 'select',
@@ -113,9 +112,6 @@ function islandora_livingresearchlab_add_birth_form(array $form, array &$form_st
     '#ajax' => array(
       'callback' => 'ajax_update_birth_nums_callback',
       'wrapper' => 'children-id-fieldset-wrapper',
-      'method' => 'replaceWith',
-      'effect' => 'slide',
-      'progress' => array('type' => 'none'),
     ),
   );
 
@@ -141,7 +137,6 @@ function islandora_livingresearchlab_add_birth_form(array $form, array &$form_st
       '#default_value' => $child_id,
     );
   }
-
   return $form;
 }
 
@@ -152,7 +147,6 @@ function islandora_livingresearchlab_add_birth_form(array $form, array &$form_st
  * Selects and returns the fieldset with the children information in it.
  */
 function ajax_update_birth_nums_callback($form, $form_state) {
-  $form_state['rebuild'] = TRUE;
   return $form['lrl_birth_children']['id_fieldset'];
 }
 
@@ -163,6 +157,6 @@ function ajax_update_birth_nums_callback($form, $form_state) {
  * @todo: complete islandora_livingresearchlab_add_birth_form_submit().
  */
 function islandora_livingresearchlab_add_birth_form_submit(array $form, array &$form_state) {
-  //dpm($form_state, 'form_state_posted');
+  dpm($form_state, 'form_state_posted');
   drupal_set_message(t('Mouse 1234 created with Birth Record 111.'));
 }
