@@ -2,7 +2,7 @@
 
 <!--
 Diego Pino ... DwC class Any to OAI_DC March 2014.
-This XSL StyleSheet only processes the first ocurrence of every class
+This XSL StyleSheet only processes the first occurrence of every class
 -->
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/"

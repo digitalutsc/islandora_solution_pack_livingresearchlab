@@ -83,32 +83,32 @@ function islandora_livingresearchlab_theme($existing, $type, $theme, $path) {
       'variables' => array('object' => NULL),
     ),
     'islandora_lrl_datasession' => array(
-      'template' => 'theme/islandora-ltl-datasession',
+      'template' => 'theme/islandora-lrl-datasession',
       'pattern' => 'islandora_ltl_datasession__',
       'variables' => array('object' => NULL),
     ),
     'islandora_lrl_experiment' => array(
-      'template' => 'theme/islandora-ltl-experiment',
+      'template' => 'theme/islandora-lrl-experiment',
       'pattern' => 'islandora_lrl_experiment__',
       'variables' => array('object' => NULL),
     ),
     'islandora_lrl_mouse' => array(
-      'template' => 'theme/islandora-ltl-mouse',
+      'template' => 'theme/islandora-lrl-mouse',
       'pattern' => 'islandora_lrl_mouse__',
       'variables' => array('object' => NULL),
     ),
     'islandora_lrl_birth' => array(
-      'template' => 'theme/islandora-ltl-birth',
+      'template' => 'theme/islandora-lrl-birth',
       'pattern' => 'islandora_lrl_birth__',
       'variables' => array('object' => NULL),
     ),
     'islandora_lrl_protocol' => array(
-      'template' => 'theme/islandora-ltl-protocol',
+      'template' => 'theme/islandora-lrl-protocol',
       'pattern' => 'islandora_lrl_protocol__',
       'variables' => array('object' => NULL),
     ),
     'islandora_lrl_publication' => array(
-      'template' => 'theme/islandora-ltl-publication',
+      'template' => 'theme/islandora-lrl-publication',
       'pattern' => 'islandora_lrl_publication__',
       'variables' => array('object' => NULL),
     ),
@@ -145,6 +145,7 @@ function islandora_livingresearchlab_islandora_livingresearchlab_mouseCModel_isl
 
 /**
  * Implements hook_islandora_xml_form_builder_forms().
+ *
  * This hook makes a predefined ingest form for ingest.
  */
 function islandora_livingresearchlab_islandora_xml_form_builder_forms() {
@@ -171,27 +172,29 @@ function islandora_livingresearchlab_islandora_xml_form_builder_forms() {
 }
 
 
-function islandora_livingresearchlab_xml_form_builder_get_self_transforms() {
+/* Causing errors when ingesting
+ function islandora_livingresearchlab_xml_form_builder_get_self_transforms() {
+  $module_path = drupal_get_path('module', 'islandora_livingresearchlab');
+  return array(
+    'cleanup_mods.xsl' => "$module_path/xsl/cleanup_mods.xsl",
+  );
+}*/
+
+
+function islandora_livingresearchlab_xml_form_builder_get_transforms() {
   $module_path = drupal_get_path('module', 'islandora_livingresearchlab');
   return array(
     'dwcclassoccurrence2dc.xsl' => "$module_path/xsl/dwcclassoccurrence2dc.xsl",
-    'mods_to_dc.xsl' => "$module_path/xsl/mods_to_dc.xsl",
-    'cleanup_mods.xsl' => "$module_path/xsl/cleanup_mods.xsl"
   );
 }
 
-
 /**
- * Implements hook_islandora_content_model_forms_form_associations().
- * This hook associated our form with our content model.  Any time we try to ingest
- * an object with the islandora:livingresearchlabCModel content model, we will see this form
- * allowing us to supply relevant metadata.
+ * Implements hook_islandora_xml_form_builder_form_associations().
  */
-function islandora_livingresearchlab_islandora_content_model_forms_form_associations() {
+function islandora_livingresearchlab_islandora_xml_form_builder_form_associations() {
   $module_path = drupal_get_path('module', 'islandora_livingresearchlab');
 
   return array(
-
     'islandora_livingresearchlab_datasession_dwc_form' => array(
       'content_model' => 'islandora:livingresearchlab_datasessionCModel',
       'form_name' => 'DSU Data Session DwC',
@@ -199,7 +202,7 @@ function islandora_livingresearchlab_islandora_content_model_forms_form_associat
       'title_field' => array(
         'dwc_fields_datasession',
         'occurrence1',
-        'occurrenceid1'
+        'occurrenceid1',
       ),
       'transform' => 'dwcclassoccurrence2dc.xsl',
       'self_transform' => 'cleanup_mods.xsl',
@@ -212,7 +215,7 @@ function islandora_livingresearchlab_islandora_content_model_forms_form_associat
       'title_field' => array(
         'dwc_fields_experiment',
         'occurrence',
-        'occurrenceid'
+        'occurrenceid',
       ),
       'transform' => 'dwcclassoccurrence2dc.xsl',
       'self_transform' => 'cleanup_mods.xsl',
@@ -223,7 +226,7 @@ function islandora_livingresearchlab_islandora_content_model_forms_form_associat
       'form_name' => 'DSU Mouse DwC',
       'dsid' => 'DWC',
       'title_field' => array('dwc_fields_mouse', 'occurrence1', 'occurrenceid'),
-      'transform' => 'dwcclassoccurrence2dc.xsl',
+      'transform' => 'No Transform',
       'self_transform' => 'cleanup_mods.xsl',
       'template' => FALSE,
     ),
@@ -234,7 +237,7 @@ function islandora_livingresearchlab_islandora_content_model_forms_form_associat
       'title_field' => array(
         'dwc_fields_protocol',
         'occurrence',
-        'occurrenceid'
+        'occurrenceid',
       ),
       'transform' => 'dwcclassoccurrence2dc.xsl',
       'self_transform' => 'cleanup_mods.xsl',
@@ -255,6 +258,7 @@ function islandora_livingresearchlab_islandora_content_model_forms_form_associat
 
 /**
  * Implements hook_islandora_required_objects().
+ *
  * This hook ingests a very basic content model.  It is run when the module is
  * first installed.
  */
@@ -438,3 +442,23 @@ function islandora_livingresearchlab_islandora_required_objects(IslandoraTuque $
     ),
   );
 }
+
+/**
+ * Implements hook_islandora_CMODEL_PID_derivative().
+ */
+function islandora_livingresearchlab_islandora_livingresearchlab_mouseCModel_islandora_derivative() {
+  $derivatives = array();
+
+  $derivatives[] = array(
+    'source_dsid' => NULL,
+    'destination_dsid' => 'TN',
+    'weight' => '0',
+    'function' => array(
+      'islandora_livingresearchlab_create_thumbnail',
+    ),
+    'file' => drupal_get_path('module', 'islandora_livingresearchlab') . '/includes/derivatives.inc',
+  );
+
+  return $derivatives;
+}
+

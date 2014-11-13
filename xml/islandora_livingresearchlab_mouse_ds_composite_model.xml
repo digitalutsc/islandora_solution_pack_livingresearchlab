@@ -7,5 +7,10 @@
     </dsTypeModel>
     <dsTypeModel ID="DWC" >
         <form FORMAT_URI="http://rs.tdwg.org/dwc/dwcrecord/" MIME="text/xml"></form>
-    </dsTypeModel>  
+    </dsTypeModel>
+    <dsTypeModel ID="TN" optional="false">
+        <form MIME="image/jpg"/>
+        <form MIME="image/jpeg"/>
+        <form MIME="image/png"/>
+    </dsTypeModel>
 </dsCompositeModel>

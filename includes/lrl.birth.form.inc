@@ -187,6 +187,12 @@ function islandora_livingresearchlab_add_birth_form_submit(array $form, array &$
     catch (PDOException $e) {
       form_set_error("Failed to update Mice table.", $e->getMessage());
     }
+    try {
+      // Create Mouse Object in Fedora.
+    }
+    catch (PDOException $e) {
+      form_set_error("Failed to create Mouse Object(s) in Fedora.", $e->getMessage());
+    }
 
   }
 }
