@@ -1,29 +1,23 @@
-<?php
-/**
- * @file
- * This is the template file for the livingresearchlab object page.
- *
- * Here we build an html page using the variables passed in by
- * the islandora_livingresearchlab_preprocess_islandora_livingresearchlab
- * function.  Elements such as labels and buttons can be added here
- */
-$islandora_content = $islandora_object['DWC']->content;
-//CONTENT IS THE DATASTREAM
-
-$path = drupal_get_path('module', 'islandora_livingresearchlab');
-drupal_add_css("$path/css/islandora_livingresearchlab.css");
-drupal_add_js("$path/js/islandora_livingresearchlab.js");
-?>
-
-<div class="islandora-livingresearchlab-object islandora">
-  <button id="livingresearchlab_image">Living Research!</button>
-  <div class ="livingresearchlab_thumb">
-    <?php print $variables['islandora_thumbnail_img'] ?>
-  </div>
-  <div class="islandora-basic-image-content-wrapper clearfix">
-    <?php if (isset($islandora_content)): ?>
-      <div class="islandora-livingresearchlab-content">
-        <?php print $islandora_content; ?>
+<div class="islandora-livingresearchlabs-object islandora">
+  <div class="islandora-livingresearchlabs-content-wrapper clearfix">
+    <?php if (isset($islandora_thumbnail_img)): ?>
+      <div class="islandora-livingresearchlabs-object-content">
+        <?php print $islandora_thumbnail_img; ?>
       </div>
     <?php endif; ?>
   </div>
+  <div class="islandora-livingresearchlabs-object-metadata">
+    <?php print $description; ?>
+    <?php if ($parent_collections): ?>
+      <div>
+        <h2><?php print t('In collections'); ?></h2>
+        <ul>
+          <?php foreach ($parent_collections as $collection): ?>
+            <li><?php print l($collection->label, "islandora/object/{$collection->id}"); ?></li>
+          <?php endforeach; ?>
+        </ul>
+      </div>
+    <?php endif; ?>
+    <?php print $metadata; ?>
+  </div>
+</div>

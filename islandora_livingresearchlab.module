@@ -127,17 +127,20 @@ function islandora_livingresearchlab_islandora_livingresearchlab_islandora_view_
 
 
 function islandora_livingresearchlab_islandora_livingresearchlab_datasessionCModel_islandora_view_object($object) {
-  $output = theme('islandora_lrl_datasession', array('object' => $object));
+  //$output = theme('islandora_lrl_datasession', array('object' => $object));
+  $output = theme('islandora_livingresearchlab', array('object' => $object));
   return array('' => $output);
 }
 
 function islandora_livingresearchlab_islandora_livingresearchlab_experimentCModel_islandora_view_object($object) {
-  $output = theme('islandora_lrl_experiment', array('object' => $object));
+  //$output = theme('islandora_lrl_experiment', array('object' => $object));
+  $output = theme('islandora_livingresearchlab', array('object' => $object));
   return array('' => $output);
 }
 
-function islandora_livingresearchlab_islandora_livingresearchlab_mouseCModel_islandora_view_object($object) {
-  $output = theme('islandora_lrl_mouse', array('object' => $object));
+function islandora_livingresearchlab_islandora_livingresearchlab_mouseCModel_islandora_view_object($object, $page_number, $page_size) {
+  //$output = theme('islandora_lrl_mouse', array('object' => $object));
+  $output = theme('islandora_livingresearchlab', array('object' => $object));
   return array('' => $output);
 }
 
