@@ -208,7 +208,7 @@
                   <multiple>FALSE</multiple>
                   <options>
                     <NotYetDefined>Not yet defined</NotYetDefined>
-                    <Experiment>Experiment</Experiment>
+                    <Experimental>Experimental</Experimental>
                     <Breeding>Breeding</Breeding>
                     <index key=""/>
                   </options>
