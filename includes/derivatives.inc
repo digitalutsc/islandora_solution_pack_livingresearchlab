@@ -30,6 +30,11 @@ function islandora_livingresearchlab_create_tn_experiment(AbstractObject $object
   }
 }
 
+function islandora_livingresearchlab_create_tn_datasession(AbstractObject $object, $force = FALSE) {
+  if (!isset($object['TN']) || $force === TRUE) {
+    return islandora_livingresearchlab_add_datastream($object, 'TN', drupal_get_path('module', 'islandora_livingresearchlab') . '/images/datasessions.png');
+  }
+}
 
 /**
  * Adds the given file as a datastream to the given object.

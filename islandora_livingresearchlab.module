@@ -254,14 +254,6 @@ function islandora_livingresearchlab_islandora_xml_form_builder_form_association
   );
 }
 
-/**
- * Implements hook_form_xml_form_builder_ingest_form_alter().
- */
-function islandora_livingresearchlab_form_xml_form_builder_ingest_form_alter(&$form, &$form_state, $form_id) {
-  dpm($form_id, 'form_id');
-  dpm($form, 'form');
-  dpm($form_state, 'form_state');
-}
 
 /**
  * Implements hook_islandora_required_objects().
@@ -479,6 +471,26 @@ function islandora_livingresearchlab_islandora_livingresearchlab_experimentCMode
     'weight' => '0',
     'function' => array(
       'islandora_livingresearchlab_create_tn_experiment',
+    ),
+    'file' => drupal_get_path('module', 'islandora_livingresearchlab') . '/includes/derivatives.inc',
+  );
+
+  return $derivatives;
+}
+
+
+/**
+ * Implements hook_islandora_CMODEL_PID_derivative().
+ */
+function islandora_livingresearchlab_islandora_livingresearchlab_datasessionCModel_islandora_derivative() {
+  $derivatives = array();
+
+  $derivatives[] = array(
+    'source_dsid' => NULL,
+    'destination_dsid' => 'TN',
+    'weight' => '0',
+    'function' => array(
+      'islandora_livingresearchlab_create_tn_datasession',
     ),
     'file' => drupal_get_path('module', 'islandora_livingresearchlab') . '/includes/derivatives.inc',
   );
