@@ -215,7 +215,7 @@ function islandora_livingresearchlab_islandora_xml_form_builder_form_association
       'content_model' => 'islandora:livingresearchlab_experimentCModel',
       'form_name' => 'DSU Experiment DwC',
       'dsid' => 'DWC',
-      'title_field' => array('dwc_fields_experiment', 'occurrence', 'occurrenceid'),
+      'title_field' => array('dwc_fields_experiment', 'occurrence1', 'occurrenceid'),
       'transform' => 'No Transform',
       'self_transform' => 'cleanup_mods.xsl',
       'template' => FALSE,
@@ -254,6 +254,14 @@ function islandora_livingresearchlab_islandora_xml_form_builder_form_association
   );
 }
 
+/**
+ * Implements hook_form_xml_form_builder_ingest_form_alter().
+ */
+function islandora_livingresearchlab_form_xml_form_builder_ingest_form_alter(&$form, &$form_state, $form_id) {
+  dpm($form_id, 'form_id');
+  dpm($form, 'form');
+  dpm($form_state, 'form_state');
+}
 
 /**
  * Implements hook_islandora_required_objects().
