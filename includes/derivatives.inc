@@ -18,9 +18,15 @@
  *
  * @see hook_islandora_derivative()
  */
-function islandora_livingresearchlab_create_thumbnail(AbstractObject $object, $force = FALSE) {
+function islandora_livingresearchlab_create_tn_mouse(AbstractObject $object, $force = FALSE) {
   if (!isset($object['TN']) || $force === TRUE) {
     return islandora_livingresearchlab_add_datastream($object, 'TN', drupal_get_path('module', 'islandora_livingresearchlab') . '/images/mouse.png');
+  }
+}
+
+function islandora_livingresearchlab_create_tn_experiment(AbstractObject $object, $force = FALSE) {
+  if (!isset($object['TN']) || $force === TRUE) {
+    return islandora_livingresearchlab_add_datastream($object, 'TN', drupal_get_path('module', 'islandora_livingresearchlab') . '/images/experiments.png');
   }
 }
 

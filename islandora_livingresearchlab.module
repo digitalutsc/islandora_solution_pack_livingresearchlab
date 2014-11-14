@@ -175,7 +175,7 @@ function islandora_livingresearchlab_islandora_xml_form_builder_forms() {
 }
 
 
-/* Causing errors when ingesting
+/* Causing errors when ingesting.
  function islandora_livingresearchlab_xml_form_builder_get_self_transforms() {
   $module_path = drupal_get_path('module', 'islandora_livingresearchlab');
   return array(
@@ -215,12 +215,8 @@ function islandora_livingresearchlab_islandora_xml_form_builder_form_association
       'content_model' => 'islandora:livingresearchlab_experimentCModel',
       'form_name' => 'DSU Experiment DwC',
       'dsid' => 'DWC',
-      'title_field' => array(
-        'dwc_fields_experiment',
-        'occurrence',
-        'occurrenceid',
-      ),
-      'transform' => 'dwcclassoccurrence2dc.xsl',
+      'title_field' => array('dwc_fields_experiment', 'occurrence', 'occurrenceid'),
+      'transform' => 'No Transform',
       'self_transform' => 'cleanup_mods.xsl',
       'template' => FALSE,
     ),
@@ -266,11 +262,9 @@ function islandora_livingresearchlab_islandora_xml_form_builder_form_association
  * first installed.
  */
 function islandora_livingresearchlab_islandora_required_objects(IslandoraTuque $connection) {
-
   $module_path = drupal_get_path('module', 'islandora_livingresearchlab');
 
-
-  /** Data Session CModel */
+  // Data Session CModel.
   $livingresearchlab_datasession_content_model = $connection->repository->constructObject('islandora:livingresearchlab_datasessionCModel');
   $livingresearchlab_datasession_content_model->owner = 'fedoraAdmin';
   $livingresearchlab_datasession_content_model->label = 'Islandora Living Research Lab Data Session Content Model';
@@ -282,7 +276,7 @@ function islandora_livingresearchlab_islandora_required_objects(IslandoraTuque $
   $datastream->setContentFromFile("$module_path/xml/islandora_livingresearchlab_datasession_ds_composite_model.xml", FALSE);
   $livingresearchlab_datasession_content_model->ingestDatastream($datastream);
 
-  /** Experiment CModel */
+  // Experiment CModel.
   $livingresearchlab_experiment_content_model = $connection->repository->constructObject('islandora:livingresearchlab_experimentCModel');
   $livingresearchlab_experiment_content_model->owner = 'fedoraAdmin';
   $livingresearchlab_experiment_content_model->label = 'Islandora Living Research Lab Experiment Content Model';
@@ -294,7 +288,7 @@ function islandora_livingresearchlab_islandora_required_objects(IslandoraTuque $
   $datastream->setContentFromFile("$module_path/xml/islandora_livingresearchlab_experiment_ds_composite_model.xml", FALSE);
   $livingresearchlab_experiment_content_model->ingestDatastream($datastream);
 
-  /** Mouse CModel */
+  // Mouse CModel.
   $livingresearchlab_mouse_content_model = $connection->repository->constructObject('islandora:livingresearchlab_mouseCModel');
   $livingresearchlab_mouse_content_model->owner = 'fedoraAdmin';
   $livingresearchlab_mouse_content_model->label = 'Islandora Living Research Lab Mouse Content Model';
@@ -457,7 +451,7 @@ function islandora_livingresearchlab_islandora_livingresearchlab_mouseCModel_isl
     'destination_dsid' => 'TN',
     'weight' => '0',
     'function' => array(
-      'islandora_livingresearchlab_create_thumbnail',
+      'islandora_livingresearchlab_create_tn_mouse',
     ),
     'file' => drupal_get_path('module', 'islandora_livingresearchlab') . '/includes/derivatives.inc',
   );
@@ -465,3 +459,21 @@ function islandora_livingresearchlab_islandora_livingresearchlab_mouseCModel_isl
   return $derivatives;
 }
 
+/**
+ * Implements hook_islandora_CMODEL_PID_derivative().
+ */
+function islandora_livingresearchlab_islandora_livingresearchlab_experimentCModel_islandora_derivative() {
+  $derivatives = array();
+
+  $derivatives[] = array(
+    'source_dsid' => NULL,
+    'destination_dsid' => 'TN',
+    'weight' => '0',
+    'function' => array(
+      'islandora_livingresearchlab_create_tn_experiment',
+    ),
+    'file' => drupal_get_path('module', 'islandora_livingresearchlab') . '/includes/derivatives.inc',
+  );
+
+  return $derivatives;
+}
