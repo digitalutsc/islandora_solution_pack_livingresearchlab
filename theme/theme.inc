@@ -40,7 +40,7 @@ function islandora_livingresearchlab_preprocess_islandora_livingresearchlab(arra
     $params = array(
       'title' => $object->label,
       'path' => $thumbnail_size_url,
-      'width' => '30%',
+      'width' => '20%',
     );
     $variables['islandora_thumbnail_img'] = theme('image', $params);
   }
