@@ -53,13 +53,13 @@ function islandora_livingresearchlab_add_birth_form(array $form, array &$form_st
   $form['lrl_birth_mother'] = array(
     '#type' => 'textfield',
     '#title' => t('Mother'),
-    '#autocomplete_path' => 'islandora/lrl_object/autocomplete/mother',
+    '#autocomplete_path' => 'islandora/lrl_object/autocomplete/mouse',
     '#size' => 25,
   );
   $form['lrl_birth_father'] = array(
     '#type' => 'textfield',
     '#title' => t('Father'),
-    '#autocomplete_path' => 'islandora/lrl_object/autocomplete/father',
+    '#autocomplete_path' => 'islandora/lrl_object/autocomplete/mouse',
     '#size' => 25,
   );
   $form['lrl_birth_weandate'] = array(

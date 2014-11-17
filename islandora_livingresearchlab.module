@@ -35,11 +35,11 @@ function islandora_livingresearchlab_menu() {
     'file' => 'includes/lrl.birth.form.inc',
     'type' => MENU_NORMAL_ITEM,
   );
-  $items['islandora/lrl_object/autocomplete/mother'] = array(
+  $items['islandora/lrl_object/autocomplete/%'] = array(
     'title' => 'Autocomplete callback',
     'description' => 'Autocomplete a Mouse content model PID.',
     'page callback' => 'islandora_livingresearchlab_autocomplete',
-    'page arguments' => array(4),
+    'page arguments' => array(3, 4),
     'access arguments' => array('administer living research lab content'),
     'file' => 'includes/lrl.autocomplete.inc',
     'type' => MENU_CALLBACK,
