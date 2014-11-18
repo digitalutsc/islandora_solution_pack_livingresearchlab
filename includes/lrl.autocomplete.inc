@@ -53,7 +53,8 @@ function islandora_livingresearchlab_autocomplete($type, $string = '') {
   $list = array();
   foreach ($json['response']['docs'] as $choice) {
     if (isset($choice[$mappings[$type]['title']])) {
-      $list[$choice[$mappings[$type]['title']][0]] = $choice[$mappings[$type]['title']][0] . ' (' . $choice['PID'] . ')';
+      $record = $choice[$mappings[$type]['title']][0] . ' (' . $choice['PID'] . ')';
+      $list[$record] = $record;
     }
   }
   drupal_json_output($list);

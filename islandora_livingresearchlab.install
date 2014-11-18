@@ -58,14 +58,14 @@ function  islandora_livingresearchlab_schema() {
       'mother_id' => array(
         'description' => 'Mouse Identifier for the mother.',
         'type' => 'varchar',
-        'length' => 20,
+        'length' => 50,
         'not null' => TRUE,
         'default' => '',
       ),
       'father_id' => array(
         'description' => 'Mouse Identifier for the father.',
         'type' => 'varchar',
-        'length' => 20,
+        'length' => 50,
         'not null' => TRUE,
         'default' => '',
       ),

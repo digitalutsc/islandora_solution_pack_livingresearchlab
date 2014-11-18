@@ -157,7 +157,8 @@ function ajax_update_birth_nums_callback($form, $form_state) {
  * @todo: complete islandora_livingresearchlab_add_birth_form_submit().
  */
 function islandora_livingresearchlab_add_birth_form_submit(array $form, array &$form_state) {
-  dpm($form_state, 'form_state_posted');
+  module_load_include('inc', 'islandora', 'includes/tuque');
+  module_load_include('inc', 'islandora', 'includes/tuque_wrapper');
 
   $birth_id = $form_state['values']['lrl_birth_id'];
   $birth_cage_id = $form_state['values']['lrl_birth_cage_id'];
@@ -170,7 +171,6 @@ function islandora_livingresearchlab_add_birth_form_submit(array $form, array &$
   $litter = explode('-', $children['child1']);
 
   foreach ($children as $child) {
-    dpm($child, 'children');
     // Update Mice table to track Mice IDs.
     try {
       $query = db_insert('islandora_lrl_mice')
@@ -188,7 +188,75 @@ function islandora_livingresearchlab_add_birth_form_submit(array $form, array &$
       form_set_error("Failed to update Mice table.", $e->getMessage());
     }
     try {
-      // Create Mouse Object in Fedora.
+      // Construct DWC XML content.
+      $dwr = new SimpleXMLElement('<dwr:DarwinRecordSet xmlns:dwr="http://rs.tdwg.org/dwc/dwcrecord/"
+                                    xmlns="http://rs.tdwg.org/dwc/dwcrecord/"
+                                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                                    xmlns:dwc="http://rs.tdwg.org/dwc/terms/"
+                                    xmlns:dcterms="http://purl.org/dc/terms/"></dwr:DarwinRecordSet>');
+      $occurrence = $dwr->addChild('dwc:Occurrence');
+      $occurrence_id = $occurrence->addChild('dwc:occurrenceID', $child);
+      $basis_record = $occurrence->addChild('dwc:basisOfRecord', 'LivingSpecimen');
+      $sex = $occurrence->addChild('dwc:sex', 'NotYetDefined');
+
+      $taxon = $dwr->addChild('dwc:Taxon');
+      $taxon_id = $taxon->addChild('dwc:taxonID', 'NotYetDefined');
+      $taxon_remarks = $taxon->addChild('dwc:taxonRemarks', 'mouseType');
+
+      $location = $dwr->addChild('dcterms:Location');
+      $loc_id = $location->addChild('dwc:locationID', $birth_cage_id);
+      $locality = $location->addChild('dwc:locality', 'Cage born');
+      $location_remarks = $location->addChild('dwc:locationRemarks', date('Y-m-d', strtotime($dob)));
+
+      $event = $dwr->addChild('dwc:Event');
+      $event_id = $event->addChild('dwc:eventID', $birth_id);
+      $event_date = $event->addChild('dwc:eventDate', date('Y-m-d', strtotime($dob)));
+      $event_remarks = $event->addChild('dwc:eventRemarks', 'dateOfBirth');
+
+      $rels = $dwr->addChild('dwc:ResourceRelationship');
+      $rels_id = $rels->addChild('dwc:relatedResourceID', $mother_id);
+      $rels_resource = $rels->addChild('dwc:relationshipOfResource', 'hasMother');
+
+      $rels = $dwr->addChild('dwc:ResourceRelationship');
+      $rels_id = $rels->addChild('dwc:relatedResourceID', $father_id);
+      $rels_resource = $rels->addChild('dwc:relationshipOfResource', 'hasFather');
+
+      $event = $dwr->addChild('dwc:Event');
+      $event_date = $event->addChild('dwc:eventDate', date('Y-m-d', strtotime($weandate)));
+      $event_remarks = $event->addChild('dwc:eventRemarks', 'weanDate');
+
+      $event = $dwr->addChild('dwc:Event');
+      $event_date = $event->addChild('dwc:eventDate', date('Y-m-d', strtotime($setupdate)));
+      $event_remarks = $event->addChild('dwc:eventRemarks', 'setupDate');
+
+      $dom = new DOMDocument('1.0', 'UTF-8');
+      $dom->preserveWhiteSpace = false;
+      $dom->formatOutput = true;
+      $dom->loadXML($dwr->asXML());
+
+      $motherid_part = explode('(', $mother_id);
+      $mother_pid = substr($motherid_part[1], 0, strlen($motherid_part[1]) - 1);
+      $fatherid_part = explode('(', $father_id);
+      $father_pid = substr($fatherid_part[1], 0, strlen($$fatherid_part[1]) - 1);
+
+      $connection = islandora_get_tuque_connection();
+      $repository = $connection->repository;
+      // @todo: find out if there is variable to hold the namespace.
+      $namespace = 'islandora';
+
+      $object = $repository->constructObject($namespace);
+      $object->label = $child;
+      $object->models = array('islandora:livingresearchlab_mouseCModel');
+      $object->relationships->add(FEDORA_RELS_EXT_URI, 'isMemberOfCollection', 'islandora:mice_collection');
+      $object->relationships->add(FEDORA_RELS_EXT_URI, 'hasMother', $mother_pid);
+      $object->relationships->add(FEDORA_RELS_EXT_URI, 'hasFather', $father_pid);
+      $dsid = 'DWC';
+      $ds = $object->constructDatastream($dsid, 'M');
+      $ds->label = $dsid;
+      $ds->mimetype = 'text/xml';
+      $ds->setContentFromString($dom->saveXML());
+      $object->ingestDatastream($ds);
+      $repository->ingestObject($object);
     }
     catch (PDOException $e) {
       form_set_error("Failed to create Mouse Object(s) in Fedora.", $e->getMessage());
