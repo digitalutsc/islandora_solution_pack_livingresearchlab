@@ -496,7 +496,7 @@
                   </element>
                   <element name="resourcetype">
                     <properties>
-                      <type>select_or_other</type>
+                      <type>select</type>
                       <access>TRUE</access>
                       <collapsed>FALSE</collapsed>
                       <collapsible>FALSE</collapsible>
@@ -508,6 +508,7 @@
                         <index key="patchclamprecording-abf">patch clamp recording (abf)</index>
                         <index key="video-avi">video (avi)</index>
                         <index key="confocalimage-tiff">confocal image (tiff)</index>
+                        <other>Other</other>
                       </options>
                       <required>FALSE</required>
                       <resizable>FALSE</resizable>
