@@ -301,32 +301,6 @@ function islandora_livingresearchlab_islandora_required_objects(IslandoraTuque $
   $livingresearchlab_mouse_content_model->ingestDatastream($datastream);
 
 
-// // * Protocol CModel
-//  $livingresearchlab_protocol_content_model = $connection->repository->constructObject('islandora:livingresearchlab_protocolCModel');
-//  $livingresearchlab_protocol_content_model->owner = 'fedoraAdmin';
-//  $livingresearchlab_protocol_content_model->label = 'Islandora Living Research Lab Protocol Content Model';
-//  $livingresearchlab_protocol_content_model->models = 'fedora-system:ContentModel-3.0';
-
-//   $datastream =$livingresearchlab_protocol_content_model->constructDatastream('DS-COMPOSITE-MODEL', 'X');
-//   $datastream->label = 'DS-COMPOSITE-MODEL';
-//   $datastream->mimetype = 'text/xml';
-//   $datastream->setContentFromFile("$module_path/xml/islandora_livingresearchlab_protocol_ds_composite_model.xml", FALSE);
-//  $livingresearchlab_protocol_content_model->ingestDatastream($datastream);
-
-
-// // * Publication CModel  
-//  $livingresearchlab_publication_content_model = $connection->repository->constructObject('islandora:livingresearchlab_publicationCModel');
-//  $livingresearchlab_publication_content_model->owner = 'fedoraAdmin';
-//  $livingresearchlab_publication_content_model->label = 'Islandora Living Research Lab Publication Content Model';
-//  $livingresearchlab_publication_content_model->models = 'fedora-system:ContentModel-3.0';
-
-//   $datastream =$livingresearchlab_publication_content_model->constructDatastream('DS-COMPOSITE-MODEL', 'X');
-//   $datastream->label = 'DS-COMPOSITE-MODEL';
-//   $datastream->mimetype = 'text/xml';
-//   $datastream->setContentFromFile("$module_path/xml/islandora_livingresearchlab_publication_ds_composite_model.xml", FALSE);
-//  $livingresearchlab_publication_content_model->ingestDatastream($datastream);
-
-
   /** DATASESSION root collection */
   $datasessions_collection = $connection->repository->constructObject('islandora:datasessions_collection');
   $datasessions_collection->owner = 'fedoraAdmin';
