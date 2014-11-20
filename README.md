@@ -21,7 +21,7 @@ Install as usual, see [this](https://drupal.org/documentation/install/modules-th
 
 ## Configuration
 
-Select a viewer in Administration » Islandora » Living Research Lab Solution Pack (admin/islandora/solution_pack_config/livingresearchlab).
+Configure Mice ID Schema information in Administration » Islandora » Living Research Lab Solution Pack (admin/islandora/solution_pack_config/livingresearchlab).
 
 ## Troubleshooting/Issues
 This is a beta test.  The module is not meant to be used in a production environment.
