@@ -30,7 +30,7 @@ function lrl_generate_mouse_id($s, $x, $is_litter = TRUE, $seq = '01') {
   if (strlen($seq) == 1) {
     $seq_padded = sprintf('%02s', $seq);
   }
-  elseif (strlen($seq) == 1) {
+  elseif (strlen($seq) == 2) {
     $seq_padded = $seq;
   }
   else {

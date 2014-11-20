@@ -188,60 +188,69 @@ function islandora_livingresearchlab_add_birth_form_submit(array $form, array &$
       form_set_error("Failed to update Mice table.", $e->getMessage());
     }
     try {
-      // Construct DWC XML content.
-      $dwr = new SimpleXMLElement('<dwr:DarwinRecordSet xmlns:dwr="http://rs.tdwg.org/dwc/dwcrecord/"
-                                    xmlns="http://rs.tdwg.org/dwc/dwcrecord/"
-                                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                                    xmlns:dwc="http://rs.tdwg.org/dwc/terms/"
-                                    xmlns:dcterms="http://purl.org/dc/terms/"></dwr:DarwinRecordSet>');
-      $occurrence = $dwr->addChild('dwc:Occurrence');
-      $occurrence_id = $occurrence->addChild('dwc:occurrenceID', $child);
-      $basis_record = $occurrence->addChild('dwc:basisOfRecord', 'LivingSpecimen');
-      $sex = $occurrence->addChild('dwc:sex', 'NotYetDefined');
 
-      $taxon = $dwr->addChild('dwc:Taxon');
-      $taxon_id = $taxon->addChild('dwc:taxonID', 'NotYetDefined');
-      $taxon_remarks = $taxon->addChild('dwc:taxonRemarks', 'mouseType');
+      $dwr_url = 'http://rs.tdwg.org/dwc/dwcrecord/';
+      $dwc_url = 'http://rs.tdwg.org/dwc/terms/';
+      $dcterms_url = 'http://purl.org/dc/terms/';
 
-      $location = $dwr->addChild('dcterms:Location');
-      $loc_id = $location->addChild('dwc:locationID', $birth_cage_id);
-      $locality = $location->addChild('dwc:locality', 'Cage born');
-      $location_remarks = $location->addChild('dwc:locationRemarks', date('Y-m-d', strtotime($dob)));
+      $dom = new DOMDocument('1.0', 'utf-8');
 
-      $event = $dwr->addChild('dwc:Event');
-      $event_id = $event->addChild('dwc:eventID', $birth_id);
-      $event_date = $event->addChild('dwc:eventDate', date('Y-m-d', strtotime($dob)));
-      $event_remarks = $event->addChild('dwc:eventRemarks', 'dateOfBirth');
+      $dwr = $dom->appendChild($dom->createElementNS($dwr_url, 'dwr:DarwinRecordSet'));
+      $dwr->setAttributeNS(
+        'http://www.w3.org/2001/XMLSchema-instance',
+        'xsi:schemaLocation',
+        'http://rs.tdwg.org/dwc/dwcrecord/  http://rs.tdwg.org/dwc/xsd/tdwg_dwc_classes.xsd'
+      );
+      $dwr->setAttributeNS('http://www.w3.org/2000/xmlns/', 'xmlns:dwr', $dwr_url);
+      $dwr->setAttributeNS('http://www.w3.org/2000/xmlns/', 'xmlns:dwc', $dwc_url);
+      $dwr->setAttributeNS('http://www.w3.org/2000/xmlns/', 'xmlns:dcterms', $dcterms_url);
 
-      $rels = $dwr->addChild('dwc:ResourceRelationship');
-      $rels_id = $rels->addChild('dwc:relatedResourceID', $mother_id);
-      $rels_resource = $rels->addChild('dwc:relationshipOfResource', 'hasMother');
+      $occurrence = $dwr->appendChild($dom->createElementNS($dwc_url, 'dwc:Occurrence'));
+      $occurrence_id = $occurrence->appendChild($dom->createElementNS($dwc_url, 'dwc:occurrenceID', $child));
+      $basis_record = $occurrence->appendChild($dom->createElementNS($dwc_url, 'dwc:basisOfRecord', 'LivingSpecimen'));
+      $sex = $occurrence->appendChild($dom->createElementNS($dwc_url, 'dwc:sex', 'NotYetDefined'));
 
-      $rels = $dwr->addChild('dwc:ResourceRelationship');
-      $rels_id = $rels->addChild('dwc:relatedResourceID', $father_id);
-      $rels_resource = $rels->addChild('dwc:relationshipOfResource', 'hasFather');
+      $taxon = $dwr->appendChild($dom->createElementNS($dwc_url, 'dwc:Taxon'));
+      $taxon_id = $taxon->appendChild($dom->createElementNS($dwc_url, 'dwc:taxonID', 'NotYetDefined'));
+      $taxon_remarks = $taxon->appendChild($dom->createElementNS($dwc_url, 'dwc:taxonRemarks', 'NotYetDefined'));
 
-      $event = $dwr->addChild('dwc:Event');
-      $event_date = $event->addChild('dwc:eventDate', date('Y-m-d', strtotime($weandate)));
-      $event_remarks = $event->addChild('dwc:eventRemarks', 'weanDate');
+      $location = $dwr->appendChild($dom->createElementNS($dcterms_url, 'dcterms:Location'));
+      $loc_id = $location->appendChild($dom->createElementNS($dwc_url, 'dwc:locationID', $birth_cage_id));
+      $locality = $location->appendChild($dom->createElementNS($dwc_url, 'dwc:locality', 'Cage born'));
+      $location_remarks = $location->appendChild($dom->createElementNS($dwc_url, 'dwc:locationRemarks', date('Y-m-d', strtotime($dob))));
 
-      $event = $dwr->addChild('dwc:Event');
-      $event_date = $event->addChild('dwc:eventDate', date('Y-m-d', strtotime($setupdate)));
-      $event_remarks = $event->addChild('dwc:eventRemarks', 'setupDate');
+      $event = $dwr->appendChild($dom->createElementNS($dwc_url, 'dwc:Event'));
+      $event_id = $event->appendChild($dom->createElementNS($dwc_url, 'dwc:eventID', $birth_id));
+      $event_date = $event->appendChild($dom->createElementNS($dwc_url, 'dwc:eventDate', date('Y-m-d', strtotime($dob))));
+      $event_remarks = $event->appendChild($dom->createElementNS($dwc_url, 'dwc:eventRemarks', 'dateOfBirth'));
 
-      $dom = new DOMDocument('1.0', 'UTF-8');
-      $dom->preserveWhiteSpace = false;
-      $dom->formatOutput = true;
-      $dom->loadXML($dwr->asXML());
+      $rels = $dwr->appendChild($dom->createElementNS($dwc_url, 'dwc:ResourceRelationship'));
+      $rels_id = $rels->appendChild($dom->createElementNS($dwc_url, 'dwc:relatedResourceID', $mother_id));
+      $rels_resource = $rels->appendChild($dom->createElementNS($dwc_url, 'dwc:relationshipOfResource', 'hasMother'));
+
+      $rels = $dwr->appendChild($dom->createElementNS($dwc_url, 'dwc:ResourceRelationship'));
+      $rels_id = $rels->appendChild($dom->createElementNS($dwc_url, 'dwc:relatedResourceID', $father_id));
+      $rels_resource = $rels->appendChild($dom->createElementNS($dwc_url, 'dwc:relationshipOfResource', 'hasFather'));
+
+      $event = $dwr->appendChild($dom->createElementNS($dwc_url, 'dwc:Event'));
+      $event_date = $event->appendChild($dom->createElementNS($dwc_url, 'dwc:eventDate', date('Y-m-d', strtotime($weandate))));
+      $event_remarks = $event->appendChild($dom->createElementNS($dwc_url, 'dwc:eventRemarks', 'weanDate'));
+
+      $event = $dwr->appendChild($dom->createElementNS($dwc_url, 'dwc:Event'));
+      $event_date = $event->appendChild($dom->createElementNS($dwc_url, 'dwc:eventDate', date('Y-m-d', strtotime($setupdate))));
+      $event_remarks = $event->appendChild($dom->createElementNS($dwc_url, 'dwc:eventRemarks', 'setupDate'));
+
+      $dom->preserveWhiteSpace = FALSE;
+      $dom->formatOutput = TRUE;
 
       $motherid_part = explode('(', $mother_id);
       $mother_pid = substr($motherid_part[1], 0, strlen($motherid_part[1]) - 1);
       $fatherid_part = explode('(', $father_id);
-      $father_pid = substr($fatherid_part[1], 0, strlen($$fatherid_part[1]) - 1);
+      $father_pid = substr($fatherid_part[1], 0, strlen($fatherid_part[1]) - 1);
 
       $connection = islandora_get_tuque_connection();
       $repository = $connection->repository;
-      // @todo: find out if there is variable to hold the namespace.
+      // @todo: find out if there is a variable to hold the namespace.
       $namespace = 'islandora';
 
       $object = $repository->constructObject($namespace);

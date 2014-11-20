@@ -471,3 +471,18 @@ function islandora_livingresearchlab_islandora_livingresearchlab_datasessionCMod
 
   return $derivatives;
 }
+
+
+function islandora_livingresearchlab_form_xml_form_builder_ingest_form_alter(&$form, &$form_state, $form_id) {
+  module_load_include('inc', 'islandora_livingresearchlab', 'includes/utilities');
+
+  //@todo: Need add a small form for Mice ID schema information.
+  $mouse_id = lrl_generate_mouse_id('0', '0', FALSE, 1);
+  if ($form_state['islandora']['step_storage']['xml_form_builder_metadata_step']['association']['id'] == 'islandora_livingresearchlab_mouse_dwc_form') {
+    $form_state['rebuild'] = TRUE;
+    $form['dwc_fields_mouse']['occurrence1']['occurrenceid']['#default_value'] = $mouse_id;
+    $form['dwc_fields_mouse']['birthFieldset']['ResourceRelationship1']['motherrelatedResourceid']['#autocomplete_path'] = 'islandora/lrl_object/autocomplete/mouse';
+    $form['dwc_fields_mouse']['birthFieldset']['ResourceRelationship2']['fatherrelatedResourceid']['#autocomplete_path'] = 'islandora/lrl_object/autocomplete/mouse';
+  }
+}
+
