@@ -33,6 +33,8 @@ function islandora_livingresearchlab_menu() {
     'page arguments' => array('islandora_livingresearchlab_add_birth_form'),
     'access arguments' => array('administer living research lab content'),
     'file' => 'includes/lrl.birth.form.inc',
+    'menu_name' => 'main-menu',
+    'weight' => 10,
     'type' => MENU_NORMAL_ITEM,
   );
   $items['islandora/lrl_object/autocomplete/%'] = array(
