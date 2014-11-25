@@ -20,10 +20,12 @@ function islandora_livingresearchlab_autocomplete($type, $string = '') {
     'mouse' => array(
       'cmodel' => 'islandora:livingresearchlab_mouseCModel',
       'title' => 'dc.title',
+      'collection' => 'islandora:mice_collection',
     ),
     'experiment' => array(
       'cmodel' => 'islandora:livingresearchlab_experimentCModel',
       'title' => 'dc.title',
+      'collection' => 'islandora:experiments_collection',
     ),
     'protocol' => array(
       'cmodel' => 'islandora:sp_pdf',

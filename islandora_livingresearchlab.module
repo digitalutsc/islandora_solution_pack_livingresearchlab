@@ -475,5 +475,13 @@ function islandora_livingresearchlab_form_xml_form_builder_ingest_form_alter(&$f
     $form_state['rebuild'] = TRUE;
     $form['dwc_fields_experiment']['ResourceRelationship']['#autocomplete_path'] = 'islandora/lrl_object/autocomplete/protocol';
   }
+
+  if ($form_state['islandora']['step_storage']['xml_form_builder_metadata_step']['association']['id'] == 'islandora_livingresearchlab_datasession_dwc_form') {
+    $form_state['rebuild'] = TRUE;
+    $form['dwc_fields_datasession']['ResourceRelationship']['#autocomplete_path'] = 'islandora/lrl_object/autocomplete/experiment';
+    //$form['dwc_fields_datasession']['datafilespanel']['ResourceRelationship2']['relresourceID']['#autocomplete_path'] = 'islandora/lrl_object/autocomplete/mouse';
+  }
+
+
 }
 
