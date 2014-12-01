@@ -147,7 +147,6 @@ function islandora_livingresearchlab_islandora_xml_form_builder_forms() {
   $module_path = drupal_get_path('module', 'islandora_livingresearchlab');
 
   return array(
-
     'DSU Data Session DwC' => array(
       'form_file' => "$module_path/xml/forms/DataSession_dwc.xml",
     ),
@@ -398,6 +397,21 @@ function islandora_livingresearchlab_islandora_required_objects(IslandoraTuque $
 }
 
 /**
+ * Implements hook_islandora_ingest_steps().
+ */
+function islandora_livingresearchlab_islandora_livingresearchlab_mouseCModel_islandora_ingest_steps() {
+  return array(
+    'islandora_lrl_mice_id' => array(
+      'weight' => 1,
+      'type' => 'form',
+      'form_id' => 'islandora_lrl_mice_id_form',
+      'module' => 'islandora_livingresearchlab',
+      'file' => 'includes/lrl_mice_id_form.inc',
+    ),
+  );
+}
+
+/**
  * Implements hook_islandora_CMODEL_PID_derivative().
  */
 function islandora_livingresearchlab_islandora_livingresearchlab_mouseCModel_islandora_derivative() {
@@ -464,22 +478,15 @@ function islandora_livingresearchlab_form_xml_form_builder_ingest_form_alter(&$f
 
   //@todo: Need add a small form for Mice ID schema information.
   $mouse_id = lrl_generate_mouse_id('0', '0', FALSE, 1);
+
   if ($form_state['islandora']['step_storage']['xml_form_builder_metadata_step']['association']['id'] == 'islandora_livingresearchlab_mouse_dwc_form') {
-    $form_state['rebuild'] = TRUE;
     $form['dwc_fields_mouse']['occurrence1']['occurrenceid']['#default_value'] = $mouse_id;
-    $form['dwc_fields_mouse']['birthFieldset']['ResourceRelationship1']['motherrelatedResourceid']['#autocomplete_path'] = 'islandora/lrl_object/autocomplete/mouse';
-    $form['dwc_fields_mouse']['birthFieldset']['ResourceRelationship2']['fatherrelatedResourceid']['#autocomplete_path'] = 'islandora/lrl_object/autocomplete/mouse';
   }
 
   if ($form_state['islandora']['step_storage']['xml_form_builder_metadata_step']['association']['id'] == 'islandora_livingresearchlab_experiment_dwc_form') {
-    $form_state['rebuild'] = TRUE;
-    $form['dwc_fields_experiment']['ResourceRelationship']['#autocomplete_path'] = 'islandora/lrl_object/autocomplete/protocol';
   }
 
   if ($form_state['islandora']['step_storage']['xml_form_builder_metadata_step']['association']['id'] == 'islandora_livingresearchlab_datasession_dwc_form') {
-    $form_state['rebuild'] = TRUE;
-    $form['dwc_fields_datasession']['ResourceRelationship']['#autocomplete_path'] = 'islandora/lrl_object/autocomplete/experiment';
-    //$form['dwc_fields_datasession']['datafilespanel']['ResourceRelationship2']['relresourceID']['#autocomplete_path'] = 'islandora/lrl_object/autocomplete/mouse';
   }
 
 

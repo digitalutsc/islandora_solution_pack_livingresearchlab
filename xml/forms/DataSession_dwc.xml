@@ -126,6 +126,7 @@
                                 <properties>
                                     <type>textfield</type>
                                     <access>TRUE</access>
+                                    <autocomplete_path>user/autocomplete</autocomplete_path>
                                     <collapsed>FALSE</collapsed>
                                     <collapsible>FALSE</collapsible>
                                     <disabled>FALSE</disabled>
@@ -203,6 +204,7 @@
                         <properties>
                             <type>textfield</type>
                             <access>TRUE</access>
+                            <autocomplete_path>islandora/lrl_object/autocomplete/experiment</autocomplete_path>
                             <collapsed>FALSE</collapsed>
                             <collapsible>FALSE</collapsible>
                             <disabled>FALSE</disabled>
@@ -581,6 +583,7 @@
                                         <properties>
                                             <type>textfield</type>
                                             <access>TRUE</access>
+                                            <autocomplete_path>islandora/lrl_object/autocomplete/mouse</autocomplete_path>
                                             <collapsed>FALSE</collapsed>
                                             <collapsible>FALSE</collapsible>
                                             <disabled>FALSE</disabled>
