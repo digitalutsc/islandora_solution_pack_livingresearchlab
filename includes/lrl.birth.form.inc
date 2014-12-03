@@ -29,7 +29,7 @@ function islandora_livingresearchlab_add_birth_form(array $form, array &$form_st
   // #tree to be able to access them.
   $form['#tree'] = TRUE;
 
-  // buttons
+  // buttons.
   $form['actions'] = array('#type' => 'actions');
   $form['actions']['submit'] = array(
     '#type' => 'submit',
@@ -54,12 +54,14 @@ function islandora_livingresearchlab_add_birth_form(array $form, array &$form_st
     '#type' => 'textfield',
     '#title' => t('Mother'),
     '#autocomplete_path' => 'islandora/lrl_object/autocomplete/mouse',
+    '#required' => TRUE,
     '#size' => 25,
   );
   $form['lrl_birth_father'] = array(
     '#type' => 'textfield',
     '#title' => t('Father'),
     '#autocomplete_path' => 'islandora/lrl_object/autocomplete/mouse',
+    '#required' => TRUE,
     '#size' => 25,
   );
   $form['lrl_birth_weandate'] = array(
@@ -173,14 +175,9 @@ function islandora_livingresearchlab_add_birth_form_submit(array $form, array &$
   foreach ($children as $child) {
     // Update Mice table to track Mice IDs.
     try {
-      $query = db_insert('islandora_lrl_mice')
-        ->fields(array(
-          'mouse_id' => $child,
-          'litter_no' => $litter[2],
-          'shipment_no' => '0000',
-          'birth_id' => $birth_id,
-          'mother_id' => $mother_id,
-          'father_id' => $father_id))
+      $query = db_update('islandora_lrl_mice')
+        ->fields(array('highest_no' => $litter[2]))
+        ->condition('type', 'litter')
         ->execute();
       drupal_set_message(t('Mouse ID !mid created with Birth Record ID !bid.', array('!mid' => $child, '!bid' => $birth_id)));
     }

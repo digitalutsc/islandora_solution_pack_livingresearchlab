@@ -41,15 +41,16 @@ function lrl_generate_mouse_id($s, $x, $is_litter = TRUE, $seq = '01') {
   if ($is_litter) {
     $init_litter = variable_get('islandora_livingresearchlab_mice_id_init_litter', '0001');
     $result = db_select('islandora_lrl_mice', 'm')
-      ->fields('m', array('litter_no'))
-      ->distinct()
+      ->fields('m', array('highest_no'))
+      ->condition('type', 'litter')
       ->execute()
-      ->fetchCol();
+      ->fetchField();
+    dpm($result, 'result');
     if (empty($result)) {
       $litter = $init_litter;
     }
     else {
-      $litter = sprintf('%04s', max($result) + 1);
+      $litter = sprintf('%04s', $result + 1);
     }
 
     return $s . '-' . $x . '-' . $litter . '-' . $seq_padded;
@@ -57,15 +58,15 @@ function lrl_generate_mouse_id($s, $x, $is_litter = TRUE, $seq = '01') {
   else {
     $init_shipment = variable_get('islandora_livingresearchlab_mice_id_init_shipment', '0001');
     $result = db_select('islandora_lrl_mice', 'm')
-      ->fields('m', array('shipment_no'))
-      ->distinct()
+      ->fields('m', array('highest_no'))
+      ->condition('type', 'shipment')
       ->execute()
-      ->fetchCol();
+      ->fetchField();
     if (empty($result)) {
       $shipment = $init_shipment;
     }
     else {
-      $shipment = sprintf('%04s', max($result) + 1);
+      $shipment = sprintf('%04s', $result + 1);
     }
     return $s . '-' . $x . '-' . $shipment . '-' . $seq_padded;
   }
