@@ -476,8 +476,14 @@ function islandora_livingresearchlab_islandora_livingresearchlab_datasessionCMod
 function islandora_livingresearchlab_form_xml_form_builder_ingest_form_alter(&$form, &$form_state, $form_id) {
   module_load_include('inc', 'islandora_livingresearchlab', 'includes/utilities');
 
-  //@todo: Need add a small form for Mice ID schema information.
-  $mouse_id = lrl_generate_mouse_id('0', '0', FALSE, 1);
+  $mouse_id = $form_state['input']['mice_id_s'] . '-' . $form_state['input']['mice_id_x'] . '-';
+  if ($form_state['input']['mice_id_litter_or_shipment']) {
+    $mouse_id .= $form_state['input']['mice_id_shipment'];
+  }
+  else {
+    $mouse_id .= $form_state['input']['mice_id_litter'];
+  }
+  $mouse_id .= '-01';
 
   if ($form_state['islandora']['step_storage']['xml_form_builder_metadata_step']['association']['id'] == 'islandora_livingresearchlab_mouse_dwc_form') {
     $form['dwc_fields_mouse']['occurrence1']['occurrenceid']['#default_value'] = $mouse_id;
