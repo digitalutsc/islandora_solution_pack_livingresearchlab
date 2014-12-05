@@ -45,7 +45,6 @@ function lrl_generate_mouse_id($s, $x, $is_litter = TRUE, $seq = '01') {
       ->condition('type', 'litter')
       ->execute()
       ->fetchField();
-    dpm($result, 'result');
     if (empty($result)) {
       $litter = $init_litter;
     }

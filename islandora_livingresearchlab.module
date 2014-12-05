@@ -399,7 +399,7 @@ function islandora_livingresearchlab_islandora_required_objects(IslandoraTuque $
 /**
  * Implements hook_islandora_ingest_steps().
  */
-function islandora_livingresearchlab_islandora_livingresearchlab_mouseCModel_islandora_ingest_steps() {
+function islandora_livingresearchlab_islandora_livingresearchlab_mouseCModel_islandora_ingest_steps(array &$form_state) {
   return array(
     'islandora_lrl_mice_id' => array(
       'weight' => 1,
@@ -407,6 +407,16 @@ function islandora_livingresearchlab_islandora_livingresearchlab_mouseCModel_isl
       'form_id' => 'islandora_lrl_mice_id_form',
       'module' => 'islandora_livingresearchlab',
       'file' => 'includes/lrl_mice_id_form.inc',
+    ),
+    'islandora_lrl_mice_table_update' => array(
+      'type' => 'callback',
+      'module' => 'islandora_livingresearchlab',
+      'file' => 'includes/lrl_mice_id_form.inc',
+      'weight' => 10,
+      'do_function' => array(
+        'function' => 'islandora_lrl_mice_table_update',
+        'args' => array(),
+      ),
     ),
   );
 }
@@ -475,26 +485,19 @@ function islandora_livingresearchlab_islandora_livingresearchlab_datasessionCMod
  */
 function islandora_livingresearchlab_form_xml_form_builder_ingest_form_alter(&$form, &$form_state, $form_id) {
   module_load_include('inc', 'islandora_livingresearchlab', 'includes/utilities');
-
-  $mouse_id = $form_state['input']['mice_id_s'] . '-' . $form_state['input']['mice_id_x'] . '-';
-  if ($form_state['input']['mice_id_litter_or_shipment']) {
-    $mouse_id .= $form_state['input']['mice_id_shipment'];
+  $mouse_id = $form_state['input']['mice_id_fields']['mice_id_s'] . '-' . $form_state['input']['mice_id_fields']['mice_id_x'] . '-';
+  if ($form_state['input']['mice_id_fields']['mice_id_litter_or_shipment']) {
+    $mouse_id .= $form_state['input']['mice_id_fields']['mice_id_shipment'];
   }
   else {
-    $mouse_id .= $form_state['input']['mice_id_litter'];
+    $mouse_id .= $form_state['input']['mice_id_fields']['mice_id_litter'];
   }
   $mouse_id .= '-01';
 
   if ($form_state['islandora']['step_storage']['xml_form_builder_metadata_step']['association']['id'] == 'islandora_livingresearchlab_mouse_dwc_form') {
     $form['dwc_fields_mouse']['occurrence1']['occurrenceid']['#default_value'] = $mouse_id;
   }
-
-  if ($form_state['islandora']['step_storage']['xml_form_builder_metadata_step']['association']['id'] == 'islandora_livingresearchlab_experiment_dwc_form') {
-  }
-
-  if ($form_state['islandora']['step_storage']['xml_form_builder_metadata_step']['association']['id'] == 'islandora_livingresearchlab_datasession_dwc_form') {
-  }
-
-
 }
 
+
+// @todo: dwc xslt for solr

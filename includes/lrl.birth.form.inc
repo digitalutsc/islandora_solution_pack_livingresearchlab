@@ -156,7 +156,6 @@ function ajax_update_birth_nums_callback($form, $form_state) {
  *
  * Implements hook_form_submit().
  *
- * @todo: complete islandora_livingresearchlab_add_birth_form_submit().
  */
 function islandora_livingresearchlab_add_birth_form_submit(array $form, array &$form_state) {
   module_load_include('inc', 'islandora', 'includes/tuque');
@@ -254,6 +253,7 @@ function islandora_livingresearchlab_add_birth_form_submit(array $form, array &$
       $object->label = $child;
       $object->models = array('islandora:livingresearchlab_mouseCModel');
       $object->relationships->add(FEDORA_RELS_EXT_URI, 'isMemberOfCollection', 'islandora:mice_collection');
+      // @todo: add our own NS for our relationships.
       $object->relationships->add(FEDORA_RELS_EXT_URI, 'hasMother', $mother_pid);
       $object->relationships->add(FEDORA_RELS_EXT_URI, 'hasFather', $father_pid);
       $dsid = 'DWC';
@@ -270,3 +270,4 @@ function islandora_livingresearchlab_add_birth_form_submit(array $form, array &$
 
   }
 }
+

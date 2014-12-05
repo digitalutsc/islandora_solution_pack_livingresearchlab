@@ -7,7 +7,6 @@
 
 /**
  * Autocomplete callback for lrl object search.
- * @todo: islandora_livingresearchlab_autocomplete().
  *
  * @param string $type
  *   Selects eithe Scholar or Department

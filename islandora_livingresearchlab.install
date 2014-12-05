@@ -59,12 +59,14 @@ function islandora_livingresearchlab_install() {
   db_insert('islandora_lrl_mice')
     ->fields(array(
       'type' => 'litter',
-      'highest_no' => '0000',))
+      'highest_no' => '0000',
+    ))
     ->execute();
   db_insert('islandora_lrl_mice')
     ->fields(array(
       'type' => 'shipment',
-      'highest_no' => '0000',))
+      'highest_no' => '0000',
+    ))
     ->execute();
 }
 
