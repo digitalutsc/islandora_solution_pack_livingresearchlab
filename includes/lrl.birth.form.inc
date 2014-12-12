@@ -246,9 +246,17 @@ function islandora_livingresearchlab_add_birth_form_submit(array $form, array &$
 
       $connection = islandora_get_tuque_connection();
       $repository = $connection->repository;
-      // @todo: find out if there is a variable to hold the namespace.
-      $namespace = 'islandora';
 
+      // Get the namespace for mouseCModel via CollectionPolicy class.
+      $collection_object = islandora_object_load('islandora:mice_collection');
+      $collection_policy = new CollectionPolicy($collection_object['COLLECTION_POLICY']->content);
+      $collection_models = $collection_policy->getContentModels();
+      if (isset($collection_models['islandora:livingresearchlab_mouseCModel'])) {
+        $namespace = check_plain($collection_models['islandora:livingresearchlab_mouseCModel']['namespace']);
+      }
+      else {
+        $namespace = 'islandora';
+      }
       $object = $repository->constructObject($namespace);
       $object->label = $child;
       $object->models = array('islandora:livingresearchlab_mouseCModel');
