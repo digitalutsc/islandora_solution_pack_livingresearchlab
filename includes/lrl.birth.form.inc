@@ -261,9 +261,8 @@ function islandora_livingresearchlab_add_birth_form_submit(array $form, array &$
       $object->label = $child;
       $object->models = array('islandora:livingresearchlab_mouseCModel');
       $object->relationships->add(FEDORA_RELS_EXT_URI, 'isMemberOfCollection', 'islandora:mice_collection');
-      // @todo: add our own NS for our relationships.
-      $object->relationships->add(FEDORA_RELS_EXT_URI, 'hasMother', $mother_pid);
-      $object->relationships->add(FEDORA_RELS_EXT_URI, 'hasFather', $father_pid);
+      $object->relationships->add(ISLANDORA_RELS_EXT_URI, 'hasParent', $mother_pid);
+      $object->relationships->add(ISLANDORA_RELS_EXT_URI, 'hasParent', $father_pid);
       $dsid = 'DWC';
       $ds = $object->constructDatastream($dsid, 'M');
       $ds->label = $dsid;

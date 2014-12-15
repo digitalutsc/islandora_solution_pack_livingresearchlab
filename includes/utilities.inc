@@ -3,8 +3,6 @@
 /**
  * Callback to generate a unique ID for mouse.
  *
- * @todo: islandora_livingresearchlab_generate_mouse_id().
- *
  * Mice ID schema in S-X-IIII-NN format.
  *
  * @param string $s
