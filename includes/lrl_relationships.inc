@@ -63,6 +63,17 @@ function islandora_lrl_mouse_rels_update(array &$form_state) {
   $metadata_step_storage = &islandora_ingest_form_get_step_storage($form_state, 'xml_form_builder_metadata_step');
   $object = islandora_ingest_form_get_object($form_state);
   if ($metadata_step_storage['created']['DWC'] && $object) {
-
+    if (!empty($metadata_step_storage['values']['dwc_fields_mouse']['birthFieldset']['ResourceRelationship1']['motherrelatedResourceid'])) {
+      $mother = $metadata_step_storage['values']['dwc_fields_mouse']['birthFieldset']['ResourceRelationship1']['motherrelatedResourceid'];
+      $m_pid = explode('(', trim($mother));
+      $pid = substr($m_pid[1], 0, -1);
+      $object->relationships->add(ISLANDORA_RELS_EXT_URI, 'hasParent', $pid);
+    }
+    if (!empty($metadata_step_storage['values']['dwc_fields_mouse']['birthFieldset']['ResourceRelationship2']['fatherrelatedResourceid'])) {
+      $father = $metadata_step_storage['values']['dwc_fields_mouse']['birthFieldset']['ResourceRelationship2']['fatherrelatedResourceid'];
+      $f_pid = explode('(', trim($father));
+      $pid = substr($f_pid[1], 0, -1);
+      $object->relationships->add(ISLANDORA_RELS_EXT_URI, 'hasParent', $pid);
+    }
   }
 }
