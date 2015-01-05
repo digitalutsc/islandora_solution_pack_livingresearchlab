@@ -433,7 +433,6 @@ function islandora_livingresearchlab_islandora_livingresearchlab_mouseCModel_isl
 }
 
 
-// @todo: update relationships for experiments, datasession.
 /**
  * Implements hook_islandora_ingest_steps().
  */
