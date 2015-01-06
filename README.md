@@ -23,15 +23,28 @@ Install as usual, see [this](https://drupal.org/documentation/install/modules-th
 
 Configure Mice ID Schema information in Administration » Islandora » Living Research Lab Solution Pack (admin/islandora/solution_pack_config/livingresearchlab).
 
+## Index dwc.* and dcterms.* fields in Solr
+
+A dwc_to_solr.xslt file (xsl/dwc_to_solr.xslt) is included in the module in order to index dwc and dcterms fields in Solr.
+
+* Please drop this file to 'islandora_transforms' folder and update the foxmlToSolr.xslt file to include new xslt file.
+* Modify solr schema.xml file to add dwc.* and dcterms.* fields
+
+    <dynamicField name="dwc.*"  type="text_general" indexed="true" stored="true" multiValued="true"/>
+    <dynamicField name="dcterms.*"  type="text_general" indexed="true" stored="true" multiValued="true"/>
+
 ## Troubleshooting/Issues
-This is a beta test.  The module is not meant to be used in a production environment.
-Needs: 
--Self-transform xslt may need modification
--themes, collection policy, admin page need to be customized
+This is a beta version.
+
+Having problems or solved a problem? Check out the Islandora google groups for a solution.
+
+* [Islandora Group](https://groups.google.com/forum/?hl=en&fromgroups#!forum/islandora)
+* [Islandora Dev Group](https://groups.google.com/forum/?hl=en&fromgroups#!forum/islandora-dev)
 
 ## Maintainers
 
-* Kim Pham (since August 2014)
 * [Lingling Jiang](https://github.com/sprklinginfo)
+* Kim Pham
+
 
 =======
