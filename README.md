@@ -30,8 +30,11 @@ A dwc_to_solr.xslt file (xsl/dwc_to_solr.xslt) is included in the module in orde
 * Please drop this file to 'islandora_transforms' folder and update the foxmlToSolr.xslt file to include new xslt file.
 * Modify solr schema.xml file to add dwc.* and dcterms.* fields
 
-    <dynamicField name="dwc.*"  type="text_general" indexed="true" stored="true" multiValued="true"/>
-    <dynamicField name="dcterms.*"  type="text_general" indexed="true" stored="true" multiValued="true"/>
+```xml
+<dynamicField name="dwc.*"  type="text_general" indexed="true" stored="true" multiValued="true"/>
+<dynamicField name="dcterms.*"  type="text_general" indexed="true" stored="true" multiValued="true"/>
+```
+    
 
 ## Troubleshooting/Issues
 This is a beta version.
