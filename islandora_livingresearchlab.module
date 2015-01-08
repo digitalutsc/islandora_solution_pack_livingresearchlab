@@ -556,7 +556,3 @@ function islandora_livingresearchlab_form_xml_form_builder_ingest_form_alter(&$f
 
 }
 
-
-
-// @todo: dwc xslt for solr
-
