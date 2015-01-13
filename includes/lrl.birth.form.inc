@@ -153,9 +153,7 @@ function ajax_update_birth_nums_callback($form, $form_state) {
 }
 
 /**
- *
  * Implements hook_form_submit().
- *
  */
 function islandora_livingresearchlab_add_birth_form_submit(array $form, array &$form_state) {
   module_load_include('inc', 'islandora', 'includes/tuque');
