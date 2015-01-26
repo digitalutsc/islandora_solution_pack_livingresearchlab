@@ -206,7 +206,7 @@ function islandora_livingresearchlab_add_birth_form_submit(array $form, array &$
 
       $taxon = $dwr->appendChild($dom->createElementNS($dwc_url, 'dwc:Taxon'));
       $taxon_id = $taxon->appendChild($dom->createElementNS($dwc_url, 'dwc:taxonID', 'NotYetDefined'));
-      $taxon_remarks = $taxon->appendChild($dom->createElementNS($dwc_url, 'dwc:taxonRemarks', 'NotYetDefined'));
+      $taxon_remarks = $taxon->appendChild($dom->createElementNS($dwc_url, 'dwc:taxonRemarks', 'mouseType'));
 
       $location = $dwr->appendChild($dom->createElementNS($dcterms_url, 'dcterms:Location'));
       $loc_id = $location->appendChild($dom->createElementNS($dwc_url, 'dwc:locationID', $birth_cage_id));
