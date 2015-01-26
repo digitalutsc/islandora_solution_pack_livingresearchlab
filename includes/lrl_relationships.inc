@@ -21,7 +21,6 @@ function islandora_lrl_experiment_rels_update(array &$form_state) {
 }
 
 
-
 /**
  * Callback to update relationships between Experiment and DataSession.
  *
@@ -67,13 +66,13 @@ function islandora_lrl_mouse_rels_update(array &$form_state) {
       $mother = $metadata_step_storage['values']['dwc_fields_mouse']['birthFieldset']['ResourceRelationship1']['motherrelatedResourceid'];
       $m_pid = explode('(', trim($mother));
       $pid = substr($m_pid[1], 0, -1);
-      $object->relationships->add(ISLANDORA_RELS_EXT_URI, 'hasParent', $pid);
+      $object->relationships->add(ISLANDORA_RELS_EXT_URI, 'hasMother', $pid);
     }
     if (!empty($metadata_step_storage['values']['dwc_fields_mouse']['birthFieldset']['ResourceRelationship2']['fatherrelatedResourceid'])) {
       $father = $metadata_step_storage['values']['dwc_fields_mouse']['birthFieldset']['ResourceRelationship2']['fatherrelatedResourceid'];
       $f_pid = explode('(', trim($father));
       $pid = substr($f_pid[1], 0, -1);
-      $object->relationships->add(ISLANDORA_RELS_EXT_URI, 'hasParent', $pid);
+      $object->relationships->add(ISLANDORA_RELS_EXT_URI, 'hasFather', $pid);
     }
   }
 }
