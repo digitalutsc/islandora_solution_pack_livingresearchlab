@@ -21,7 +21,9 @@ function islandora_livingresearchlab_add_birth_form(array $form, array &$form_st
   module_load_include('inc', 'islandora_livingresearchlab', 'includes/utilities');
   drupal_add_library('system', 'ui.datepicker');
   drupal_add_js("(function ($) { $('.datepicker').datepicker(); })(jQuery);", array('type' => 'inline', 'scope' => 'footer', 'weight' => 5));
-  $timestamp = time();
+
+  // Get new litter id as birth id.
+  $litter_id = explode('-', lrl_generate_mouse_id('0', '0', TRUE, '01'));
 
   $form = array();
 
@@ -41,7 +43,7 @@ function islandora_livingresearchlab_add_birth_form(array $form, array &$form_st
     '#title' => t('Birth Identifier'),
     '#description' => t('An unique ID for a birth event.'),
     '#required' => TRUE,
-    '#default_value' => $timestamp,
+    '#default_value' => $litter_id[2],
     '#size' => 25,
   );
   $form['lrl_birth_cage_id'] = array(
@@ -130,6 +132,7 @@ function islandora_livingresearchlab_add_birth_form(array $form, array &$form_st
   $nums_children = !empty($form_state['values']['lrl_birth_children']['nums']) ? $form_state['values']['lrl_birth_children']['nums'] : 0;
   $mice_id_x = !empty($form_state['values']['lrl_birth_children']['id_schema_x']) ? $form_state['values']['lrl_birth_children']['id_schema_x'] : 0;
 
+  // Loop to generate Child ID automatically.
   for ($i = 1; $i <= $nums_children; $i++) {
     $child_id = lrl_generate_mouse_id('0', $mice_id_x, TRUE, $i);
     $form['lrl_birth_children']['id_fieldset']['child' . $i] = array(
@@ -139,6 +142,8 @@ function islandora_livingresearchlab_add_birth_form(array $form, array &$form_st
       '#default_value' => $child_id,
     );
   }
+ dpm($form_state, 'form_state');
+  dpm($form, 'form');
   return $form;
 }
 
@@ -168,6 +173,9 @@ function islandora_livingresearchlab_add_birth_form_submit(array $form, array &$
   $setupdate = $form_state['values']['lrl_birth_setupdate'];
   $children = $form_state['values']['lrl_birth_children']['id_fieldset'];
   $litter = explode('-', $children['child1']);
+  dpm($form_state['values']['lrl_birth_weandate'], 'weandate');
+  dpm($form, 'form after submission');
+  dpm($form_state, 'form_state after submission');
 
   foreach ($children as $child) {
     // Update Mice table to track Mice IDs.
@@ -211,12 +219,19 @@ function islandora_livingresearchlab_add_birth_form_submit(array $form, array &$
       $location = $dwr->appendChild($dom->createElementNS($dcterms_url, 'dcterms:Location'));
       $loc_id = $location->appendChild($dom->createElementNS($dwc_url, 'dwc:locationID', $birth_cage_id));
       $locality = $location->appendChild($dom->createElementNS($dwc_url, 'dwc:locality', 'Cage born'));
-      $location_remarks = $location->appendChild($dom->createElementNS($dwc_url, 'dwc:locationRemarks', date('Y-m-d', strtotime($dob))));
+      if (isset($dob) && !empty($dob)) {
+        $location_remarks = $location->appendChild($dom->createElementNS($dwc_url, 'dwc:locationRemarks', date('Y-m-d', strtotime($dob))));
+      }
+      else {
+        $location_remarks = $location->appendChild($dom->createElementNS($dwc_url, 'dwc:locationRemarks', 'NotYetDefined'));
+      }
 
-      $event = $dwr->appendChild($dom->createElementNS($dwc_url, 'dwc:Event'));
-      $event_id = $event->appendChild($dom->createElementNS($dwc_url, 'dwc:eventID', $birth_id));
-      $event_date = $event->appendChild($dom->createElementNS($dwc_url, 'dwc:eventDate', date('Y-m-d', strtotime($dob))));
-      $event_remarks = $event->appendChild($dom->createElementNS($dwc_url, 'dwc:eventRemarks', 'dateOfBirth'));
+      if (isset($dob) && !empty($dob)) {
+        $event = $dwr->appendChild($dom->createElementNS($dwc_url, 'dwc:Event'));
+        $event_id = $event->appendChild($dom->createElementNS($dwc_url, 'dwc:eventID', $birth_id));
+        $event_date = $event->appendChild($dom->createElementNS($dwc_url, 'dwc:eventDate', date('Y-m-d', strtotime($dob))));
+        $event_remarks = $event->appendChild($dom->createElementNS($dwc_url, 'dwc:eventRemarks', 'dateOfBirth'));
+      }
 
       $rels = $dwr->appendChild($dom->createElementNS($dwc_url, 'dwc:ResourceRelationship'));
       $rels_id = $rels->appendChild($dom->createElementNS($dwc_url, 'dwc:relatedResourceID', $mother_id));
@@ -226,13 +241,17 @@ function islandora_livingresearchlab_add_birth_form_submit(array $form, array &$
       $rels_id = $rels->appendChild($dom->createElementNS($dwc_url, 'dwc:relatedResourceID', $father_id));
       $rels_resource = $rels->appendChild($dom->createElementNS($dwc_url, 'dwc:relationshipOfResource', 'hasFather'));
 
-      $event = $dwr->appendChild($dom->createElementNS($dwc_url, 'dwc:Event'));
-      $event_date = $event->appendChild($dom->createElementNS($dwc_url, 'dwc:eventDate', date('Y-m-d', strtotime($weandate))));
-      $event_remarks = $event->appendChild($dom->createElementNS($dwc_url, 'dwc:eventRemarks', 'weanDate'));
+      if (isset($weandate) && !empty($weandate)) {
+        $event = $dwr->appendChild($dom->createElementNS($dwc_url, 'dwc:Event'));
+        $event_date = $event->appendChild($dom->createElementNS($dwc_url, 'dwc:eventDate', date('Y-m-d', strtotime($weandate))));
+        $event_remarks = $event->appendChild($dom->createElementNS($dwc_url, 'dwc:eventRemarks', 'weanDate'));
+      }
 
-      $event = $dwr->appendChild($dom->createElementNS($dwc_url, 'dwc:Event'));
-      $event_date = $event->appendChild($dom->createElementNS($dwc_url, 'dwc:eventDate', date('Y-m-d', strtotime($setupdate))));
-      $event_remarks = $event->appendChild($dom->createElementNS($dwc_url, 'dwc:eventRemarks', 'setupDate'));
+      if (isset($setupdate) && !empty($setupdate)) {
+        $event = $dwr->appendChild($dom->createElementNS($dwc_url, 'dwc:Event'));
+        $event_date = $event->appendChild($dom->createElementNS($dwc_url, 'dwc:eventDate', date('Y-m-d', strtotime($setupdate))));
+        $event_remarks = $event->appendChild($dom->createElementNS($dwc_url, 'dwc:eventRemarks', 'setupDate'));
+      }
 
       $dom->preserveWhiteSpace = FALSE;
       $dom->formatOutput = TRUE;
