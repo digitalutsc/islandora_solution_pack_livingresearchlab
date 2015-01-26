@@ -142,8 +142,6 @@ function islandora_livingresearchlab_add_birth_form(array $form, array &$form_st
       '#default_value' => $child_id,
     );
   }
- dpm($form_state, 'form_state');
-  dpm($form, 'form');
   return $form;
 }
 
@@ -173,9 +171,6 @@ function islandora_livingresearchlab_add_birth_form_submit(array $form, array &$
   $setupdate = $form_state['values']['lrl_birth_setupdate'];
   $children = $form_state['values']['lrl_birth_children']['id_fieldset'];
   $litter = explode('-', $children['child1']);
-  dpm($form_state['values']['lrl_birth_weandate'], 'weandate');
-  dpm($form, 'form after submission');
-  dpm($form_state, 'form_state after submission');
 
   foreach ($children as $child) {
     // Update Mice table to track Mice IDs.
