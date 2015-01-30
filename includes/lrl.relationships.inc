@@ -20,6 +20,14 @@ function islandora_lrl_experiment_rels_update(array &$form_state) {
   }
 }
 
+/**
+ * Callback to update relationships between Experiment and Protocol.
+ *
+ * Update relationships if an Experiment object is ingested successfully.
+ */
+function islandora_lrl_cage_rels_update(array &$form_state) {
+// @todo islandora_lrl_cage_rels_update()
+}
 
 /**
  * Callback to update relationships between Experiment and DataSession.

@@ -151,6 +151,9 @@ function islandora_livingresearchlab_islandora_xml_form_builder_forms() {
       'form_file' => "$module_path/xml/forms/DataSession_dwc.xml",
     ),
     'DSU Experiment DwC' => array(
+      'form_file' => "$module_path/xml/forms/Cage_dwc.xml",
+    ),
+    'DSU Cage DwC' => array(
       'form_file' => "$module_path/xml/forms/Experiment_dwc.xml",
     ),
     'DSU Mouse DwC' => array(
@@ -197,7 +200,24 @@ function islandora_livingresearchlab_islandora_xml_form_builder_form_association
       'content_model' => 'islandora:livingresearchlab_experimentCModel',
       'form_name' => 'DSU Experiment DwC',
       'dsid' => 'DWC',
-      'title_field' => array('dwc_fields_experiment', 'occurrence1', 'occurrenceid'),
+      'title_field' => array(
+        'dwc_fields_experiment',
+        'occurrence1',
+        'occurrenceid',
+      ),
+      'transform' => 'No Transform',
+      'self_transform' => 'cleanup_mods.xsl',
+      'template' => FALSE,
+    ),
+    'islandora_livingresearchlab_cage_dwc_form' => array(
+      'content_model' => 'islandora:livingresearchlab_cageCModel',
+      'form_name' => 'DSU Cage DwC',
+      'dsid' => 'DWC',
+      'title_field' => array(
+        'dwc_fields_cage',
+        'occurrence1',
+        'occurrenceid',
+      ),
       'transform' => 'No Transform',
       'self_transform' => 'cleanup_mods.xsl',
       'template' => FALSE,
@@ -206,7 +226,11 @@ function islandora_livingresearchlab_islandora_xml_form_builder_form_association
       'content_model' => 'islandora:livingresearchlab_mouseCModel',
       'form_name' => 'DSU Mouse DwC',
       'dsid' => 'DWC',
-      'title_field' => array('dwc_fields_mouse', 'occurrence1', 'occurrenceid'),
+      'title_field' => array(
+        'dwc_fields_mouse',
+        'occurrence1',
+        'occurrenceid',
+      ),
       'transform' => 'No Transform',
       'self_transform' => 'cleanup_mods.xsl',
       'template' => FALSE,
@@ -270,6 +294,14 @@ function islandora_livingresearchlab_islandora_required_objects(IslandoraTuque $
   // DS-COMPOSITE-MODEL Datastream.
   islandora_livingresearchlab_ingest__ds_composite_datastream($livingresearchlab_mouse_content_model, $module_path . "/xml/islandora_livingresearchlab_mouse_ds_composite_model.xml");
 
+  // Cage CModel.
+  $livingresearchlab_cage_content_model = $connection->repository->constructObject('islandora:livingresearchlab_cageCModel');
+  $livingresearchlab_cage_content_model->owner = 'fedoraAdmin';
+  $livingresearchlab_cage_content_model->label = 'Islandora Living Research Lab Cage Content Model';
+  $livingresearchlab_cage_content_model->models = 'fedora-system:ContentModel-3.0';
+  // DS-COMPOSITE-MODEL Datastream.
+  islandora_livingresearchlab_ingest__ds_composite_datastream($livingresearchlab_cage_content_model, $module_path . "/xml/islandora_livingresearchlab_cage_ds_composite_model.xml");
+
   // DATASESSION root collection.
   $datasessions_collection = $connection->repository->constructObject('islandora:datasessions_collection');
   $datasessions_collection->owner = 'fedoraAdmin';
@@ -328,6 +360,26 @@ function islandora_livingresearchlab_islandora_required_objects(IslandoraTuque $
   $datastream->setContentFromFile("$module_path/images/mice.png", FALSE);
   $mice_collection->ingestDatastream($datastream);
 
+
+  // CAGES root collection.
+  $cages_collection = $connection->repository->constructObject('islandora:cages_collection');
+  $cages_collection->owner = 'fedoraAdmin';
+  $cages_collection->label = 'Islandora Living Research Lab Cages Collection';
+  $cages_collection->models = 'islandora:collectionCModel';
+  $cages_collection->relationships->add(FEDORA_RELS_EXT_URI, 'isMemberOfCollection', 'islandora:root');
+
+  $datastream = $cages_collection->constructDatastream('COLLECTION_POLICY', 'X');
+  $datastream->label = 'Collection policy';
+  $datastream->mimetype = 'text/xml';
+  $datastream->setContentFromFile("$module_path/xml/collection_policy/islandora_livingresearchlab_cages_collection_policy.xml", FALSE);
+  $cages_collection->ingestDatastream($datastream);
+
+  $datastream = $cages_collection->constructDatastream('TN', 'M');
+  $datastream->label = 'Thumbnail';
+  $datastream->mimetype = 'image/png';
+  $datastream->setContentFromFile("$module_path/images/cage.png", FALSE);
+  $cages_collection->ingestDatastream($datastream);
+
   // PROTOCOLS root collection.
   $protocols_collection = $connection->repository->constructObject('islandora:protocols_collection');
   $protocols_collection->owner = 'fedoraAdmin';
@@ -373,9 +425,11 @@ function islandora_livingresearchlab_islandora_required_objects(IslandoraTuque $
         $livingresearchlab_datasession_content_model,
         $livingresearchlab_experiment_content_model,
         $livingresearchlab_mouse_content_model,
+        $livingresearchlab_cage_content_model,
         $datasessions_collection,
         $experiments_collection,
         $mice_collection,
+        $cages_collection,
         $protocols_collection,
         $publications_collection,
       ),
@@ -414,12 +468,12 @@ function islandora_livingresearchlab_islandora_livingresearchlab_mouseCModel_isl
       'type' => 'form',
       'form_id' => 'islandora_lrl_mice_id_form',
       'module' => 'islandora_livingresearchlab',
-      'file' => 'includes/lrl_mice_id_form.inc',
+      'file' => 'includes/lrl.mice_id.form.inc',
     ),
     'islandora_lrl_mice_table_update' => array(
       'type' => 'callback',
       'module' => 'islandora_livingresearchlab',
-      'file' => 'includes/lrl_mice_id_form.inc',
+      'file' => 'includes/lrl.mice_id.form.inc',
       'weight' => 10,
       'do_function' => array(
         'function' => 'islandora_lrl_mice_table_update',
@@ -429,7 +483,7 @@ function islandora_livingresearchlab_islandora_livingresearchlab_mouseCModel_isl
     'islandora_lrl_mouse_rels_update' => array(
       'type' => 'callback',
       'module' => 'islandora_livingresearchlab',
-      'file' => 'includes/lrl_relationships.inc',
+      'file' => 'includes/lrl.relationships.inc',
       'weight' => 11,
       'do_function' => array(
         'function' => 'islandora_lrl_mouse_rels_update',
@@ -449,7 +503,7 @@ function islandora_livingresearchlab_islandora_livingresearchlab_experimentCMode
     'islandora_lrl_experiment_rels_update' => array(
       'type' => 'callback',
       'module' => 'islandora_livingresearchlab',
-      'file' => 'includes/lrl_relationships.inc',
+      'file' => 'includes/lrl.relationships.inc',
       'weight' => 11,
       'do_function' => array(
         'function' => 'islandora_lrl_experiment_rels_update',
@@ -462,13 +516,33 @@ function islandora_livingresearchlab_islandora_livingresearchlab_experimentCMode
 /**
  * Implements hook_islandora_ingest_steps().
  */
+function islandora_livingresearchlab_islandora_livingresearchlab_cageCModel_islandora_ingest_steps(array &$form_state) {
+  module_load_include('inc', 'islandora_livingresearchlab', 'includes/lrl_relationships');
+  return array(
+    'islandora_lrl_cage_rels_update' => array(
+      'type' => 'callback',
+      'module' => 'islandora_livingresearchlab',
+      'file' => 'includes/lrl.relationships.inc',
+      'weight' => 11,
+      'do_function' => array(
+        'function' => 'islandora_lrl_cage_rels_update',
+        'args' => array(),
+      ),
+    ),
+  );
+}
+
+
+/**
+ * Implements hook_islandora_ingest_steps().
+ */
 function islandora_livingresearchlab_islandora_livingresearchlab_datasessionCModel_islandora_ingest_steps(array &$form_state) {
   module_load_include('inc', 'islandora_livingresearchlab', 'includes/lrl_relationships');
   return array(
     'islandora_lrl_datasession_rels_update' => array(
       'type' => 'callback',
       'module' => 'islandora_livingresearchlab',
-      'file' => 'includes/lrl_relationships.inc',
+      'file' => 'includes/lrl.relationships.inc',
       'weight' => 11,
       'do_function' => array(
         'function' => 'islandora_lrl_datasession_rels_update',
@@ -516,6 +590,25 @@ function islandora_livingresearchlab_islandora_livingresearchlab_experimentCMode
   return $derivatives;
 }
 
+
+/**
+ * Implements hook_islandora_CMODEL_PID_derivative().
+ */
+function islandora_livingresearchlab_islandora_livingresearchlab_cageCModel_islandora_derivative() {
+  $derivatives = array();
+
+  $derivatives[] = array(
+    'source_dsid' => NULL,
+    'destination_dsid' => 'TN',
+    'weight' => '0',
+    'function' => array(
+      'islandora_livingresearchlab_create_tn_cage',
+    ),
+    'file' => drupal_get_path('module', 'islandora_livingresearchlab') . '/includes/derivatives.inc',
+  );
+
+  return $derivatives;
+}
 
 /**
  * Implements hook_islandora_CMODEL_PID_derivative().
