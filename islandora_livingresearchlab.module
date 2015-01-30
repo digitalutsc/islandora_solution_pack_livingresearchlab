@@ -251,37 +251,24 @@ function islandora_livingresearchlab_islandora_required_objects(IslandoraTuque $
   $livingresearchlab_datasession_content_model->owner = 'fedoraAdmin';
   $livingresearchlab_datasession_content_model->label = 'Islandora Living Research Lab Data Session Content Model';
   $livingresearchlab_datasession_content_model->models = 'fedora-system:ContentModel-3.0';
-
-  $datastream = $livingresearchlab_datasession_content_model->constructDatastream('DS-COMPOSITE-MODEL', 'X');
-  $datastream->label = 'DS-COMPOSITE-MODEL';
-  $datastream->mimetype = 'text/xml';
-  $datastream->setContentFromFile("$module_path/xml/islandora_livingresearchlab_datasession_ds_composite_model.xml", FALSE);
-  $livingresearchlab_datasession_content_model->ingestDatastream($datastream);
+  // DS-COMPOSITE-MODEL Datastream.
+  islandora_livingresearchlab_ingest__ds_composite_datastream($livingresearchlab_datasession_content_model, $module_path . "/xml/islandora_livingresearchlab_datasession_ds_composite_model.xml");
 
   // Experiment CModel.
   $livingresearchlab_experiment_content_model = $connection->repository->constructObject('islandora:livingresearchlab_experimentCModel');
   $livingresearchlab_experiment_content_model->owner = 'fedoraAdmin';
   $livingresearchlab_experiment_content_model->label = 'Islandora Living Research Lab Experiment Content Model';
   $livingresearchlab_experiment_content_model->models = 'fedora-system:ContentModel-3.0';
-
-  $datastream = $livingresearchlab_experiment_content_model->constructDatastream('DS-COMPOSITE-MODEL', 'X');
-  $datastream->label = 'DS-COMPOSITE-MODEL';
-  $datastream->mimetype = 'text/xml';
-  $datastream->setContentFromFile("$module_path/xml/islandora_livingresearchlab_experiment_ds_composite_model.xml", FALSE);
-  $livingresearchlab_experiment_content_model->ingestDatastream($datastream);
+  // DS-COMPOSITE-MODEL Datastream.
+  islandora_livingresearchlab_ingest__ds_composite_datastream($livingresearchlab_experiment_content_model, $module_path . "/xml/islandora_livingresearchlab_experiment_ds_composite_model.xml");
 
   // Mouse CModel.
   $livingresearchlab_mouse_content_model = $connection->repository->constructObject('islandora:livingresearchlab_mouseCModel');
   $livingresearchlab_mouse_content_model->owner = 'fedoraAdmin';
   $livingresearchlab_mouse_content_model->label = 'Islandora Living Research Lab Mouse Content Model';
   $livingresearchlab_mouse_content_model->models = 'fedora-system:ContentModel-3.0';
-
-  $datastream = $livingresearchlab_mouse_content_model->constructDatastream('DS-COMPOSITE-MODEL', 'X');
-  $datastream->label = 'DS-COMPOSITE-MODEL';
-  $datastream->mimetype = 'text/xml';
-  $datastream->setContentFromFile("$module_path/xml/islandora_livingresearchlab_mouse_ds_composite_model.xml", FALSE);
-  $livingresearchlab_mouse_content_model->ingestDatastream($datastream);
-
+  // DS-COMPOSITE-MODEL Datastream.
+  islandora_livingresearchlab_ingest__ds_composite_datastream($livingresearchlab_mouse_content_model, $module_path . "/xml/islandora_livingresearchlab_mouse_ds_composite_model.xml");
 
   // DATASESSION root collection.
   $datasessions_collection = $connection->repository->constructObject('islandora:datasessions_collection');
@@ -395,6 +382,26 @@ function islandora_livingresearchlab_islandora_required_objects(IslandoraTuque $
     ),
   );
 }
+
+/**
+ * This function will add an entity DS composite datastream to an object.
+ *
+ * This is a workaround of a known issue with temp files being lost in Tuque in
+ * batches because of object destruction during the serialization process.
+ *
+ * @param AbstractObject $object
+ *   The object to add the DS composite datastream to.
+ */
+function islandora_livingresearchlab_ingest__ds_composite_datastream(AbstractObject $object, $filename) {
+  $module_path = drupal_get_path('module', 'islandora_livingresearchlab');
+
+  $ds_composite_datastream = $object->constructDatastream('DS-COMPOSITE-MODEL', 'X');
+  $ds_composite_datastream->label = 'DS-COMPOSITE-MODEL';
+  $ds_composite_datastream->mimetype = 'text/xml';
+  $ds_composite_datastream->setContentFromFile($filename, FALSE);
+  $object->ingestDatastream($ds_composite_datastream);
+}
+
 
 /**
  * Implements hook_islandora_ingest_steps().
