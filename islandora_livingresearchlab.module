@@ -151,10 +151,10 @@ function islandora_livingresearchlab_islandora_xml_form_builder_forms() {
       'form_file' => "$module_path/xml/forms/DataSession_dwc.xml",
     ),
     'DSU Experiment DwC' => array(
-      'form_file' => "$module_path/xml/forms/Cage_dwc.xml",
+      'form_file' => "$module_path/xml/forms/Experiment_dwc.xml",
     ),
     'DSU Cage DwC' => array(
-      'form_file' => "$module_path/xml/forms/Experiment_dwc.xml",
+      'form_file' => "$module_path/xml/forms/Cage_dwc.xml",
     ),
     'DSU Mouse DwC' => array(
       'form_file' => "$module_path/xml/forms/Mouse_dwc.xml",
