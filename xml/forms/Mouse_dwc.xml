@@ -681,7 +681,121 @@
                         </properties>
                         <children/>
                     </element>
-                    <element name="locationtab">
+                    <element name="ResourceRelationship1">
+                        <properties>
+                            <type>item</type>
+                            <access>TRUE</access>
+                            <collapsed>FALSE</collapsed>
+                            <collapsible>FALSE</collapsible>
+                            <disabled>FALSE</disabled>
+                            <executes_submit_callback>FALSE</executes_submit_callback>
+                            <multiple>FALSE</multiple>
+                            <required>FALSE</required>
+                            <resizable>FALSE</resizable>
+                            <title>Associated Protocol</title>
+                            <tree>TRUE</tree>
+                            <actions>
+                                <create>
+                                    <path>/dwr:DarwinRecordSet</path>
+                                    <context>document</context>
+                                    <schema/>
+                                    <type>element</type>
+                                    <prefix>dwc</prefix>
+                                    <value>dwc:ResourceRelationship</value>
+                                </create>
+                                <read>
+                                    <path>/dwr:DarwinRecordSet/dwc:ResourceRelationship[1]</path>
+                                    <context>document</context>
+                                </read>
+                                <update>
+                                    <path>self::node()</path>
+                                    <context>self</context>
+                                </update>
+                                <delete>
+                                    <path>self::node()</path>
+                                    <context>self</context>
+                                </delete>
+                            </actions>
+                        </properties>
+                        <children>
+                            <element name="protocolrelatedResourceid">
+                                <properties>
+                                    <type>textfield</type>
+                                    <access>TRUE</access>
+                                    <autocomplete_path>islandora/lrl_object/autocomplete/protocol</autocomplete_path>
+                                    <collapsed>FALSE</collapsed>
+                                    <collapsible>FALSE</collapsible>
+                                    <disabled>FALSE</disabled>
+                                    <executes_submit_callback>FALSE</executes_submit_callback>
+                                    <multiple>FALSE</multiple>
+                                    <required>FALSE</required>
+                                    <resizable>FALSE</resizable>
+                                    <tree>TRUE</tree>
+                                    <actions>
+                                        <create>
+                                            <path>/dwr:DarwinRecordSet/dwc:ResourceRelationship[1]</path>
+                                            <context>document</context>
+                                            <schema/>
+                                            <type>element</type>
+                                            <prefix>dwc</prefix>
+                                            <value>dwc:relatedResourceID</value>
+                                        </create>
+                                        <read>
+                                            <path>/dwr:DarwinRecordSet/dwc:ResourceRelationship[1]/dwc:relatedResourceID[1]</path>
+                                            <context>document</context>
+                                        </read>
+                                        <update>
+                                            <path>self::node()</path>
+                                            <context>self</context>
+                                        </update>
+                                        <delete>
+                                            <path>self::node()</path>
+                                            <context>self</context>
+                                        </delete>
+                                    </actions>
+                                </properties>
+                                <children/>
+                            </element>
+                            <element name="protocolrelationshipOfResource">
+                                <properties>
+                                    <type>markup</type>
+                                    <access>TRUE</access>
+                                    <collapsed>FALSE</collapsed>
+                                    <collapsible>FALSE</collapsible>
+                                    <disabled>FALSE</disabled>
+                                    <executes_submit_callback>FALSE</executes_submit_callback>
+                                    <multiple>FALSE</multiple>
+                                    <required>FALSE</required>
+                                    <resizable>FALSE</resizable>
+                                    <tree>TRUE</tree>
+                                    <actions>
+                                        <create>
+                                            <path>/dwr:DarwinRecordSet/dwc:ResourceRelationship[1]</path>
+                                            <context>document</context>
+                                            <schema/>
+                                            <type>xml</type>
+                                            <prefix>NULL</prefix>
+                                            <value>&lt;dwc:relationshipOfResource&gt;isTestSubjectUnder&lt;/dwc:relationshipOfResource&gt;</value>
+                                        </create>
+                                        <read>
+                                            <path>/dwr:DarwinRecordSet/dwc:ResourceRelationship[1]/dwc:relationshipOfResource[1]</path>
+                                            <context>document</context>
+                                        </read>
+                                        <update>
+                                            <path>self::node()</path>
+                                            <context>self</context>
+                                        </update>
+                                        <delete>
+                                            <path>self::node()</path>
+                                            <context>self</context>
+                                        </delete>
+                                    </actions>
+                                </properties>
+                                <children/>
+                            </element>
+                        </children>
+                    </element>
+                    <element name="locationtabcagehistory">
                         <properties>
                             <type>tabs</type>
                             <access>TRUE</access>
@@ -692,7 +806,7 @@
                             <multiple>FALSE</multiple>
                             <required>FALSE</required>
                             <resizable>FALSE</resizable>
-                            <title>Cage Record</title>
+                            <title>Cage History</title>
                             <tree>TRUE</tree>
                         </properties>
                         <children>
@@ -736,6 +850,7 @@
                                         <properties>
                                             <type>textfield</type>
                                             <access>TRUE</access>
+                                            <autocomplete_path>islandora/lrl_object/autocomplete/cage</autocomplete_path>
                                             <collapsed>FALSE</collapsed>
                                             <collapsible>FALSE</collapsible>
                                             <disabled>FALSE</disabled>
@@ -780,9 +895,8 @@
                                             <executes_submit_callback>FALSE</executes_submit_callback>
                                             <multiple>FALSE</multiple>
                                             <options>
-                                                <index key="Cage born">Cage born</index>
-                                                <index key="Living cage">Living cage</index>
-                                                <index key="Breeding cage">Breeding cage</index>
+                                                <pastCage>Past cage</pastCage>
+                                                <currentCage>Current cage</currentCage>
                                             </options>
                                             <required>FALSE</required>
                                             <resizable>FALSE</resizable>
@@ -1143,120 +1257,6 @@
                                     </element>
                                 </children>
                             </element>
-                            <element name="ResourceRelationship1">
-                                <properties>
-                                    <type>item</type>
-                                    <access>TRUE</access>
-                                    <collapsed>FALSE</collapsed>
-                                    <collapsible>FALSE</collapsible>
-                                    <disabled>FALSE</disabled>
-                                    <executes_submit_callback>FALSE</executes_submit_callback>
-                                    <multiple>FALSE</multiple>
-                                    <required>FALSE</required>
-                                    <resizable>FALSE</resizable>
-                                    <title>Mother Identifier</title>
-                                    <tree>TRUE</tree>
-                                    <actions>
-                                        <create>
-                                            <path>/dwr:DarwinRecordSet</path>
-                                            <context>document</context>
-                                            <schema/>
-                                            <type>element</type>
-                                            <prefix>dwc</prefix>
-                                            <value>dwc:ResourceRelationship</value>
-                                        </create>
-                                        <read>
-                                            <path>/dwr:DarwinRecordSet/dwc:ResourceRelationship[1]</path>
-                                            <context>document</context>
-                                        </read>
-                                        <update>
-                                            <path>self::node()</path>
-                                            <context>self</context>
-                                        </update>
-                                        <delete>
-                                            <path>self::node()</path>
-                                            <context>self</context>
-                                        </delete>
-                                    </actions>
-                                </properties>
-                                <children>
-                                    <element name="motherrelatedResourceid">
-                                        <properties>
-                                            <type>textfield</type>
-                                            <access>TRUE</access>
-                                            <autocomplete_path>islandora/lrl_object/autocomplete/mouse</autocomplete_path>
-                                            <collapsed>FALSE</collapsed>
-                                            <collapsible>FALSE</collapsible>
-                                            <disabled>FALSE</disabled>
-                                            <executes_submit_callback>FALSE</executes_submit_callback>
-                                            <multiple>FALSE</multiple>
-                                            <required>FALSE</required>
-                                            <resizable>FALSE</resizable>
-                                            <tree>TRUE</tree>
-                                            <actions>
-                                                <create>
-                                                    <path>/dwr:DarwinRecordSet/dwc:ResourceRelationship[1]</path>
-                                                    <context>document</context>
-                                                    <schema/>
-                                                    <type>element</type>
-                                                    <prefix>dwc</prefix>
-                                                    <value>dwc:relatedResourceID</value>
-                                                </create>
-                                                <read>
-                                                    <path>/dwr:DarwinRecordSet/dwc:ResourceRelationship[1]/dwc:relatedResourceID[1]</path>
-                                                    <context>document</context>
-                                                </read>
-                                                <update>
-                                                    <path>self::node()</path>
-                                                    <context>self</context>
-                                                </update>
-                                                <delete>
-                                                    <path>self::node()</path>
-                                                    <context>self</context>
-                                                </delete>
-                                            </actions>
-                                        </properties>
-                                        <children/>
-                                    </element>
-                                    <element name="motherrelationshipOfResource">
-                                        <properties>
-                                            <type>markup</type>
-                                            <access>TRUE</access>
-                                            <collapsed>FALSE</collapsed>
-                                            <collapsible>FALSE</collapsible>
-                                            <disabled>FALSE</disabled>
-                                            <executes_submit_callback>FALSE</executes_submit_callback>
-                                            <multiple>FALSE</multiple>
-                                            <required>FALSE</required>
-                                            <resizable>FALSE</resizable>
-                                            <tree>TRUE</tree>
-                                            <actions>
-                                                <create>
-                                                    <path>/dwr:DarwinRecordSet/dwc:ResourceRelationship[1]</path>
-                                                    <context>document</context>
-                                                    <schema/>
-                                                    <type>xml</type>
-                                                    <prefix>NULL</prefix>
-                                                    <value>&lt;dwc:relationshipOfResource&gt;hasMother&lt;/dwc:relationshipOfResource&gt;</value>
-                                                </create>
-                                                <read>
-                                                    <path>/dwr:DarwinRecordSet/dwc:ResourceRelationship[1]/dwc:relationshipOfResource[1]</path>
-                                                    <context>document</context>
-                                                </read>
-                                                <update>
-                                                    <path>self::node()</path>
-                                                    <context>self</context>
-                                                </update>
-                                                <delete>
-                                                    <path>self::node()</path>
-                                                    <context>self</context>
-                                                </delete>
-                                            </actions>
-                                        </properties>
-                                        <children/>
-                                    </element>
-                                </children>
-                            </element>
                             <element name="ResourceRelationship2">
                                 <properties>
                                     <type>item</type>
@@ -1268,7 +1268,7 @@
                                     <multiple>FALSE</multiple>
                                     <required>FALSE</required>
                                     <resizable>FALSE</resizable>
-                                    <title>Father Identifier</title>
+                                    <title>Mother Identifier</title>
                                     <tree>TRUE</tree>
                                     <actions>
                                         <create>
@@ -1294,7 +1294,7 @@
                                     </actions>
                                 </properties>
                                 <children>
-                                    <element name="fatherrelatedResourceid">
+                                    <element name="motherrelatedResourceid">
                                         <properties>
                                             <type>textfield</type>
                                             <access>TRUE</access>
@@ -1332,7 +1332,7 @@
                                         </properties>
                                         <children/>
                                     </element>
-                                    <element name="fatherrelationshipOfResource">
+                                    <element name="motherrelationshipOfResource">
                                         <properties>
                                             <type>markup</type>
                                             <access>TRUE</access>
@@ -1351,10 +1351,124 @@
                                                     <schema/>
                                                     <type>xml</type>
                                                     <prefix>NULL</prefix>
-                                                    <value>&lt;dwc:relationshipOfResource&gt;hasFather&lt;/dwc:relationshipOfResource&gt;</value>
+                                                    <value>&lt;dwc:relationshipOfResource&gt;hasMother&lt;/dwc:relationshipOfResource&gt;</value>
                                                 </create>
                                                 <read>
                                                     <path>/dwr:DarwinRecordSet/dwc:ResourceRelationship[2]/dwc:relationshipOfResource[1]</path>
+                                                    <context>document</context>
+                                                </read>
+                                                <update>
+                                                    <path>self::node()</path>
+                                                    <context>self</context>
+                                                </update>
+                                                <delete>
+                                                    <path>self::node()</path>
+                                                    <context>self</context>
+                                                </delete>
+                                            </actions>
+                                        </properties>
+                                        <children/>
+                                    </element>
+                                </children>
+                            </element>
+                            <element name="ResourceRelationship3">
+                                <properties>
+                                    <type>item</type>
+                                    <access>TRUE</access>
+                                    <collapsed>FALSE</collapsed>
+                                    <collapsible>FALSE</collapsible>
+                                    <disabled>FALSE</disabled>
+                                    <executes_submit_callback>FALSE</executes_submit_callback>
+                                    <multiple>FALSE</multiple>
+                                    <required>FALSE</required>
+                                    <resizable>FALSE</resizable>
+                                    <title>Father Identifier</title>
+                                    <tree>TRUE</tree>
+                                    <actions>
+                                        <create>
+                                            <path>/dwr:DarwinRecordSet</path>
+                                            <context>document</context>
+                                            <schema/>
+                                            <type>element</type>
+                                            <prefix>dwc</prefix>
+                                            <value>dwc:ResourceRelationship</value>
+                                        </create>
+                                        <read>
+                                            <path>/dwr:DarwinRecordSet/dwc:ResourceRelationship[3]</path>
+                                            <context>document</context>
+                                        </read>
+                                        <update>
+                                            <path>self::node()</path>
+                                            <context>self</context>
+                                        </update>
+                                        <delete>
+                                            <path>self::node()</path>
+                                            <context>self</context>
+                                        </delete>
+                                    </actions>
+                                </properties>
+                                <children>
+                                    <element name="fatherrelatedResourceid">
+                                        <properties>
+                                            <type>textfield</type>
+                                            <access>TRUE</access>
+                                            <autocomplete_path>islandora/lrl_object/autocomplete/mouse</autocomplete_path>
+                                            <collapsed>FALSE</collapsed>
+                                            <collapsible>FALSE</collapsible>
+                                            <disabled>FALSE</disabled>
+                                            <executes_submit_callback>FALSE</executes_submit_callback>
+                                            <multiple>FALSE</multiple>
+                                            <required>FALSE</required>
+                                            <resizable>FALSE</resizable>
+                                            <tree>TRUE</tree>
+                                            <actions>
+                                                <create>
+                                                    <path>/dwr:DarwinRecordSet/dwc:ResourceRelationship[3]</path>
+                                                    <context>document</context>
+                                                    <schema/>
+                                                    <type>element</type>
+                                                    <prefix>dwc</prefix>
+                                                    <value>dwc:relatedResourceID</value>
+                                                </create>
+                                                <read>
+                                                    <path>/dwr:DarwinRecordSet/dwc:ResourceRelationship[3]/dwc:relatedResourceID[1]</path>
+                                                    <context>document</context>
+                                                </read>
+                                                <update>
+                                                    <path>self::node()</path>
+                                                    <context>self</context>
+                                                </update>
+                                                <delete>
+                                                    <path>self::node()</path>
+                                                    <context>self</context>
+                                                </delete>
+                                            </actions>
+                                        </properties>
+                                        <children/>
+                                    </element>
+                                    <element name="fatherrelationshipOfResource">
+                                        <properties>
+                                            <type>markup</type>
+                                            <access>TRUE</access>
+                                            <collapsed>FALSE</collapsed>
+                                            <collapsible>FALSE</collapsible>
+                                            <disabled>FALSE</disabled>
+                                            <executes_submit_callback>FALSE</executes_submit_callback>
+                                            <multiple>FALSE</multiple>
+                                            <required>FALSE</required>
+                                            <resizable>FALSE</resizable>
+                                            <tree>TRUE</tree>
+                                            <actions>
+                                                <create>
+                                                    <path>/dwr:DarwinRecordSet/dwc:ResourceRelationship[3]</path>
+                                                    <context>document</context>
+                                                    <schema/>
+                                                    <type>xml</type>
+                                                    <prefix>NULL</prefix>
+                                                    <value>&lt;dwc:relationshipOfResource&gt;hasFather&lt;/dwc:relationshipOfResource&gt;</value>
+                                                </create>
+                                                <read>
+                                                    <path>/dwr:DarwinRecordSet/dwc:ResourceRelationship[3]/dwc:relationshipOfResource[1]</path>
                                                     <context>document</context>
                                                 </read>
                                                 <update>

@@ -461,7 +461,7 @@ function islandora_livingresearchlab_ingest__ds_composite_datastream(AbstractObj
  * Implements hook_islandora_ingest_steps().
  */
 function islandora_livingresearchlab_islandora_livingresearchlab_mouseCModel_islandora_ingest_steps(array &$form_state) {
-  module_load_include('inc', 'islandora_livingresearchlab', 'includes/lrl_relationships');
+  module_load_include('inc', 'islandora_livingresearchlab', 'includes/lrl.relationships');
   return array(
     'islandora_lrl_mice_id' => array(
       'weight' => 1,
@@ -498,7 +498,7 @@ function islandora_livingresearchlab_islandora_livingresearchlab_mouseCModel_isl
  * Implements hook_islandora_ingest_steps().
  */
 function islandora_livingresearchlab_islandora_livingresearchlab_experimentCModel_islandora_ingest_steps(array &$form_state) {
-  module_load_include('inc', 'islandora_livingresearchlab', 'includes/lrl_relationships');
+  module_load_include('inc', 'islandora_livingresearchlab', 'includes/lrl.relationships');
   return array(
     'islandora_lrl_experiment_rels_update' => array(
       'type' => 'callback',
@@ -517,7 +517,7 @@ function islandora_livingresearchlab_islandora_livingresearchlab_experimentCMode
  * Implements hook_islandora_ingest_steps().
  */
 function islandora_livingresearchlab_islandora_livingresearchlab_cageCModel_islandora_ingest_steps(array &$form_state) {
-  module_load_include('inc', 'islandora_livingresearchlab', 'includes/lrl_relationships');
+  module_load_include('inc', 'islandora_livingresearchlab', 'includes/lrl.relationships');
   return array(
     'islandora_lrl_cage_rels_update' => array(
       'type' => 'callback',
@@ -537,7 +537,7 @@ function islandora_livingresearchlab_islandora_livingresearchlab_cageCModel_isla
  * Implements hook_islandora_ingest_steps().
  */
 function islandora_livingresearchlab_islandora_livingresearchlab_datasessionCModel_islandora_ingest_steps(array &$form_state) {
-  module_load_include('inc', 'islandora_livingresearchlab', 'includes/lrl_relationships');
+  module_load_include('inc', 'islandora_livingresearchlab', 'includes/lrl.relationships');
   return array(
     'islandora_lrl_datasession_rels_update' => array(
       'type' => 'callback',
