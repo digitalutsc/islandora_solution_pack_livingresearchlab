@@ -82,5 +82,6 @@ function islandora_lrl_mouse_rels_update(array &$form_state) {
       $pid = substr($f_pid[1], 0, -1);
       $object->relationships->add(ISLANDORA_RELS_EXT_URI, 'hasFather', $pid);
     }
+    // @todo: Need update rels for protocol and cage??
   }
 }

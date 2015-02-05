@@ -26,6 +26,11 @@ function islandora_livingresearchlab_autocomplete($type, $string = '') {
       'title' => 'dc.title',
       'collection' => 'islandora:experiments_collection',
     ),
+    'cage' => array(
+      'cmodel' => 'islandora:livingresearchlab_cageCModel',
+      'title' => 'dc.title',
+      'collection' => 'islandora:cages_collection',
+    ),
     'protocol' => array(
       'cmodel' => 'islandora:sp_pdf',
       'title' => 'dc.title',
