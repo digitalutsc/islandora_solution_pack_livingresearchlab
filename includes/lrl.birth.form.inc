@@ -50,6 +50,7 @@ function islandora_livingresearchlab_add_birth_form(array $form, array &$form_st
     '#type' => 'textfield',
     '#title' => t('Cage born ID'),
     '#description' => t('An unique ID for Breeding cage.'),
+    '#autocomplete_path' => 'islandora/lrl_object/autocomplete/cage',
     '#size' => 25,
   );
   $form['lrl_birth_mother'] = array(
@@ -167,6 +168,14 @@ function islandora_livingresearchlab_add_birth_form_submit(array $form, array &$
   $mother_id = $form_state['values']['lrl_birth_mother'];
   $father_id = $form_state['values']['lrl_birth_father'];
   $weandate = $form_state['values']['lrl_birth_weandate'];
+  if (isset($weandate) && empty($weandate)) {
+    $weandate = date('Y-m-d');
+    $default_weandate = date('Y-m-d', strtotime($weandate . ' + 21 days'));
+  }
+  else {
+    $default_weandate = $weandate;
+  }
+
   $dob = $form_state['values']['lrl_birth_dob'];
   $setupdate = $form_state['values']['lrl_birth_setupdate'];
   $children = $form_state['values']['lrl_birth_children']['id_fieldset'];
@@ -211,9 +220,10 @@ function islandora_livingresearchlab_add_birth_form_submit(array $form, array &$
       $taxon_id = $taxon->appendChild($dom->createElementNS($dwc_url, 'dwc:taxonID', 'NotYetDefined'));
       $taxon_remarks = $taxon->appendChild($dom->createElementNS($dwc_url, 'dwc:taxonRemarks', 'mouseType'));
 
+      // @todo: Update cage related xml.
       $location = $dwr->appendChild($dom->createElementNS($dcterms_url, 'dcterms:Location'));
       $loc_id = $location->appendChild($dom->createElementNS($dwc_url, 'dwc:locationID', $birth_cage_id));
-      $locality = $location->appendChild($dom->createElementNS($dwc_url, 'dwc:locality', 'Cage born'));
+      $locality = $location->appendChild($dom->createElementNS($dwc_url, 'dwc:locality', 'currentCage'));
       if (isset($dob) && !empty($dob)) {
         $location_remarks = $location->appendChild($dom->createElementNS($dwc_url, 'dwc:locationRemarks', date('Y-m-d', strtotime($dob))));
       }
@@ -236,9 +246,9 @@ function islandora_livingresearchlab_add_birth_form_submit(array $form, array &$
       $rels_id = $rels->appendChild($dom->createElementNS($dwc_url, 'dwc:relatedResourceID', $father_id));
       $rels_resource = $rels->appendChild($dom->createElementNS($dwc_url, 'dwc:relationshipOfResource', 'hasFather'));
 
-      if (isset($weandate) && !empty($weandate)) {
+      if (!empty($default_weandate)) {
         $event = $dwr->appendChild($dom->createElementNS($dwc_url, 'dwc:Event'));
-        $event_date = $event->appendChild($dom->createElementNS($dwc_url, 'dwc:eventDate', date('Y-m-d', strtotime($weandate))));
+        $event_date = $event->appendChild($dom->createElementNS($dwc_url, 'dwc:eventDate', $default_weandate));
         $event_remarks = $event->appendChild($dom->createElementNS($dwc_url, 'dwc:eventRemarks', 'weanDate'));
       }
 
