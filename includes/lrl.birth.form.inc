@@ -67,17 +67,19 @@ function islandora_livingresearchlab_add_birth_form(array $form, array &$form_st
     '#required' => TRUE,
     '#size' => 25,
   );
-  $form['lrl_birth_weandate'] = array(
+  $form['lrl_birth_dob'] = array(
     '#type' => 'textfield',
-    '#title' => t('Wean Date'),
+    '#title' => t('Date of Birth'),
+    '#description' => t("Will default to TODAY's date when empty."),
     '#attributes' => array(
       'class' => array('datepicker'),
     ),
     '#size' => 25,
   );
-  $form['lrl_birth_dob'] = array(
+  $form['lrl_birth_weandate'] = array(
     '#type' => 'textfield',
-    '#title' => t('Date of Birth'),
+    '#title' => t('Wean Date'),
+    '#description' => t("Will default to DOB +21 days when empty."),
     '#attributes' => array(
       'class' => array('datepicker'),
     ),
@@ -168,18 +170,16 @@ function islandora_livingresearchlab_add_birth_form_submit(array $form, array &$
   $mother_id = $form_state['values']['lrl_birth_mother'];
   $father_id = $form_state['values']['lrl_birth_father'];
   $weandate = $form_state['values']['lrl_birth_weandate'];
+  $dob = $form_state['values']['lrl_birth_dob'] ? $form_state['values']['lrl_birth_dob'] : date('Y-m-d');
+  $setupdate = $form_state['values']['lrl_birth_setupdate'];
+  $children = $form_state['values']['lrl_birth_children']['id_fieldset'];
+  $litter = explode('-', $children['child1']);
   if (isset($weandate) && empty($weandate)) {
-    $weandate = date('Y-m-d');
-    $default_weandate = date('Y-m-d', strtotime($weandate . ' + 21 days'));
+    $default_weandate = date('Y-m-d', strtotime($dob . ' + 21 days'));
   }
   else {
     $default_weandate = $weandate;
   }
-
-  $dob = $form_state['values']['lrl_birth_dob'];
-  $setupdate = $form_state['values']['lrl_birth_setupdate'];
-  $children = $form_state['values']['lrl_birth_children']['id_fieldset'];
-  $litter = explode('-', $children['child1']);
 
   foreach ($children as $child) {
     // Update Mice table to track Mice IDs.
@@ -220,7 +220,6 @@ function islandora_livingresearchlab_add_birth_form_submit(array $form, array &$
       $taxon_id = $taxon->appendChild($dom->createElementNS($dwc_url, 'dwc:taxonID', 'NotYetDefined'));
       $taxon_remarks = $taxon->appendChild($dom->createElementNS($dwc_url, 'dwc:taxonRemarks', 'mouseType'));
 
-      // @todo: Update cage related xml.
       $location = $dwr->appendChild($dom->createElementNS($dcterms_url, 'dcterms:Location'));
       $loc_id = $location->appendChild($dom->createElementNS($dwc_url, 'dwc:locationID', $birth_cage_id));
       $locality = $location->appendChild($dom->createElementNS($dwc_url, 'dwc:locality', 'currentCage'));
