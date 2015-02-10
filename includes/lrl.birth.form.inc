@@ -259,7 +259,8 @@ function islandora_livingresearchlab_add_birth_form_submit(array $form, array &$
 
       $dom->preserveWhiteSpace = FALSE;
       $dom->formatOutput = TRUE;
-
+      $cageid_part = explode('(', $birth_cage_id);
+      $cage_pid = substr($cageid_part[1], 0, strlen($cageid_part[1]) - 1);
       $motherid_part = explode('(', $mother_id);
       $mother_pid = substr($motherid_part[1], 0, strlen($motherid_part[1]) - 1);
       $fatherid_part = explode('(', $father_id);
@@ -284,6 +285,7 @@ function islandora_livingresearchlab_add_birth_form_submit(array $form, array &$
       $object->relationships->add(FEDORA_RELS_EXT_URI, 'isMemberOfCollection', 'islandora:mice_collection');
       $object->relationships->add(ISLANDORA_RELS_EXT_URI, 'hasMother', $mother_pid);
       $object->relationships->add(ISLANDORA_RELS_EXT_URI, 'hasFather', $father_pid);
+      $object->relationships->add(ISLANDORA_RELS_EXT_URI, 'isTestSubjectUnder', $cage_pid);
       $dsid = 'DWC';
       $ds = $object->constructDatastream($dsid, 'M');
       $ds->label = $dsid;

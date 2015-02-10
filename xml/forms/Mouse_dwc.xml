@@ -810,7 +810,7 @@
                             <tree>TRUE</tree>
                         </properties>
                         <children>
-                            <element name="tabpaneldctermslocation1recursive">
+                            <element name="0">
                                 <properties>
                                     <type>tabpanel</type>
                                     <access>TRUE</access>

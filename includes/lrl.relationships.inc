@@ -20,14 +20,6 @@ function islandora_lrl_experiment_rels_update(array &$form_state) {
   }
 }
 
-/**
- * Callback to update relationships between Experiment and Protocol.
- *
- * Update relationships if an Experiment object is ingested successfully.
- */
-function islandora_lrl_cage_rels_update(array &$form_state) {
-// @todo islandora_lrl_cage_rels_update()
-}
 
 /**
  * Callback to update relationships between Experiment and DataSession.
@@ -70,18 +62,38 @@ function islandora_lrl_mouse_rels_update(array &$form_state) {
   $metadata_step_storage = &islandora_ingest_form_get_step_storage($form_state, 'xml_form_builder_metadata_step');
   $object = islandora_ingest_form_get_object($form_state);
   if ($metadata_step_storage['created']['DWC'] && $object) {
-    if (!empty($metadata_step_storage['values']['dwc_fields_mouse']['birthFieldset']['ResourceRelationship1']['motherrelatedResourceid'])) {
-      $mother = $metadata_step_storage['values']['dwc_fields_mouse']['birthFieldset']['ResourceRelationship1']['motherrelatedResourceid'];
+    if (!empty($metadata_step_storage['values']['dwc_fields_mouse']['birthFieldset']['ResourceRelationship2']['motherrelatedResourceid'])) {
+      $mother = $metadata_step_storage['values']['dwc_fields_mouse']['birthFieldset']['ResourceRelationship2']['motherrelatedResourceid'];
       $m_pid = explode('(', trim($mother));
       $pid = substr($m_pid[1], 0, -1);
       $object->relationships->add(ISLANDORA_RELS_EXT_URI, 'hasMother', $pid);
     }
-    if (!empty($metadata_step_storage['values']['dwc_fields_mouse']['birthFieldset']['ResourceRelationship2']['fatherrelatedResourceid'])) {
-      $father = $metadata_step_storage['values']['dwc_fields_mouse']['birthFieldset']['ResourceRelationship2']['fatherrelatedResourceid'];
+    if (!empty($metadata_step_storage['values']['dwc_fields_mouse']['birthFieldset']['ResourceRelationship3']['fatherrelatedResourceid'])) {
+      $father = $metadata_step_storage['values']['dwc_fields_mouse']['birthFieldset']['ResourceRelationship3']['fatherrelatedResourceid'];
       $f_pid = explode('(', trim($father));
       $pid = substr($f_pid[1], 0, -1);
       $object->relationships->add(ISLANDORA_RELS_EXT_URI, 'hasFather', $pid);
     }
-    // @todo: Need update rels for protocol and cage??
+    if (!empty($metadata_step_storage['values']['dwc_fields_mouse']['locationtabcagehistory'][0]['locationid1'])
+    || !empty($metadata_step_storage['values']['dwc_fields_mouse']['locationtabcagehistory'][1]['locationid1'])) {
+      $cage_history = $metadata_step_storage['values']['dwc_fields_mouse']['locationtabcagehistory'];
+      foreach ($cage_history as $cage) {
+        if (trim($cage['locality1']) == 'currentCage') {
+          $cage_id = $cage['locationid1'];
+        }
+      }
+      $cage_pid = explode('(', trim($cage_id));
+      $pid = substr($cage_pid[1], 0, -1);
+      $object->relationships->add(ISLANDORA_RELS_EXT_URI, 'isCurrentResidentOf', $pid);
+    }
+
+    if (!empty($metadata_step_storage['values']['dwc_fields_mouse']['ResourceRelationship1']['protocolrelatedResourceid'])) {
+      $protocol = $metadata_step_storage['values']['dwc_fields_mouse']['ResourceRelationship1']['protocolrelatedResourceid'];
+      $p_pid = explode('(', trim($protocol));
+      $pid = substr($p_pid[1], 0, -1);
+      $object->relationships->add(ISLANDORA_RELS_EXT_URI, 'isTestSubjectUnder', $pid);
+    }
+
+
   }
 }

@@ -513,25 +513,6 @@ function islandora_livingresearchlab_islandora_livingresearchlab_experimentCMode
   );
 }
 
-/**
- * Implements hook_islandora_ingest_steps().
- */
-function islandora_livingresearchlab_islandora_livingresearchlab_cageCModel_islandora_ingest_steps(array &$form_state) {
-  module_load_include('inc', 'islandora_livingresearchlab', 'includes/lrl.relationships');
-  return array(
-    'islandora_lrl_cage_rels_update' => array(
-      'type' => 'callback',
-      'module' => 'islandora_livingresearchlab',
-      'file' => 'includes/lrl.relationships.inc',
-      'weight' => 11,
-      'do_function' => array(
-        'function' => 'islandora_lrl_cage_rels_update',
-        'args' => array(),
-      ),
-    ),
-  );
-}
-
 
 /**
  * Implements hook_islandora_ingest_steps().
