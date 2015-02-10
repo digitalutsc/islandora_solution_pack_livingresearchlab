@@ -68,3 +68,17 @@ function lrl_generate_mouse_id($s, $x, $is_litter = TRUE, $seq = '01') {
     return $s . '-' . $x . '-' . $shipment . '-' . $seq_padded;
   }
 }
+
+/**
+ * Helper function to extract PID from relationship autocomplete field string.
+ *
+ * @param string $rel_str
+ *   A string created by autocomplete field e.g. cage 1917317 (islandora:242).
+ *
+ * @return string
+ *   A valid PID.
+ */
+function lrl_extract_pid($rel_str) {
+  $part = explode('(', trim($rel_str));
+  return substr($part[1], 0, -1);
+}

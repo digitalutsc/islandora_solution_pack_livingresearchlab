@@ -164,6 +164,7 @@ function ajax_update_birth_nums_callback($form, $form_state) {
 function islandora_livingresearchlab_add_birth_form_submit(array $form, array &$form_state) {
   module_load_include('inc', 'islandora', 'includes/tuque');
   module_load_include('inc', 'islandora', 'includes/tuque_wrapper');
+  module_load_include('inc', 'islandora_livingresearchlab', 'includes/utilities');
 
   $birth_id = $form_state['values']['lrl_birth_id'];
   $birth_cage_id = $form_state['values']['lrl_birth_cage_id'];
@@ -259,12 +260,10 @@ function islandora_livingresearchlab_add_birth_form_submit(array $form, array &$
 
       $dom->preserveWhiteSpace = FALSE;
       $dom->formatOutput = TRUE;
-      $cageid_part = explode('(', $birth_cage_id);
-      $cage_pid = substr($cageid_part[1], 0, strlen($cageid_part[1]) - 1);
-      $motherid_part = explode('(', $mother_id);
-      $mother_pid = substr($motherid_part[1], 0, strlen($motherid_part[1]) - 1);
-      $fatherid_part = explode('(', $father_id);
-      $father_pid = substr($fatherid_part[1], 0, strlen($fatherid_part[1]) - 1);
+
+      $cage_pid = lrl_extract_pid($birth_cage_id);
+      $mother_pid = lrl_extract_pid($mother_id);
+      $father_pid = lrl_extract_pid($father_id);
 
       $connection = islandora_get_tuque_connection();
       $repository = $connection->repository;
