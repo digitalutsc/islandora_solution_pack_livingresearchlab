@@ -127,7 +127,7 @@ function islandora_livingresearchlab_islandora_livingresearchlab_experimentCMode
   return array('' => $output);
 }
 
-function islandora_livingresearchlab_islandora_livingresearchlab_mouseCModel_islandora_view_object($object, $page_number, $page_size) {
+function islandora_livingresearchlab_islandora_livingresearchlab_mouseCModel_islandora_view_object($object) {
   $output = theme('islandora_livingresearchlab', array('object' => $object));
   return array('' => $output);
 }
