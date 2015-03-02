@@ -39,11 +39,11 @@ function islandora_lrl_datasession_rels_update(array &$form_state) {
     $len = count($data_files);
     if ($len >= 1) {
       foreach ($data_files as $i => $data_file) {
-        $file = $data_file['resourceID'];
+        $file = $data_file['measurementID'];
         if (preg_match('/\s/', $file)) {
           $file = preg_replace('/\s+/', '_', $file);
         }
-        $mice[$i] = explode('(', trim($data_file['relresourceID']));
+        $mice[$i] = explode('(', trim($data_file['measurementUnit']));
         $mice_id = substr($mice[$i][1], 0, -1);
         $object->relationships->add(ISLANDORA_RELS_EXT_URI, 'isDataMeasurementOf', $mice_id);
         $object->relationships->add(ISLANDORA_RELS_EXT_URI, 'hasDataFile', $file);

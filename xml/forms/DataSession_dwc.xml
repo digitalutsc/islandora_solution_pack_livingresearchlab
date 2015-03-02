@@ -422,7 +422,7 @@
                             <tree>TRUE</tree>
                         </properties>
                         <children>
-                            <element name="ResourceRelationship2">
+                            <element name="0">
                                 <properties>
                                     <type>tabpanel</type>
                                     <access>TRUE</access>
@@ -441,10 +441,10 @@
                                             <schema/>
                                             <type>element</type>
                                             <prefix>dwc</prefix>
-                                            <value>dwc:ResourceRelationship</value>
+                                            <value>dwc:MeasurementOrFact</value>
                                         </create>
                                         <read>
-                                            <path>dwc:ResourceRelationship</path>
+                                            <path>dwc:MeasurementOrFact</path>
                                             <context>parent</context>
                                         </read>
                                         <update>
@@ -458,7 +458,7 @@
                                     </actions>
                                 </properties>
                                 <children>
-                                    <element name="resourceID">
+                                    <element name="measurementID">
                                         <properties>
                                             <type>textfield</type>
                                             <access>TRUE</access>
@@ -478,10 +478,10 @@
                                                     <schema/>
                                                     <type>element</type>
                                                     <prefix>dwc</prefix>
-                                                    <value>dwc:resourceID</value>
+                                                    <value>dwc:measurementID</value>
                                                 </create>
                                                 <read>
-                                                    <path>dwc:resourceID</path>
+                                                    <path>dwc:measurementID</path>
                                                     <context>parent</context>
                                                 </read>
                                                 <update>
@@ -496,7 +496,7 @@
                                         </properties>
                                         <children/>
                                     </element>
-                                    <element name="resourcetype">
+                                    <element name="measurementType">
                                         <properties>
                                             <type>select</type>
                                             <access>TRUE</access>
@@ -523,10 +523,10 @@
                                                     <schema/>
                                                     <type>element</type>
                                                     <prefix>dwc</prefix>
-                                                    <value>dwc:relationshipAccordingTo</value>
+                                                    <value>dwc:measurementType</value>
                                                 </create>
                                                 <read>
-                                                    <path>dwc:relationshipAccordingTo</path>
+                                                    <path>dwc:measurementType</path>
                                                     <context>parent</context>
                                                 </read>
                                                 <update>
@@ -541,7 +541,7 @@
                                         </properties>
                                         <children/>
                                     </element>
-                                    <element name="relremarks">
+                                    <element name="measurementRemarks">
                                         <properties>
                                             <type>textarea</type>
                                             <access>TRUE</access>
@@ -561,10 +561,10 @@
                                                     <schema/>
                                                     <type>element</type>
                                                     <prefix>dwc</prefix>
-                                                    <value>dwc:relationshipRemarks</value>
+                                                    <value>dwc:measurementRemarks</value>
                                                 </create>
                                                 <read>
-                                                    <path>dwc:relationshipRemarks</path>
+                                                    <path>dwc:measurementRemarks</path>
                                                     <context>parent</context>
                                                 </read>
                                                 <update>
@@ -579,7 +579,7 @@
                                         </properties>
                                         <children/>
                                     </element>
-                                    <element name="relresourceID">
+                                    <element name="measurementUnit">
                                         <properties>
                                             <type>textfield</type>
                                             <access>TRUE</access>
@@ -600,10 +600,10 @@
                                                     <schema/>
                                                     <type>element</type>
                                                     <prefix>dwc</prefix>
-                                                    <value>dwc:relatedResourceID</value>
+                                                    <value>dwc:measurementUnit</value>
                                                 </create>
                                                 <read>
-                                                    <path>dwc:relatedResourceID</path>
+                                                    <path>dwc:measurementUnit</path>
                                                     <context>parent</context>
                                                 </read>
                                                 <update>
@@ -618,7 +618,7 @@
                                         </properties>
                                         <children/>
                                     </element>
-                                    <element name="relresource">
+                                    <element name="measurementValue">
                                         <properties>
                                             <type>hidden</type>
                                             <access>TRUE</access>
@@ -637,10 +637,10 @@
                                                     <schema/>
                                                     <type>xml</type>
                                                     <prefix>NULL</prefix>
-                                                    <value>&lt;dwc:relationshipOfResource&gt;isDataMeasurementOf&lt;/dwc:relationshipOfResource&gt;</value>
+                                                    <value>&lt;dwc:measurementValue&gt;isDataMeasurementOf&lt;/dwc:measurementValue&gt;</value>
                                                 </create>
                                                 <read>
-                                                    <path>dwc:relationshipOfResource</path>
+                                                    <path>dwc:measurementValue</path>
                                                     <context>parent</context>
                                                 </read>
                                                 <update>
