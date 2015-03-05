@@ -220,6 +220,10 @@ function islandora_livingresearchlab_add_birth_form_submit(array $form, array &$
       $taxon = $dwr->appendChild($dom->createElementNS($dwc_url, 'dwc:Taxon'));
       $taxon_id = $taxon->appendChild($dom->createElementNS($dwc_url, 'dwc:taxonID', 'NotYetDefined'));
       $taxon_remarks = $taxon->appendChild($dom->createElementNS($dwc_url, 'dwc:taxonRemarks', 'mouseType'));
+      // Need protocol so read for mother/father relationships are correct.
+      $rels = $dwr->appendChild($dom->createElementNS($dwc_url, 'dwc:ResourceRelationship'));
+      $rels_id = $rels->appendChild($dom->createElementNS($dwc_url, 'dwc:relatedResourceID', ''));
+      $rels_resource = $rels->appendChild($dom->createElementNS($dwc_url, 'dwc:relationshipOfResource', 'isTestSubjectUnder'));
 
       $location = $dwr->appendChild($dom->createElementNS($dcterms_url, 'dcterms:Location'));
       $loc_id = $location->appendChild($dom->createElementNS($dwc_url, 'dwc:locationID', $birth_cage_id));
@@ -261,7 +265,7 @@ function islandora_livingresearchlab_add_birth_form_submit(array $form, array &$
       $dom->preserveWhiteSpace = FALSE;
       $dom->formatOutput = TRUE;
 
-      $cage_pid = lrl_extract_pid($birth_cage_id);
+
       $mother_pid = lrl_extract_pid($mother_id);
       $father_pid = lrl_extract_pid($father_id);
 
@@ -284,7 +288,10 @@ function islandora_livingresearchlab_add_birth_form_submit(array $form, array &$
       $object->relationships->add(FEDORA_RELS_EXT_URI, 'isMemberOfCollection', 'islandora:mice_collection');
       $object->relationships->add(ISLANDORA_RELS_EXT_URI, 'hasMother', $mother_pid);
       $object->relationships->add(ISLANDORA_RELS_EXT_URI, 'hasFather', $father_pid);
-      $object->relationships->add(ISLANDORA_RELS_EXT_URI, 'isTestSubjectUnder', $cage_pid);
+      if (isset($birth_cage_id) && !empty($birth_cage_id)) {
+        $cage_pid = lrl_extract_pid($birth_cage_id);
+        $object->relationships->add(ISLANDORA_RELS_EXT_URI, 'isTestSubjectUnder', $cage_pid);
+      }
       $dsid = 'DWC';
       $ds = $object->constructDatastream($dsid, 'M');
       $ds->label = $dsid;

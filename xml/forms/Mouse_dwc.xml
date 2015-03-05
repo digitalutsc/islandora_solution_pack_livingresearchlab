@@ -737,16 +737,16 @@
                             <tree>TRUE</tree>
                             <actions>
                                 <create>
-                                    <path>self::node()</path>
-                                    <context>parent</context>
+                                    <path>/dwr:DarwinRecordSet</path>
+                                    <context>document</context>
                                     <schema/>
                                     <type>element</type>
                                     <prefix>dwc</prefix>
                                     <value>dwc:ResourceRelationship</value>
                                 </create>
                                 <read>
-                                    <path>dwc:ResourceRelationship[1]</path>
-                                    <context>parent</context>
+                                    <path>/dwr:DarwinRecordSet/dwc:ResourceRelationship[1]</path>
+                                    <context>document</context>
                                 </read>
                                 <update>
                                     <path>self::node()</path>
@@ -775,16 +775,16 @@
                                     <tree>TRUE</tree>
                                     <actions>
                                         <create>
-                                            <path>self::node()</path>
-                                            <context>parent</context>
+                                            <path>/dwr:DarwinRecordSet/dwc:ResourceRelationship[1]</path>
+                                            <context>document</context>
                                             <schema/>
                                             <type>element</type>
                                             <prefix>dwc</prefix>
                                             <value>dwc:relatedResourceID</value>
                                         </create>
                                         <read>
-                                            <path>dwc:relatedResourceID</path>
-                                            <context>parent</context>
+                                            <path>/dwr:DarwinRecordSet/dwc:ResourceRelationship[1]/dwc:relatedResourceID[1]</path>
+                                            <context>document</context>
                                         </read>
                                         <update>
                                             <path>self::node()</path>
@@ -812,15 +812,15 @@
                                     <tree>TRUE</tree>
                                     <actions>
                                         <create>
-                                            <path>self::node()</path>
-                                            <context>parent</context>
+                                            <path>/dwr:DarwinRecordSet/dwc:ResourceRelationship[1]</path>
+                                            <context>document</context>
                                             <schema/>
                                             <type>xml</type>
                                             <prefix>NULL</prefix>
                                             <value>&lt;dwc:relationshipOfResource&gt;isTestSubjectUnder&lt;/dwc:relationshipOfResource&gt;</value>
                                         </create>
                                         <read>
-                                            <path>dwc:relationshipOfResource</path>
+                                            <path>/dwr:DarwinRecordSet/dwc:ResourceRelationship[1]/dwc:relationshipOfResource[1]</path>
                                             <context>parent</context>
                                         </read>
                                         <update>
@@ -1193,16 +1193,16 @@
                                     <tree>TRUE</tree>
                                     <actions>
                                         <create>
-                                            <path>self::node()</path>
-                                            <context>parent</context>
+                                            <path>/dwr:DarwinRecordSet</path>
+                                            <context>document</context>
                                             <schema/>
                                             <type>element</type>
                                             <prefix>dwc</prefix>
                                             <value>dwc:ResourceRelationship</value>
                                         </create>
                                         <read>
-                                            <path>dwc:ResourceRelationship[2]</path>
-                                            <context>parent</context>
+                                            <path>/dwr:DarwinRecordSet/dwc:ResourceRelationship[2]</path>
+                                            <context>document</context>
                                         </read>
                                         <update>
                                             <path>self::node()</path>
@@ -1231,16 +1231,16 @@
                                             <tree>TRUE</tree>
                                             <actions>
                                                 <create>
-                                                    <path>self::node()</path>
-                                                    <context>parent</context>
+                                                    <path>/dwr:DarwinRecordSet/dwc:ResourceRelationship[2]</path>
+                                                    <context>document</context>
                                                     <schema/>
                                                     <type>element</type>
                                                     <prefix>dwc</prefix>
                                                     <value>dwc:relatedResourceID</value>
                                                 </create>
                                                 <read>
-                                                    <path>dwc:relatedResourceID</path>
-                                                    <context>parent</context>
+                                                    <path>/dwr:DarwinRecordSet/dwc:ResourceRelationship[2]/dwc:relatedResourceID[1]</path>
+                                                    <context>document</context>
                                                 </read>
                                                 <update>
                                                     <path>self::node()</path>
@@ -1268,16 +1268,16 @@
                                             <tree>TRUE</tree>
                                             <actions>
                                                 <create>
-                                                    <path>self::node()</path>
-                                                    <context>parent</context>
+                                                    <path>/dwr:DarwinRecordSet/dwc:ResourceRelationship[2]</path>
+                                                    <context>document</context>
                                                     <schema/>
                                                     <type>xml</type>
                                                     <prefix>NULL</prefix>
                                                     <value>&lt;dwc:relationshipOfResource&gt;hasMother&lt;/dwc:relationshipOfResource&gt;</value>
                                                 </create>
                                                 <read>
-                                                    <path>dwc:relationshipOfResource</path>
-                                                    <context>parent</context>
+                                                    <path>/dwr:DarwinRecordSet/dwc:ResourceRelationship[2]/dwc:relationshipOfResource[1]</path>
+                                                    <context>document</context>
                                                 </read>
                                                 <update>
                                                     <path>self::node()</path>
@@ -1307,16 +1307,16 @@
                                     <tree>TRUE</tree>
                                     <actions>
                                         <create>
-                                            <path>self::node()</path>
-                                            <context>parent</context>
+                                            <path>/dwr:DarwinRecordSet</path>
+                                            <context>document</context>
                                             <schema/>
                                             <type>element</type>
                                             <prefix>dwc</prefix>
                                             <value>dwc:ResourceRelationship</value>
                                         </create>
                                         <read>
-                                            <path>dwc:ResourceRelationship[3]</path>
-                                            <context>parent</context>
+                                            <path>/dwr:DarwinRecordSet/dwc:ResourceRelationship[3]</path>
+                                            <context>document</context>
                                         </read>
                                         <update>
                                             <path>self::node()</path>
@@ -1345,16 +1345,16 @@
                                             <tree>TRUE</tree>
                                             <actions>
                                                 <create>
-                                                    <path>self::node()</path>
-                                                    <context>parent</context>
+                                                    <path>/dwr:DarwinRecordSet/dwc:ResourceRelationship[3]</path>
+                                                    <context>document</context>
                                                     <schema/>
                                                     <type>element</type>
                                                     <prefix>dwc</prefix>
                                                     <value>dwc:relatedResourceID</value>
                                                 </create>
                                                 <read>
-                                                    <path>dwc:relatedResourceID</path>
-                                                    <context>parent</context>
+                                                    <path>/dwr:DarwinRecordSet/dwc:ResourceRelationship[3]/dwc:relatedResourceID[1]</path>
+                                                    <context>document</context>
                                                 </read>
                                                 <update>
                                                     <path>self::node()</path>
@@ -1382,16 +1382,16 @@
                                             <tree>TRUE</tree>
                                             <actions>
                                                 <create>
-                                                    <path>self::node()</path>
-                                                    <context>parent</context>
+                                                    <path>/dwr:DarwinRecordSet/dwc:ResourceRelationship[3]</path>
+                                                    <context>document</context>
                                                     <schema/>
                                                     <type>xml</type>
                                                     <prefix>NULL</prefix>
                                                     <value>&lt;dwc:relationshipOfResource&gt;hasFather&lt;/dwc:relationshipOfResource&gt;</value>
                                                 </create>
                                                 <read>
-                                                    <path>dwc:relationshipOfResource</path>
-                                                    <context>parent</context>
+                                                    <path>/dwr:DarwinRecordSet/dwc:ResourceRelationship[3]/dwc:relationshipOfResource[1]</path>
+                                                    <context>document</context>
                                                 </read>
                                                 <update>
                                                     <path>self::node()</path>

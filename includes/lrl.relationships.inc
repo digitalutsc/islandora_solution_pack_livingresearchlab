@@ -81,8 +81,10 @@ function islandora_lrl_mouse_rels_update(array &$form_state) {
           $cage_id = $cage['locationid1'];
         }
       }
-      $pid = lrl_extract_pid($cage_id);
-      $object->relationships->add(ISLANDORA_RELS_EXT_URI, 'isCurrentResidentOf', $pid);
+      if (isset($cage_id) && !empty($cage_id)) {
+        $pid = lrl_extract_pid($cage_id);
+        $object->relationships->add(ISLANDORA_RELS_EXT_URI, 'isCurrentResidentOf', $pid);
+      }
     }
 
     if (!empty($metadata_step_storage['values']['dwc_fields_mouse']['ResourceRelationship1']['protocolrelatedResourceid'])) {
@@ -90,7 +92,6 @@ function islandora_lrl_mouse_rels_update(array &$form_state) {
       $pid = lrl_extract_pid($protocol);
       $object->relationships->add(ISLANDORA_RELS_EXT_URI, 'isTestSubjectUnder', $pid);
     }
-
 
   }
 }
