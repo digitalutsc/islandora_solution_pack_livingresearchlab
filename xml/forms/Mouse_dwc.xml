@@ -159,6 +159,45 @@
                                 </properties>
                                 <children/>
                             </element>
+                            <element name="occurrenceremarks2">
+                                <properties>
+                                    <type>textfield</type>
+                                    <access>TRUE</access>
+                                    <collapsed>FALSE</collapsed>
+                                    <collapsible>FALSE</collapsible>
+                                    <description>Leave field alone if not purchased.  An empty value may look like 'purchasedFrom ', a non-empty value may look like 'purchasedFrom Wal-Mart'.</description>
+                                    <disabled>FALSE</disabled>
+                                    <executes_submit_callback>FALSE</executes_submit_callback>
+                                    <multiple>FALSE</multiple>
+                                    <required>FALSE</required>
+                                    <resizable>FALSE</resizable>
+                                    <title>Purchased from</title>
+                                    <tree>TRUE</tree>
+                                    <actions>
+                                        <create>
+                                            <path>/dwr:DarwinRecordSet/dwc:Occurrence</path>
+                                            <context>document</context>
+                                            <schema/>
+                                            <type>xml</type>
+                                            <prefix>NULL</prefix>
+                                            <value>&lt;dwc:occurrenceRemarks&gt;purchasedFrom %value%&lt;/dwc:occurrenceRemarks&gt;</value>
+                                        </create>
+                                        <read>
+                                            <path>/dwr:DarwinRecordSet/dwc:Occurrence/dwc:occurrenceRemarks</path>
+                                            <context>document</context>
+                                        </read>
+                                        <update>
+                                            <path>self::node()</path>
+                                            <context>self</context>
+                                        </update>
+                                        <delete>
+                                            <path>self::node()</path>
+                                            <context>self</context>
+                                        </delete>
+                                    </actions>
+                                </properties>
+                                <children/>
+                            </element>
                         </children>
                     </element>
                     <element name="taxon1">
@@ -203,14 +242,15 @@
                                     <access>TRUE</access>
                                     <collapsed>FALSE</collapsed>
                                     <collapsible>FALSE</collapsible>
+                                    <default_value>NotYetDefined</default_value>
                                     <disabled>FALSE</disabled>
                                     <executes_submit_callback>FALSE</executes_submit_callback>
                                     <multiple>FALSE</multiple>
                                     <options>
-                                        <NotYetDefined>Not yet defined</NotYetDefined>
-                                        <Experimental>Experimental</Experimental>
-                                        <Breeding>Breeding</Breeding>
                                         <index key=""/>
+                                        <Breeding>Breeding</Breeding>
+                                        <Experimental>Experimental</Experimental>
+                                        <NotYetDefined>Not yet defined</NotYetDefined>
                                     </options>
                                     <required>FALSE</required>
                                     <resizable>FALSE</resizable>
@@ -322,6 +362,7 @@
                                     <access>TRUE</access>
                                     <collapsed>FALSE</collapsed>
                                     <collapsible>FALSE</collapsible>
+                                    <default_value>Not yet defined</default_value>
                                     <disabled>FALSE</disabled>
                                     <executes_submit_callback>FALSE</executes_submit_callback>
                                     <multiple>FALSE</multiple>
@@ -329,7 +370,7 @@
                                         <index key="BALB/cJ">BALB/cJ</index>
                                         <index key=" 129/Sv"> 129/Sv</index>
                                         <index key="C57BL/6J">C57BL/6J</index>
-                                        <index key=""/>
+                                        <index key="Not yet defined">Not yet defined</index>
                                     </options>
                                     <required>FALSE</required>
                                     <resizable>FALSE</resizable>
@@ -441,10 +482,12 @@
                                     <access>TRUE</access>
                                     <collapsed>FALSE</collapsed>
                                     <collapsible>FALSE</collapsible>
+                                    <default_value>Not yet defined</default_value>
                                     <disabled>FALSE</disabled>
                                     <executes_submit_callback>FALSE</executes_submit_callback>
                                     <multiple>FALSE</multiple>
                                     <options>
+                                        <index key="Not yet defined">Not yet defined</index>
                                         <index key="Wild-type">Wild-type</index>
                                         <index key="PV-IRES-Cre heterozygous">PV-IRES-Cre heterozygous</index>
                                         <index key="PV-IRES-Cre homozygous">PV-IRES-Cre homozygous</index>
@@ -454,7 +497,6 @@
                                         <index key="SST-ines-cne heterozygous">SST-ines-cne heterozygous</index>
                                         <index key="Camkza-cre homozygous">Camkza-cre homozygous</index>
                                         <index key="Camkza-cre heterozygous">Camkza-cre heterozygous</index>
-                                        <index key=""/>
                                     </options>
                                     <required>FALSE</required>
                                     <resizable>FALSE</resizable>
@@ -692,20 +734,19 @@
                             <multiple>FALSE</multiple>
                             <required>FALSE</required>
                             <resizable>FALSE</resizable>
-                            <title>Associated Protocol</title>
                             <tree>TRUE</tree>
                             <actions>
                                 <create>
-                                    <path>/dwr:DarwinRecordSet</path>
-                                    <context>document</context>
+                                    <path>self::node()</path>
+                                    <context>parent</context>
                                     <schema/>
                                     <type>element</type>
                                     <prefix>dwc</prefix>
                                     <value>dwc:ResourceRelationship</value>
                                 </create>
                                 <read>
-                                    <path>/dwr:DarwinRecordSet/dwc:ResourceRelationship[1]</path>
-                                    <context>document</context>
+                                    <path>dwc:ResourceRelationship[1]</path>
+                                    <context>parent</context>
                                 </read>
                                 <update>
                                     <path>self::node()</path>
@@ -730,19 +771,20 @@
                                     <multiple>FALSE</multiple>
                                     <required>FALSE</required>
                                     <resizable>FALSE</resizable>
+                                    <title>Associated Protocol</title>
                                     <tree>TRUE</tree>
                                     <actions>
                                         <create>
-                                            <path>/dwr:DarwinRecordSet/dwc:ResourceRelationship[1]</path>
-                                            <context>document</context>
+                                            <path>self::node()</path>
+                                            <context>parent</context>
                                             <schema/>
                                             <type>element</type>
                                             <prefix>dwc</prefix>
                                             <value>dwc:relatedResourceID</value>
                                         </create>
                                         <read>
-                                            <path>/dwr:DarwinRecordSet/dwc:ResourceRelationship[1]/dwc:relatedResourceID[1]</path>
-                                            <context>document</context>
+                                            <path>dwc:relatedResourceID</path>
+                                            <context>parent</context>
                                         </read>
                                         <update>
                                             <path>self::node()</path>
@@ -770,16 +812,16 @@
                                     <tree>TRUE</tree>
                                     <actions>
                                         <create>
-                                            <path>/dwr:DarwinRecordSet/dwc:ResourceRelationship[1]</path>
-                                            <context>document</context>
+                                            <path>self::node()</path>
+                                            <context>parent</context>
                                             <schema/>
                                             <type>xml</type>
                                             <prefix>NULL</prefix>
                                             <value>&lt;dwc:relationshipOfResource&gt;isTestSubjectUnder&lt;/dwc:relationshipOfResource&gt;</value>
                                         </create>
                                         <read>
-                                            <path>/dwr:DarwinRecordSet/dwc:ResourceRelationship[1]/dwc:relationshipOfResource[1]</path>
-                                            <context>document</context>
+                                            <path>dwc:relationshipOfResource</path>
+                                            <context>parent</context>
                                         </read>
                                         <update>
                                             <path>self::node()</path>
@@ -970,126 +1012,6 @@
                             </element>
                         </children>
                     </element>
-                    <element name="occurrence2">
-                        <properties>
-                            <type>fieldset</type>
-                            <access>TRUE</access>
-                            <collapsed>FALSE</collapsed>
-                            <collapsible>FALSE</collapsible>
-                            <disabled>FALSE</disabled>
-                            <executes_submit_callback>FALSE</executes_submit_callback>
-                            <multiple>FALSE</multiple>
-                            <required>FALSE</required>
-                            <resizable>FALSE</resizable>
-                            <title>Purchase Information</title>
-                            <tree>TRUE</tree>
-                            <actions>
-                                <create>
-                                    <path>self::node()</path>
-                                    <context>parent</context>
-                                    <schema/>
-                                    <type>element</type>
-                                    <prefix>dwc</prefix>
-                                    <value>dwc:Occurrence</value>
-                                </create>
-                                <read>
-                                    <path>/dwr:DarwinRecordSet/dwc:Occurrence[2]</path>
-                                    <context>document</context>
-                                </read>
-                                <update>
-                                    <path>self::node()</path>
-                                    <context>self</context>
-                                </update>
-                                <delete>
-                                    <path>self::node()</path>
-                                    <context>self</context>
-                                </delete>
-                            </actions>
-                        </properties>
-                        <children>
-                            <element name="occurrenceid2">
-                                <properties>
-                                    <type>select</type>
-                                    <access>TRUE</access>
-                                    <collapsed>FALSE</collapsed>
-                                    <collapsible>FALSE</collapsible>
-                                    <disabled>FALSE</disabled>
-                                    <executes_submit_callback>FALSE</executes_submit_callback>
-                                    <multiple>FALSE</multiple>
-                                    <options>
-                                        <index key=""/>
-                                        <No>No</No>
-                                        <Yes>Yes</Yes>
-                                    </options>
-                                    <required>FALSE</required>
-                                    <resizable>FALSE</resizable>
-                                    <title>Purchased</title>
-                                    <tree>TRUE</tree>
-                                    <actions>
-                                        <create>
-                                            <path>/dwr:DarwinRecordSet/dwc:Occurrence[2]</path>
-                                            <context>document</context>
-                                            <schema/>
-                                            <type>element</type>
-                                            <prefix>dwc</prefix>
-                                            <value>dwc:occurrenceID</value>
-                                        </create>
-                                        <read>
-                                            <path>/dwr:DarwinRecordSet/dwc:Occurrence[2]/dwc:occurrenceID[1]</path>
-                                            <context>document</context>
-                                        </read>
-                                        <update>
-                                            <path>self::node()</path>
-                                            <context>self</context>
-                                        </update>
-                                        <delete>
-                                            <path>self::node()</path>
-                                            <context>self</context>
-                                        </delete>
-                                    </actions>
-                                </properties>
-                                <children/>
-                            </element>
-                            <element name="occurrenceremarks2">
-                                <properties>
-                                    <type>textfield</type>
-                                    <access>TRUE</access>
-                                    <collapsed>FALSE</collapsed>
-                                    <collapsible>FALSE</collapsible>
-                                    <disabled>FALSE</disabled>
-                                    <executes_submit_callback>FALSE</executes_submit_callback>
-                                    <multiple>FALSE</multiple>
-                                    <required>FALSE</required>
-                                    <resizable>FALSE</resizable>
-                                    <title>Purchased from</title>
-                                    <tree>TRUE</tree>
-                                    <actions>
-                                        <create>
-                                            <path>/dwr:DarwinRecordSet/dwc:Occurrence[2]</path>
-                                            <context>document</context>
-                                            <schema/>
-                                            <type>xml</type>
-                                            <prefix>NULL</prefix>
-                                            <value>&lt;dwc:occurrenceRemarks&gt;purchasedFrom %value%&lt;/dwc:occurrenceRemarks&gt;</value>
-                                        </create>
-                                        <read>
-                                            <path>/dwr:DarwinRecordSet/dwc:Occurrence[2]/dwc:occurrenceRemarks[1]</path>
-                                            <context>document</context>
-                                        </read>
-                                        <update>
-                                            <path>self::node()</path>
-                                            <context>self</context>
-                                        </update>
-                                        <delete>
-                                            <path>self::node()</path>
-                                            <context>self</context>
-                                        </delete>
-                                    </actions>
-                                </properties>
-                                <children/>
-                            </element>
-                        </children>
-                    </element>
                     <element name="birthFieldset">
                         <properties>
                             <type>fieldset</type>
@@ -1268,20 +1190,19 @@
                                     <multiple>FALSE</multiple>
                                     <required>FALSE</required>
                                     <resizable>FALSE</resizable>
-                                    <title>Mother Identifier</title>
                                     <tree>TRUE</tree>
                                     <actions>
                                         <create>
-                                            <path>/dwr:DarwinRecordSet</path>
-                                            <context>document</context>
+                                            <path>self::node()</path>
+                                            <context>parent</context>
                                             <schema/>
                                             <type>element</type>
                                             <prefix>dwc</prefix>
                                             <value>dwc:ResourceRelationship</value>
                                         </create>
                                         <read>
-                                            <path>/dwr:DarwinRecordSet/dwc:ResourceRelationship[2]</path>
-                                            <context>document</context>
+                                            <path>dwc:ResourceRelationship[2]</path>
+                                            <context>parent</context>
                                         </read>
                                         <update>
                                             <path>self::node()</path>
@@ -1306,19 +1227,20 @@
                                             <multiple>FALSE</multiple>
                                             <required>FALSE</required>
                                             <resizable>FALSE</resizable>
+                                            <title>Mother Identifier</title>
                                             <tree>TRUE</tree>
                                             <actions>
                                                 <create>
-                                                    <path>/dwr:DarwinRecordSet/dwc:ResourceRelationship[2]</path>
-                                                    <context>document</context>
+                                                    <path>self::node()</path>
+                                                    <context>parent</context>
                                                     <schema/>
                                                     <type>element</type>
                                                     <prefix>dwc</prefix>
                                                     <value>dwc:relatedResourceID</value>
                                                 </create>
                                                 <read>
-                                                    <path>/dwr:DarwinRecordSet/dwc:ResourceRelationship[2]/dwc:relatedResourceID[1]</path>
-                                                    <context>document</context>
+                                                    <path>dwc:relatedResourceID</path>
+                                                    <context>parent</context>
                                                 </read>
                                                 <update>
                                                     <path>self::node()</path>
@@ -1346,16 +1268,16 @@
                                             <tree>TRUE</tree>
                                             <actions>
                                                 <create>
-                                                    <path>/dwr:DarwinRecordSet/dwc:ResourceRelationship[2]</path>
-                                                    <context>document</context>
+                                                    <path>self::node()</path>
+                                                    <context>parent</context>
                                                     <schema/>
                                                     <type>xml</type>
                                                     <prefix>NULL</prefix>
                                                     <value>&lt;dwc:relationshipOfResource&gt;hasMother&lt;/dwc:relationshipOfResource&gt;</value>
                                                 </create>
                                                 <read>
-                                                    <path>/dwr:DarwinRecordSet/dwc:ResourceRelationship[2]/dwc:relationshipOfResource[1]</path>
-                                                    <context>document</context>
+                                                    <path>dwc:relationshipOfResource</path>
+                                                    <context>parent</context>
                                                 </read>
                                                 <update>
                                                     <path>self::node()</path>
@@ -1382,20 +1304,19 @@
                                     <multiple>FALSE</multiple>
                                     <required>FALSE</required>
                                     <resizable>FALSE</resizable>
-                                    <title>Father Identifier</title>
                                     <tree>TRUE</tree>
                                     <actions>
                                         <create>
-                                            <path>/dwr:DarwinRecordSet</path>
-                                            <context>document</context>
+                                            <path>self::node()</path>
+                                            <context>parent</context>
                                             <schema/>
                                             <type>element</type>
                                             <prefix>dwc</prefix>
                                             <value>dwc:ResourceRelationship</value>
                                         </create>
                                         <read>
-                                            <path>/dwr:DarwinRecordSet/dwc:ResourceRelationship[3]</path>
-                                            <context>document</context>
+                                            <path>dwc:ResourceRelationship[3]</path>
+                                            <context>parent</context>
                                         </read>
                                         <update>
                                             <path>self::node()</path>
@@ -1420,19 +1341,20 @@
                                             <multiple>FALSE</multiple>
                                             <required>FALSE</required>
                                             <resizable>FALSE</resizable>
+                                            <title>Father Identifier</title>
                                             <tree>TRUE</tree>
                                             <actions>
                                                 <create>
-                                                    <path>/dwr:DarwinRecordSet/dwc:ResourceRelationship[3]</path>
-                                                    <context>document</context>
+                                                    <path>self::node()</path>
+                                                    <context>parent</context>
                                                     <schema/>
                                                     <type>element</type>
                                                     <prefix>dwc</prefix>
                                                     <value>dwc:relatedResourceID</value>
                                                 </create>
                                                 <read>
-                                                    <path>/dwr:DarwinRecordSet/dwc:ResourceRelationship[3]/dwc:relatedResourceID[1]</path>
-                                                    <context>document</context>
+                                                    <path>dwc:relatedResourceID</path>
+                                                    <context>parent</context>
                                                 </read>
                                                 <update>
                                                     <path>self::node()</path>
@@ -1460,16 +1382,16 @@
                                             <tree>TRUE</tree>
                                             <actions>
                                                 <create>
-                                                    <path>/dwr:DarwinRecordSet/dwc:ResourceRelationship[3]</path>
-                                                    <context>document</context>
+                                                    <path>self::node()</path>
+                                                    <context>parent</context>
                                                     <schema/>
                                                     <type>xml</type>
                                                     <prefix>NULL</prefix>
                                                     <value>&lt;dwc:relationshipOfResource&gt;hasFather&lt;/dwc:relationshipOfResource&gt;</value>
                                                 </create>
                                                 <read>
-                                                    <path>/dwr:DarwinRecordSet/dwc:ResourceRelationship[3]/dwc:relationshipOfResource[1]</path>
-                                                    <context>document</context>
+                                                    <path>dwc:relationshipOfResource</path>
+                                                    <context>parent</context>
                                                 </read>
                                                 <update>
                                                     <path>self::node()</path>
