@@ -171,12 +171,13 @@ function islandora_livingresearchlab_islandora_xml_form_builder_forms() {
 }
 
 
-function islandora_livingresearchlab_xml_form_builder_get_transforms() {
-  $module_path = drupal_get_path('module', 'islandora_livingresearchlab');
-  return array(
-    'dwcclassoccurrence2dc.xsl' => "$module_path/xsl/dwcclassoccurrence2dc.xsl",
-  );
-}
+// deprecated xslt.  it doesn't work exactly as we'd like.
+// function islandora_livingresearchlab_xml_form_builder_get_transforms() {
+//   $module_path = drupal_get_path('module', 'islandora_livingresearchlab');
+//   return array(
+//     'dwcclassoccurrence2dc.xsl' => "$module_path/xsl/dwcclassoccurrence2dc.xsl",
+//   );
+// }
 
 /**
  * Implements hook_islandora_xml_form_builder_form_associations().
@@ -194,8 +195,8 @@ function islandora_livingresearchlab_islandora_xml_form_builder_form_association
         'occurrence1',
         'occurrenceid1',
       ),
-      'transform' => 'dwcclassoccurrence2dc.xsl',
-      'self_transform' => 'cleanup_mods.xsl',
+      'transform' => 'No Transform',
+      'self_transform' => 'No Transform',
       'template' => FALSE,
     ),
     'islandora_livingresearchlab_experiment_dwc_form' => array(
@@ -208,7 +209,7 @@ function islandora_livingresearchlab_islandora_xml_form_builder_form_association
         'occurrenceid',
       ),
       'transform' => 'No Transform',
-      'self_transform' => 'cleanup_mods.xsl',
+      'self_transform' => 'No Transform',
       'template' => FALSE,
     ),
     'islandora_livingresearchlab_cage_dwc_form' => array(
@@ -221,7 +222,7 @@ function islandora_livingresearchlab_islandora_xml_form_builder_form_association
         'occurrenceid',
       ),
       'transform' => 'No Transform',
-      'self_transform' => 'cleanup_mods.xsl',
+      'self_transform' => 'No Transform',
       'template' => FALSE,
     ),
     'islandora_livingresearchlab_mouse_dwc_form' => array(
@@ -234,7 +235,7 @@ function islandora_livingresearchlab_islandora_xml_form_builder_form_association
         'occurrenceid',
       ),
       'transform' => 'No Transform',
-      'self_transform' => 'cleanup_mods.xsl',
+      'self_transform' => 'No Transform',
       'template' => FALSE,
     ),
     'islandora_livingresearchlab_protocol_dwc_form' => array(
@@ -246,8 +247,8 @@ function islandora_livingresearchlab_islandora_xml_form_builder_form_association
         'occurrence',
         'occurrenceid',
       ),
-      'transform' => 'dwcclassoccurrence2dc.xsl',
-      'self_transform' => 'cleanup_mods.xsl',
+      'transform' => 'No Transform',
+      'self_transform' => 'No Transform',
       'template' => FALSE,
     ),
     'islandora_livingresearchlab_publication_dwc_form' => array(
