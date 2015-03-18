@@ -18,17 +18,17 @@ function islandora_livingresearchlab_autocomplete($type, $string = '') {
   $mappings = array(
     'mouse' => array(
       'cmodel' => 'islandora:livingresearchlab_mouseCModel',
-      'title' => 'dc.title',
+      'title' => 'dwc.occurrenceID',
       'collection' => 'islandora:mice_collection',
     ),
     'experiment' => array(
       'cmodel' => 'islandora:livingresearchlab_experimentCModel',
-      'title' => 'dc.title',
+      'title' => 'dwc.occurrenceID',
       'collection' => 'islandora:experiments_collection',
     ),
     'cage' => array(
       'cmodel' => 'islandora:livingresearchlab_cageCModel',
-      'title' => 'dc.title',
+      'title' => 'dwc.occurrenceID',
       'collection' => 'islandora:cages_collection',
     ),
     'protocol' => array(
@@ -41,7 +41,6 @@ function islandora_livingresearchlab_autocomplete($type, $string = '') {
   $qualifier = $mappings[$type]['title'] . ':*';
   $path = request_path();
   if ($path) {
-    $path_array = explode('/', $path);
     if (!empty($string)) {
       $qualifier = $mappings[$type]['title'] . ':*' . $string . '*';
     }
