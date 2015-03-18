@@ -639,3 +639,33 @@ function islandora_livingresearchlab_form_xml_form_builder_ingest_form_alter(&$f
   }
 
 }
+
+
+/**
+ * Update all custom relx-ext if datastream edit form is updated.
+ *
+ * Can't include 'lrl.relationships.inc' file directly.
+ */
+function islandora_livingresearchlab_form_xml_form_builder_datastream_form_alter(array &$form, array &$form_state, $form_id) {
+  $form['update']['#submit'][] = '_rels_update';
+}
+
+/**
+ * Custom submit handler for RELS-EXT update.
+ */
+function _rels_update(array &$form, array &$form_state){
+  module_load_include('inc', 'islandora_livingresearchlab', 'includes/lrl.relationships');
+  switch ($form_state['association']['id']) {
+    case 'islandora_livingresearchlab_experiment_dwc_form':
+      islandora_lrl_experiment_rels_update($form, $form_state, TRUE);
+      break;
+
+    case 'islandora_livingresearchlab_mouse_dwc_form':
+      islandora_lrl_mouse_rels_update($form, $form_state, TRUE);
+      break;
+
+    case 'islandora_livingresearchlab_datasession_dwc_form':
+      islandora_lrl_datasession_rels_update($form, $form_state, TRUE);
+      break;
+  }
+}

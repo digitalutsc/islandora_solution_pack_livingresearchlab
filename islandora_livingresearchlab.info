@@ -1,6 +1,7 @@
 name = Islandora Living Research Lab Solution Pack
 description = Islandora Module for DSU Living Research Lab project
 dependencies[] = islandora
+dependencies[] = islandora_xml_forms
 dependencies[] = islandora_pdf
 package = Islandora Solution Packs
 version = 7.x-dev

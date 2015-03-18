@@ -80,5 +80,10 @@ function lrl_generate_mouse_id($s, $x, $is_litter = TRUE, $seq = '01') {
  */
 function lrl_extract_pid($rel_str) {
   $part = explode('(', trim($rel_str));
-  return substr($part[1], 0, -1);
+  if (count($part) > 1) {
+    return substr($part[1], 0, -1);
+  }
+  else {
+    return NULL;
+  }
 }
