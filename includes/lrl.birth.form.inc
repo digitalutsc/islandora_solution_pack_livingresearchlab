@@ -4,7 +4,6 @@
  * Add birth to the Solution Pack.
  */
 
-
 /**
  * Birth Form.
  *
@@ -172,6 +171,7 @@ function islandora_livingresearchlab_add_birth_form_submit(array $form, array &$
   $father_id = $form_state['values']['lrl_birth_father'];
   $weandate = $form_state['values']['lrl_birth_weandate'];
   $dob = $form_state['values']['lrl_birth_dob'] ? $form_state['values']['lrl_birth_dob'] : date('Y-m-d');
+  $entrydate = date('Y-m-d');
   $setupdate = $form_state['values']['lrl_birth_setupdate'];
   $children = $form_state['values']['lrl_birth_children']['id_fieldset'];
   $litter = explode('-', $children['child1']);
@@ -179,7 +179,7 @@ function islandora_livingresearchlab_add_birth_form_submit(array $form, array &$
     $default_weandate = date('Y-m-d', strtotime($dob . ' + 21 days'));
   }
   else {
-    $default_weandate = $weandate;
+    $default_weandate = date('Y-m-d', strtotime($weandate));
   }
 
   foreach ($children as $child) {
@@ -228,8 +228,8 @@ function islandora_livingresearchlab_add_birth_form_submit(array $form, array &$
       $location = $dwr->appendChild($dom->createElementNS($dcterms_url, 'dcterms:Location'));
       $loc_id = $location->appendChild($dom->createElementNS($dwc_url, 'dwc:locationID', $birth_cage_id));
       $locality = $location->appendChild($dom->createElementNS($dwc_url, 'dwc:locality', 'currentCage'));
-      if (isset($dob) && !empty($dob)) {
-        $location_remarks = $location->appendChild($dom->createElementNS($dwc_url, 'dwc:locationRemarks', date('Y-m-d', strtotime($dob))));
+      if (isset($entrydate) && !empty($entrydate)) {
+        $location_remarks = $location->appendChild($dom->createElementNS($dwc_url, 'dwc:locationRemarks', date('Y-m-d', strtotime($entrydate))));
       }
       else {
         $location_remarks = $location->appendChild($dom->createElementNS($dwc_url, 'dwc:locationRemarks', 'NotYetDefined'));
