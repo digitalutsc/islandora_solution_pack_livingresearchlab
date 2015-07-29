@@ -28,7 +28,15 @@ Configure Mice ID Schema information in Administration » Islandora » Living Re
 A dwc_to_solr.xslt file (xsl/dwc_to_solr.xslt) is included in the module in order to index dwc fields in Solr.
 
 * Please drop this file to 'islandora_transforms' folder and update the foxmlToSolr.xslt file to include new xslt file.
-* Modify solr schema.xml file to add dwc.* and dcterms.* fields
+* Make sure the following namespaces are in the the foxmlToSolr.xslt file as well.
+
+```xml
+  xmlns:dwc="http://rs.tdwg.org/dwc/terms/"
+  xmlns:dwr="http://rs.tdwg.org/dwc/dwcrecord/" 
+  xmlns:dcterms="http://purl.org/dc/terms/" 
+```
+
+* Modify solr schema.xml file to add dwc.* fields.
 
 ```xml
 <dynamicField name="dwc.*"  type="text_general" indexed="true" stored="true" multiValued="true"/>
