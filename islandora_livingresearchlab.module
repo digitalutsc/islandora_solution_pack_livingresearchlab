@@ -490,7 +490,7 @@ function islandora_livingresearchlab_islandora_livingresearchlab_mouseCModel_isl
       'weight' => 11,
       'do_function' => array(
         'function' => 'islandora_lrl_mouse_rels_update',
-        'args' => array(),
+        'args' => array(NULL),
       ),
     ),
   );
